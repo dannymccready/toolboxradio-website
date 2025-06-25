@@ -52,6 +52,18 @@ function checkLocation() {
     }
 }
 
+function isAllowedCountry(country) {
+    if (!country) return false;
+    const allowed = [
+        'united kingdom',
+        'uk',
+        'ireland',
+        'republic of ireland'
+    ];
+    const lc = country.toLowerCase();
+    return allowed.some(region => lc.includes(region));
+}
+
 function getCountryFromCoords(lat, lng) {
     // Using a free geocoding service to get country from coordinates
     fetch(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lng}&localityLanguage=en`)
@@ -61,7 +73,7 @@ function getCountryFromCoords(lat, lng) {
             const city = data.city || data.locality || 'Unknown';
             userLocation.textContent = `${city}, ${country}`;
             
-            if (country && country.toLowerCase().includes('united kingdom')) {
+            if (isAllowedCountry(country)) {
                 showMainContent();
             } else {
                 showGeoRestriction();
@@ -82,7 +94,7 @@ function getCountryFromIP() {
             const city = data.city || 'Unknown';
             userLocation.textContent = `${city}, ${country}`;
             
-            if (country && country.toLowerCase().includes('united kingdom')) {
+            if (isAllowedCountry(country)) {
                 showMainContent();
             } else {
                 showGeoRestriction();
