@@ -46,20 +46,30 @@ function checkLocation() {
         userLocation.textContent = "Manual Override: UK/Ireland";
         return;
     }
+    // Force IP-based geolocation for production (not localhost)
+    if (!window.location.hostname.includes('localhost') && window.location.protocol !== 'file:') {
+        console.log('ToolBox Radio: Using IP-based geolocation (production mode)');
+        getCountryFromIP();
+        return;
+    }
+    // Otherwise, try browser geolocation first
     if (navigator.geolocation) {
+        console.log('ToolBox Radio: Trying browser geolocation...');
         navigator.geolocation.getCurrentPosition(
             (position) => {
                 const { latitude, longitude } = position.coords;
+                console.log('ToolBox Radio: Browser geolocation success', latitude, longitude);
                 getCountryFromCoords(latitude, longitude);
             },
             (error) => {
-                console.log("Geolocation error:", error);
+                console.warn('ToolBox Radio: Browser geolocation error', error);
                 // Fallback to IP-based geolocation
                 getCountryFromIP();
             }
         );
     } else {
         // Fallback to IP-based geolocation
+        console.log('ToolBox Radio: Browser geolocation not available, using IP-based geolocation');
         getCountryFromIP();
     }
 }
@@ -99,13 +109,14 @@ function getCountryFromCoords(lat, lng) {
 
 function getCountryFromIP() {
     // Fallback to IP-based geolocation using ipapi.co (no API key required)
+    console.log('ToolBox Radio: Fetching location from ipapi.co...');
     fetch('https://ipapi.co/json/')
         .then(response => response.json())
         .then(data => {
             const country = data.country_name;
             const city = data.city || 'Unknown';
             userLocation.textContent = `${city}, ${country}`;
-            
+            console.log('ToolBox Radio: ipapi.co result:', data);
             if (isAllowedCountry(country)) {
                 showMainContent();
             } else {
@@ -113,7 +124,7 @@ function getCountryFromIP() {
             }
         })
         .catch(error => {
-            console.log("IP geolocation error (ipapi.co):", error);
+            console.warn('ToolBox Radio: ipapi.co error', error);
             // Try a second fallback
             getCountryFromIPInfo();
         });
@@ -121,6 +132,7 @@ function getCountryFromIP() {
 
 function getCountryFromIPInfo() {
     // Second fallback to ipinfo.io
+    console.log('ToolBox Radio: Fetching location from ipinfo.io...');
     fetch('https://ipinfo.io/json?token=demo') // Remove token or use your own for production
         .then(response => response.json())
         .then(data => {
@@ -131,6 +143,7 @@ function getCountryFromIPInfo() {
             if (country === 'GB') countryName = 'United Kingdom';
             if (country === 'IE') countryName = 'Ireland';
             userLocation.textContent = `${city}, ${countryName}`;
+            console.log('ToolBox Radio: ipinfo.io result:', data);
             if (isAllowedCountry(countryName)) {
                 showMainContent();
             } else {
@@ -138,7 +151,7 @@ function getCountryFromIPInfo() {
             }
         })
         .catch(error => {
-            console.log("IP geolocation error (ipinfo.io):", error);
+            console.warn('ToolBox Radio: ipinfo.io error', error);
             userLocation.textContent = "Unknown Location (please enable location, disable VPN, or check your connection)";
             showGeoRestriction(true); // true = show manual override
         });
