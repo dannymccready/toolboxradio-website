@@ -61,7 +61,7 @@ function getCountryFromCoords(lat, lng) {
             const city = data.city || data.locality || 'Unknown';
             userLocation.textContent = `${city}, ${country}`;
             
-            if (country === 'United Kingdom' || country === 'UK') {
+            if (country && country.toLowerCase().includes('united kingdom')) {
                 showMainContent();
             } else {
                 showGeoRestriction();
@@ -82,7 +82,7 @@ function getCountryFromIP() {
             const city = data.city || 'Unknown';
             userLocation.textContent = `${city}, ${country}`;
             
-            if (country === 'United Kingdom' || country === 'UK') {
+            if (country && country.toLowerCase().includes('united kingdom')) {
                 showMainContent();
             } else {
                 showGeoRestriction();
