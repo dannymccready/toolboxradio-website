@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CMS Desk - Construction Management Platform | ToolBox Radio Partnership</title>
+    <meta name="description" content="Discover CMS Desk, the leading construction and business management platform. Learn about our partnership with ToolBox Radio and how we're revolutionizing construction project management.">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="styles.css">
+    
+    <style>
+        .cms-hero {
+            background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+            color: white;
+            padding: 120px 0 80px;
+        }
+        
+        .features-showcase {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 32px;
+            margin: 64px 0;
+        }
+        
+        .feature-showcase {
+            background: white;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        
+        .feature-showcase:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+        }
+        
+        .feature-showcase-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 24px;
+            color: white;
+            font-size: 32px;
+        }
+        
+        .partnership-section {
+            background: linear-gradient(135deg, #fef7ee 0%, #eff6ff 100%);
+            padding: 80px 0;
+        }
+        
+        .partnership-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 64px;
+            align-items: center;
+        }
+        
+        @media (max-width: 768px) {
+            .partnership-content {
+                grid-template-columns: 1fr;
+                gap: 32px;
+            }
+        }
+        
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 32px;
+            margin: 64px 0;
+        }
+        
+        .testimonial-card {
+            background: white;
+            padding: 32px;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+        
+        .testimonial-card::before {
+            content: '"';
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 48px;
+            color: #ed7519;
+            font-family: serif;
+        }
+        
+        .testimonial-text {
+            font-style: italic;
+            color: #475569;
+            margin-bottom: 24px;
+            padding-left: 20px;
+        }
+        
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .testimonial-avatar {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, #ed7519 0%, #de5a0f 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+        }
+        
+        .testimonial-info h4 {
+            color: #1e293b;
+            margin-bottom: 4px;
+        }
+        
+        .testimonial-info p {
+            color: #64748b;
+            font-size: 14px;
+        }
+        
+        .stats-section {
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            color: white;
+            padding: 80px 0;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 48px;
+            text-align: center;
+        }
+        
+        .stat-item {
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 48px;
+            font-weight: 800;
+            margin-bottom: 8px;
+        }
+        
+        .stat-label {
+            font-size: 18px;
+            opacity: 0.9;
+        }
+        
+        .demo-section {
+            background: white;
+            padding: 80px 0;
+        }
+        
+        .demo-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 64px;
+            align-items: center;
+        }
+        
+        @media (max-width: 768px) {
+            .demo-content {
+                grid-template-columns: 1fr;
+                gap: 32px;
+            }
+        }
+        
+        .demo-video {
+            background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+            border-radius: 16px;
+            padding: 40px;
+            text-align: center;
+            color: #64748b;
+        }
+        
+        .demo-video i {
+            font-size: 64px;
+            margin-bottom: 16px;
+            color: #3b82f6;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <a href="index.html" style="text-decoration: none; color: inherit;">
+                    <div class="logo-icon">
+                        <i class="fas fa-radio"></i>
+                    </div>
+                    <div class="logo-text">
+                        <h1>ToolBox Radio</h1>
+                        <p>Construction Industry Radio</p>
+                    </div>
+                </a>
+            </div>
+            
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="player.html" class="nav-link">Live Player</a></li>
+                <li><a href="index.html#about" class="nav-link">About</a></li>
+                <li><a href="advertising.html" class="nav-link">Advertising</a></li>
+                <li><a href="cms-desk.html" class="nav-link">CMS Desk</a></li>
+                <li><a href="index.html#contact" class="nav-link">Contact</a></li>
+            </ul>
+            
+            <div class="nav-cta">
+                <a href="#demo" class="btn btn-primary">Try CMS Desk</a>
+            </div>
+            
+            <div class="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="cms-hero">
+        <div class="container">
+            <div class="text-center">
+                <h1 class="hero-title">Meet <span class="text-gradient">CMS Desk</span></h1>
+                <p class="hero-subtitle">The Complete Construction Management Platform</p>
+                <p class="hero-description">
+                    CMS Desk is revolutionizing how construction professionals manage projects, 
+                    track finances, and collaborate with teams. Built by construction professionals, 
+                    for construction professionals.
+                </p>
+                <div class="hero-buttons">
+                    <a href="#demo" class="btn btn-primary btn-large">
+                        <i class="fas fa-play"></i>
+                        Watch Demo
+                    </a>
+                    <a href="#features" class="btn btn-secondary btn-large">
+                        <i class="fas fa-list"></i>
+                        View Features
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Partnership Section -->
+    <section class="partnership-section">
+        <div class="container">
+            <div class="partnership-content">
+                <div class="partnership-text">
+                    <h2 class="section-title">Our <span class="text-gradient">Partnership</span></h2>
+                    <p class="section-description">
+                        ToolBox Radio and CMS Desk have joined forces to provide construction professionals 
+                        with the ultimate combination of industry insights and powerful project management tools.
+                    </p>
+                    <p class="section-description">
+                        While ToolBox Radio keeps you informed with the latest industry news and expert insights, 
+                        CMS Desk empowers you to put that knowledge into action with comprehensive project management, 
+                        financial tracking, and team collaboration tools.
+                    </p>
+                    <div class="partnership-benefits">
+                        <div class="promo-feature">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Seamless integration between radio content and project management</span>
+                        </div>
+                        <div class="promo-feature">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Exclusive discounts for ToolBox Radio listeners</span>
+                        </div>
+                        <div class="promo-feature">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Joint industry events and webinars</span>
+                        </div>
+                        <div class="promo-feature">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Shared commitment to construction industry success</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="partnership-image">
+                    <div class="image-placeholder">
+                        <i class="fas fa-handshake"></i>
+                        <p>ToolBox Radio + CMS Desk Partnership</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="section-padding bg-white">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">CMS Desk <span class="text-gradient">Features</span></h2>
+                <p class="section-description">
+                    Everything you need to manage your construction business efficiently and profitably.
+                </p>
+            </div>
+            
+            <div class="features-showcase">
+                <div class="feature-showcase">
+                    <div class="feature-showcase-icon">
+                        <i class="fas fa-project-diagram"></i>
+                    </div>
+                    <h3>Project Management</h3>
+                    <p>Plan, track, and manage all your construction projects from start to finish with our intuitive project management tools.</p>
+                </div>
+                
+                <div class="feature-showcase">
+                    <div class="feature-showcase-icon">
+                        <i class="fas fa-calculator"></i>
+                    </div>
+                    <h3>Financial Tracking</h3>
+                    <p>Monitor budgets, track expenses, and generate detailed financial reports to keep your projects profitable.</p>
+                </div>
+                
+                <div class="feature-showcase">
+                    <div class="feature-showcase-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3>Team Collaboration</h3>
+                    <p>Connect your entire team with real-time communication, task assignments, and progress tracking.</p>
+                </div>
+                
+                <div class="feature-showcase">
+                    <div class="feature-showcase-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h3>Mobile Access</h3>
+                    <p>Access your projects, update progress, and manage your business from anywhere with our mobile app.</p>
+                </div>
+                
+                <div class="feature-showcase">
+                    <div class="feature-showcase-icon">
+                        <i class="fas fa-chart-bar"></i>
+                    </div>
+                    <h3>Analytics & Reporting</h3>
+                    <p>Get insights into your business performance with comprehensive analytics and customizable reports.</p>
+                </div>
+                
+                <div class="feature-showcase">
+                    <div class="feature-showcase-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>Safety Management</h3>
+                    <p>Track safety incidents, manage compliance, and ensure your team follows best safety practices.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title" style="color: white;">CMS Desk by the <span style="color: #fbbf24;">Numbers</span></h2>
+                <p class="section-description" style="color: rgba(255, 255, 255, 0.9);">
+                    Trusted by construction professionals across the country.
+                </p>
+            </div>
+            
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-number">5,000+</div>
+                    <div class="stat-label">Active Users</div>
+                </div>
+                
+                <div class="stat-item">
+                    <div class="stat-number">15,000+</div>
+                    <div class="stat-label">Projects Managed</div>
+                </div>
+                
+                <div class="stat-item">
+                    <div class="stat-number">$2.5B+</div>
+                    <div class="stat-label">Project Value</div>
+                </div>
+                
+                <div class="stat-item">
+                    <div class="stat-number">99.9%</div>
+                    <div class="stat-label">Uptime</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="section-padding bg-gray-50">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">What Our <span class="text-gradient">Users Say</span></h2>
+                <p class="section-description">
+                    Hear from construction professionals who have transformed their business with CMS Desk.
+                </p>
+            </div>
+            
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <p class="testimonial-text">
+                        "CMS Desk has completely transformed how we manage our construction projects. 
+                        The financial tracking alone has saved us thousands in cost overruns."
+                    </p>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar">MS</div>
+                        <div class="testimonial-info">
+                            <h4>Mike Stevens</h4>
+                            <p>Stevens Construction Co.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="testimonial-card">
+                    <p class="testimonial-text">
+                        "The mobile app is a game-changer. I can update project progress and check 
+                        financials from the job site without missing a beat."
+                    </p>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar">SL</div>
+                        <div class="testimonial-info">
+                            <h4>Sarah Lopez</h4>
+                            <p>Lopez Builders</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="testimonial-card">
+                    <p class="testimonial-text">
+                        "As a ToolBox Radio listener, I love how CMS Desk integrates industry insights 
+                        with practical project management tools. It's the perfect combination."
+                    </p>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar">DJ</div>
+                        <div class="testimonial-info">
+                            <h4>David Johnson</h4>
+                            <p>Johnson Contracting</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Demo Section -->
+    <section id="demo" class="demo-section">
+        <div class="container">
+            <div class="demo-content">
+                <div class="demo-text">
+                    <h2 class="section-title">See CMS Desk in <span class="text-gradient">Action</span></h2>
+                    <p class="section-description">
+                        Watch how CMS Desk streamlines construction project management and helps 
+                        professionals like you work more efficiently and profitably.
+                    </p>
+                    <div class="demo-features">
+                        <div class="promo-feature">
+                            <i class="fas fa-play-circle"></i>
+                            <span>5-minute overview of key features</span>
+                        </div>
+                        <div class="promo-feature">
+                            <i class="fas fa-clock"></i>
+                            <span>Real project management scenarios</span>
+                        </div>
+                        <div class="promo-feature">
+                            <i class="fas fa-user"></i>
+                            <span>User interface walkthrough</span>
+                        </div>
+                        <div class="promo-feature">
+                            <i class="fas fa-gift"></i>
+                            <span>Special ToolBox Radio listener discount</span>
+                        </div>
+                    </div>
+                    <div class="hero-buttons">
+                        <a href="#" class="btn btn-primary btn-large">
+                            <i class="fas fa-play"></i>
+                            Watch Demo Video
+                        </a>
+                        <a href="#" class="btn btn-accent btn-large">
+                            <i class="fas fa-calendar"></i>
+                            Schedule Demo
+                        </a>
+                    </div>
+                </div>
+                <div class="demo-video">
+                    <i class="fas fa-play-circle"></i>
+                    <h3>CMS Desk Demo</h3>
+                    <p>Watch how construction professionals use CMS Desk to manage projects, track finances, and collaborate with teams.</p>
+                    <p style="font-size: 14px; margin-top: 16px;">Video: 5 minutes</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <h2>Ready to Transform Your Construction Business?</h2>
+            <p>Join thousands of construction professionals who trust CMS Desk to manage their projects and grow their business.</p>
+            <div class="hero-buttons">
+                <a href="#" class="btn btn-secondary btn-large">
+                    <i class="fas fa-rocket"></i>
+                    Start Free Trial
+                </a>
+                <a href="#" class="btn btn-primary btn-large">
+                    <i class="fas fa-phone"></i>
+                    Contact Sales
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-logo">
+                        <div class="logo-icon">
+                            <i class="fas fa-radio"></i>
+                        </div>
+                        <div class="logo-text">
+                            <h3>ToolBox Radio</h3>
+                            <p>Construction Industry Radio</p>
+                        </div>
+                    </div>
+                    <p class="footer-description">
+                        The premier radio station dedicated to the construction industry and trades. 
+                        Connecting professionals through quality content and community.
+                    </p>
+                    <div class="social-links">
+                        <a href="#" class="social-link"><i class="fab fa-facebook"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-linkedin"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="player.html">Live Player</a></li>
+                        <li><a href="index.html#about">About</a></li>
+                        <li><a href="advertising.html">Advertising</a></li>
+                        <li><a href="cms-desk.html">CMS Desk</a></li>
+                        <li><a href="index.html#contact">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>CMS Desk</h4>
+                    <ul class="footer-links">
+                        <li><a href="#features">Features</a></li>
+                        <li><a href="#demo">Demo</a></li>
+                        <li><a href="#">Pricing</a></li>
+                        <li><a href="#">Support</a></li>
+                        <li><a href="#">API</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Newsletter</h4>
+                    <p>Stay updated with CMS Desk features and construction industry insights.</p>
+                    <form class="newsletter-form">
+                        <input type="email" placeholder="Enter your email" required>
+                        <button type="submit" class="btn btn-primary">Subscribe</button>
+                    </form>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2024 ToolBox Radio & CMS Desk. All rights reserved.</p>
+                <div class="footer-bottom-links">
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                    <a href="#">Cookie Policy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="script.js"></script>
+</body>
+</html> 

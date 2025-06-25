@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advertising - ToolBox Radio | Reach Construction Professionals</title>
+    <meta name="description" content="Advertise on ToolBox Radio and reach thousands of construction professionals. Get your message to the right audience with our targeted advertising solutions.">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="styles.css">
+    
+    <style>
+        .advertising-hero {
+            background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+            color: white;
+            padding: 120px 0 80px;
+        }
+        
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 32px;
+            margin: 64px 0;
+        }
+        
+        .pricing-card {
+            background: white;
+            border-radius: 16px;
+            padding: 40px;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            border: 2px solid #e2e8f0;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .pricing-card.featured {
+            border-color: #ed7519;
+            transform: scale(1.05);
+        }
+        
+        .pricing-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+        }
+        
+        .pricing-card.featured:hover {
+            transform: scale(1.05) translateY(-8px);
+        }
+        
+        .pricing-header {
+            margin-bottom: 32px;
+        }
+        
+        .pricing-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 16px;
+        }
+        
+        .pricing-price {
+            font-size: 48px;
+            font-weight: 800;
+            color: #ed7519;
+            margin-bottom: 8px;
+        }
+        
+        .pricing-period {
+            color: #64748b;
+            font-size: 16px;
+        }
+        
+        .pricing-features {
+            list-style: none;
+            margin: 32px 0;
+        }
+        
+        .pricing-features li {
+            padding: 12px 0;
+            border-bottom: 1px solid #f1f5f9;
+            color: #475569;
+        }
+        
+        .pricing-features li:last-child {
+            border-bottom: none;
+        }
+        
+        .pricing-features li i {
+            color: #10b981;
+            margin-right: 8px;
+        }
+        
+        .audience-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 32px;
+            margin: 64px 0;
+        }
+        
+        .audience-stat {
+            text-align: center;
+            padding: 32px;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .audience-stat-icon {
+            width: 64px;
+            height: 64px;
+            background: linear-gradient(135deg, #ed7519 0%, #de5a0f 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 16px;
+            color: white;
+            font-size: 24px;
+        }
+        
+        .audience-stat-number {
+            font-size: 36px;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 8px;
+        }
+        
+        .audience-stat-label {
+            color: #64748b;
+            font-size: 16px;
+        }
+        
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 32px;
+            margin: 64px 0;
+        }
+        
+        .benefit-card {
+            background: white;
+            padding: 32px;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        
+        .benefit-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #fef7ee 0%, #eff6ff 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 24px;
+            font-size: 32px;
+            color: #ed7519;
+        }
+        
+        .cta-section {
+            background: linear-gradient(135deg, #ed7519 0%, #de5a0f 100%);
+            color: white;
+            padding: 80px 0;
+            text-align: center;
+        }
+        
+        .cta-section h2 {
+            font-size: 48px;
+            font-weight: 700;
+            margin-bottom: 24px;
+        }
+        
+        .cta-section p {
+            font-size: 20px;
+            margin-bottom: 32px;
+            opacity: 0.9;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <a href="index.html" style="text-decoration: none; color: inherit;">
+                    <div class="logo-icon">
+                        <i class="fas fa-radio"></i>
+                    </div>
+                    <div class="logo-text">
+                        <h1>ToolBox Radio</h1>
+                        <p>Construction Industry Radio</p>
+                    </div>
+                </a>
+            </div>
+            
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="player.html" class="nav-link">Live Player</a></li>
+                <li><a href="index.html#about" class="nav-link">About</a></li>
+                <li><a href="advertising.html" class="nav-link">Advertising</a></li>
+                <li><a href="cms-desk.html" class="nav-link">CMS Desk</a></li>
+                <li><a href="index.html#contact" class="nav-link">Contact</a></li>
+            </ul>
+            
+            <div class="nav-cta">
+                <a href="#contact" class="btn btn-primary">Get Started</a>
+            </div>
+            
+            <div class="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="advertising-hero">
+        <div class="container">
+            <div class="text-center">
+                <h1 class="hero-title">Advertise on <span class="text-gradient">ToolBox Radio</span></h1>
+                <p class="hero-subtitle">Reach Thousands of Construction Professionals</p>
+                <p class="hero-description">
+                    Get your message to the right audience. ToolBox Radio connects you directly with 
+                    construction professionals, contractors, and industry decision-makers who are actively 
+                    seeking solutions and insights.
+                </p>
+                <div class="hero-buttons">
+                    <a href="#pricing" class="btn btn-primary btn-large">
+                        <i class="fas fa-dollar-sign"></i>
+                        View Pricing
+                    </a>
+                    <a href="#contact" class="btn btn-secondary btn-large">
+                        <i class="fas fa-phone"></i>
+                        Contact Sales
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Audience Stats -->
+    <section class="section-padding bg-white">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Your <span class="text-gradient">Target Audience</span></h2>
+                <p class="section-description">
+                    Reach construction professionals who are actively engaged and ready to make purchasing decisions.
+                </p>
+            </div>
+            
+            <div class="audience-stats">
+                <div class="audience-stat">
+                    <div class="audience-stat-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="audience-stat-number">10,000+</div>
+                    <div class="audience-stat-label">Active Listeners</div>
+                </div>
+                
+                <div class="audience-stat">
+                    <div class="audience-stat-icon">
+                        <i class="fas fa-hard-hat"></i>
+                    </div>
+                    <div class="audience-stat-number">85%</div>
+                    <div class="audience-stat-label">Construction Professionals</div>
+                </div>
+                
+                <div class="audience-stat">
+                    <div class="audience-stat-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <div class="audience-stat-number">45+</div>
+                    <div class="audience-stat-label">Minutes Average Listen Time</div>
+                </div>
+                
+                <div class="audience-stat">
+                    <div class="audience-stat-icon">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </div>
+                    <div class="audience-stat-number">50+</div>
+                    <div class="audience-stat-label">States Reached</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Benefits Section -->
+    <section class="section-padding bg-gray-50">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Why Advertise with <span class="text-gradient">ToolBox Radio</span>?</h2>
+                <p class="section-description">
+                    Our platform offers unique advantages for reaching the construction industry effectively.
+                </p>
+            </div>
+            
+            <div class="benefits-grid">
+                <div class="benefit-card">
+                    <div class="benefit-icon">
+                        <i class="fas fa-bullseye"></i>
+                    </div>
+                    <h3>Targeted Audience</h3>
+                    <p>Reach construction professionals who are actively seeking industry solutions and insights.</p>
+                </div>
+                
+                <div class="benefit-card">
+                    <div class="benefit-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <h3>Extended Engagement</h3>
+                    <p>Listeners tune in for extended periods, giving your message more exposure and impact.</p>
+                </div>
+                
+                <div class="benefit-card">
+                    <div class="benefit-icon">
+                        <i class="fas fa-trust"></i>
+                    </div>
+                    <h3>Trusted Platform</h3>
+                    <p>Benefit from our established credibility and trust within the construction community.</p>
+                </div>
+                
+                <div class="benefit-card">
+                    <div class="benefit-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h3>Multi-Platform Reach</h3>
+                    <p>Your ads reach listeners across web, mobile apps, and various streaming platforms.</p>
+                </div>
+                
+                <div class="benefit-card">
+                    <div class="benefit-icon">
+                        <i class="fas fa-chart-bar"></i>
+                    </div>
+                    <h3>Detailed Analytics</h3>
+                    <p>Get comprehensive reports on ad performance, reach, and listener engagement.</p>
+                </div>
+                
+                <div class="benefit-card">
+                    <div class="benefit-icon">
+                        <i class="fas fa-handshake"></i>
+                    </div>
+                    <h3>Personal Support</h3>
+                    <p>Work directly with our advertising team to create the perfect campaign for your business.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section id="pricing" class="section-padding bg-white">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Advertising <span class="text-gradient">Packages</span></h2>
+                <p class="section-description">
+                    Choose the advertising package that best fits your business goals and budget.
+                </p>
+            </div>
+            
+            <div class="pricing-grid">
+                <div class="pricing-card">
+                    <div class="pricing-header">
+                        <h3 class="pricing-title">Starter</h3>
+                        <div class="pricing-price">$299</div>
+                        <div class="pricing-period">per month</div>
+                    </div>
+                    <ul class="pricing-features">
+                        <li><i class="fas fa-check"></i> 30-second spots (2 per day)</li>
+                        <li><i class="fas fa-check"></i> Web banner placement</li>
+                        <li><i class="fas fa-check"></i> Social media mentions</li>
+                        <li><i class="fas fa-check"></i> Basic analytics</li>
+                        <li><i class="fas fa-check"></i> Email support</li>
+                    </ul>
+                    <a href="#contact" class="btn btn-secondary">Get Started</a>
+                </div>
+                
+                <div class="pricing-card featured">
+                    <div class="pricing-header">
+                        <h3 class="pricing-title">Professional</h3>
+                        <div class="pricing-price">$599</div>
+                        <div class="pricing-period">per month</div>
+                    </div>
+                    <ul class="pricing-features">
+                        <li><i class="fas fa-check"></i> 60-second spots (3 per day)</li>
+                        <li><i class="fas fa-check"></i> Premium banner placement</li>
+                        <li><i class="fas fa-check"></i> Featured social media posts</li>
+                        <li><i class="fas fa-check"></i> Detailed analytics & reporting</li>
+                        <li><i class="fas fa-check"></i> Priority support</li>
+                        <li><i class="fas fa-check"></i> Custom content creation</li>
+                    </ul>
+                    <a href="#contact" class="btn btn-primary">Get Started</a>
+                </div>
+                
+                <div class="pricing-card">
+                    <div class="pricing-header">
+                        <h3 class="pricing-title">Enterprise</h3>
+                        <div class="pricing-price">$1,199</div>
+                        <div class="pricing-period">per month</div>
+                    </div>
+                    <ul class="pricing-features">
+                        <li><i class="fas fa-check"></i> 90-second spots (5 per day)</li>
+                        <li><i class="fas fa-check"></i> Exclusive banner placement</li>
+                        <li><i class="fas fa-check"></i> Dedicated social media campaign</li>
+                        <li><i class="fas fa-check"></i> Advanced analytics & insights</li>
+                        <li><i class="fas fa-check"></i> Dedicated account manager</li>
+                        <li><i class="fas fa-check"></i> Custom show sponsorship</li>
+                        <li><i class="fas fa-check"></i> Industry event promotion</li>
+                    </ul>
+                    <a href="#contact" class="btn btn-accent">Get Started</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <h2>Ready to Reach Construction Professionals?</h2>
+            <p>Join the leading brands already advertising on ToolBox Radio and start connecting with your target audience today.</p>
+            <a href="#contact" class="btn btn-secondary btn-large">
+                <i class="fas fa-rocket"></i>
+                Launch Your Campaign
+            </a>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Get Started with <span class="text-gradient">Advertising</span></h2>
+                <p class="section-description">
+                    Ready to reach thousands of construction professionals? Contact our advertising team today.
+                </p>
+            </div>
+            
+            <div class="contact-content">
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-phone"></i>
+                        </div>
+                        <div class="contact-details">
+                            <h3>Call Our Sales Team</h3>
+                            <p>+1 (555) 123-4567</p>
+                            <p>Mon-Fri 9AM-6PM EST</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div class="contact-details">
+                            <h3>Email Us</h3>
+                            <p>advertising@toolboxradio.com</p>
+                            <p>We'll respond within 24 hours</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-calendar"></i>
+                        </div>
+                        <div class="contact-details">
+                            <h3>Schedule a Call</h3>
+                            <p>Book a 30-minute consultation</p>
+                            <p>Discuss your advertising goals</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="contact-form">
+                    <form id="advertisingForm">
+                        <div class="form-group">
+                            <input type="text" id="company" name="company" placeholder="Company Name" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" id="name" name="name" placeholder="Contact Name" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="email" id="email" name="email" placeholder="Email Address" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="tel" id="phone" name="phone" placeholder="Phone Number" required>
+                        </div>
+                        <div class="form-group">
+                            <select id="package" name="package" required>
+                                <option value="">Select Advertising Package</option>
+                                <option value="starter">Starter ($299/month)</option>
+                                <option value="professional">Professional ($599/month)</option>
+                                <option value="enterprise">Enterprise ($1,199/month)</option>
+                                <option value="custom">Custom Package</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <textarea id="message" name="message" placeholder="Tell us about your advertising goals and target audience..." rows="5" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-paper-plane"></i>
+                            Send Advertising Inquiry
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-logo">
+                        <div class="logo-icon">
+                            <i class="fas fa-radio"></i>
+                        </div>
+                        <div class="logo-text">
+                            <h3>ToolBox Radio</h3>
+                            <p>Construction Industry Radio</p>
+                        </div>
+                    </div>
+                    <p class="footer-description">
+                        The premier radio station dedicated to the construction industry and trades. 
+                        Connecting professionals through quality content and community.
+                    </p>
+                    <div class="social-links">
+                        <a href="#" class="social-link"><i class="fab fa-facebook"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-linkedin"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="player.html">Live Player</a></li>
+                        <li><a href="index.html#about">About</a></li>
+                        <li><a href="advertising.html">Advertising</a></li>
+                        <li><a href="cms-desk.html">CMS Desk</a></li>
+                        <li><a href="index.html#contact">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Advertising</h4>
+                    <ul class="footer-links">
+                        <li><a href="#pricing">Pricing</a></li>
+                        <li><a href="#contact">Contact Sales</a></li>
+                        <li><a href="#">Media Kit</a></li>
+                        <li><a href="#">Case Studies</a></li>
+                        <li><a href="#">Ad Guidelines</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Newsletter</h4>
+                    <p>Stay updated with advertising opportunities and industry insights.</p>
+                    <form class="newsletter-form">
+                        <input type="email" placeholder="Enter your email" required>
+                        <button type="submit" class="btn btn-primary">Subscribe</button>
+                    </form>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2024 ToolBox Radio. All rights reserved.</p>
+                <div class="footer-bottom-links">
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                    <a href="#">Cookie Policy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="script.js"></script>
+</body>
+</html> 
