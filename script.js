@@ -577,17 +577,28 @@ async function checkUserLocation() {
     try {
         console.log('Checking user location...');
         
-        // Use a completely free geolocation API with no API key required
-        const response = await fetch('https://api.myip.com');
+        // Use a simple, reliable geolocation service
+        const response = await fetch('https://ipapi.co/json/', {
+            method: 'GET',
+            mode: 'cors',
+            headers: {
+                'Accept': 'application/json'
+            }
+        });
+        
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        
         const data = await response.json();
         
         console.log('Location data received:', data);
-        console.log('Country code:', data.cc);
-        console.log('Country name:', data.country);
+        console.log('Country code:', data.country_code);
+        console.log('Country name:', data.country_name);
         
         // Check if user is in UK or Ireland
         const allowedCountries = ['GB', 'IE']; // GB = United Kingdom, IE = Ireland
-        const isAllowed = allowedCountries.includes(data.cc);
+        const isAllowed = allowedCountries.includes(data.country_code);
         
         console.log('Is user allowed:', isAllowed);
         
@@ -596,32 +607,13 @@ async function checkUserLocation() {
     } catch (error) {
         console.error('Error fetching location:', error);
         
-        // Try alternative API as fallback
-        try {
-            console.log('Trying alternative location API...');
-            const altResponse = await fetch('https://ipapi.co/json/');
-            const geoData = await altResponse.json();
-            
-            console.log('Alternative location data:', geoData);
-            
-            const allowedCountries = ['GB', 'IE'];
-            const isAllowed = allowedCountries.includes(geoData.country_code);
-            
-            console.log('Is user allowed (alternative):', isAllowed);
-            
-            return isAllowed;
-            
-        } catch (altError) {
-            console.error('Alternative API also failed:', altError);
-            
-            // For development/testing, you can temporarily allow access
-            // Remove this line in production
-            console.log('⚠️ Location check failed - allowing access for development');
-            return true;
-            
-            // In production, uncomment this line instead:
-            // return false;
-        }
+        // Since the APIs are having CORS issues, we'll implement a simple solution
+        // For now, allow access and log the issue
+        console.log('⚠️ Location check failed due to CORS/API issues');
+        console.log('💡 Recommendation: Implement server-side geolocation for production');
+        
+        // Allow access for now - you can change this to false when you have server-side geolocation
+        return true;
     }
 }
 
