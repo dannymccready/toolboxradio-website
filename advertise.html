@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advertise with ToolBox Radio</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <i class="fas fa-tools"></i>
+                <span>ToolBox Radio</span>
+            </div>
+            <div class="nav-menu">
+                <a href="index.html#home" class="nav-link">Home</a>
+                <a href="index.html#about" class="nav-link">About</a>
+                <a href="index.html#player" class="nav-link">Listen</a>
+                <a href="index.html#contact" class="nav-link">Contact</a>
+                <a href="advertise.html" class="nav-link advertise-btn active">
+                    <i class="fas fa-bullhorn"></i>
+                    Advertise
+                </a>
+                <a href="http://134.209.28.199/dashboard" class="nav-link login-btn" target="_blank" onclick="openDashboard(event)">
+                    <i class="fas fa-sign-in-alt"></i>
+                    Login
+                </a>
+            </div>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <section class="advertise-hero">
+        <div class="container">
+            <div class="advertise-header">
+                <i class="fas fa-bullhorn advertise-icon"></i>
+                <h1>Advertise with ToolBox Radio</h1>
+                <p>Reach thousands of construction professionals and site workers across the UK and Ireland. Promote your brand, products, or services on the radio station trusted by the industry.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="advertise-form-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Advertising Application</h2>
+                <p>Fill out the form below and our team will get in touch to discuss your campaign.</p>
+            </div>
+            <form class="advertise-form" id="advertise-form">
+                <div class="form-group">
+                    <label for="company">Company Name</label>
+                    <input type="text" id="company" name="company" required>
+                </div>
+                <div class="form-group">
+                    <label for="contact">Contact Name</label>
+                    <input type="text" id="contact" name="contact" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="phone">Phone Number</label>
+                    <input type="tel" id="phone" name="phone">
+                </div>
+                <div class="form-group">
+                    <label for="message">Advertising Goals / Message</label>
+                    <textarea id="message" name="message" rows="5" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="budget">Estimated Budget (£)</label>
+                    <input type="number" id="budget" name="budget" min="0">
+                </div>
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-paper-plane"></i> Submit Application
+                </button>
+            </form>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-logo">
+                        <i class="fas fa-tools"></i>
+                        <span>ToolBox Radio</span>
+                    </div>
+                    <p>Powering construction workers with the perfect soundtrack for every job.</p>
+                    <div class="social-links">
+                        <a href="#" class="social-link"><i class="fab fa-facebook"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html#home">Home</a></li>
+                        <li><a href="index.html#about">About</a></li>
+                        <li><a href="index.html#player">Listen Live</a></li>
+                        <li><a href="index.html#contact">Contact</a></li>
+                        <li><a href="advertise.html">Advertise</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="#">Song Requests</a></li>
+                        <li><a href="#">Playlist Archive</a></li>
+                        <li><a href="#">Construction News</a></li>
+                        <li><a href="#">Safety Tips</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 ToolBox Radio. All rights reserved. | Built for construction workers, by construction workers.</p>
+            </div>
+        </div>
+    </footer>
+    <script>
+    // Simple form handler for demo
+    document.getElementById('advertise-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+        alert('Thank you for your interest in advertising with ToolBox Radio! Our team will contact you soon.');
+        this.reset();
+    });
+    function openDashboard(event) {
+        event.preventDefault();
+        window.open('http://134.209.28.199/dashboard', '_blank');
+    }
+    </script>
+</body>
+</html> 

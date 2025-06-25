@@ -32,8 +32,20 @@ const playlist = [
 
 // Geolocation Functions
 function checkLocation() {
+    // Developer override: always show main content if ?dev=1 in URL
+    if (window.location.search.includes('dev=1')) {
+        showMainContent();
+        userLocation.textContent = "Developer Override: All Regions Allowed";
+        console.warn('ToolBox Radio: Developer override active, location check bypassed.');
+        return;
+    }
     userLocation.textContent = "Checking...";
-    
+    // Manual override check
+    if (localStorage.getItem('toolbox_radio_region_override') === 'allowed') {
+        showMainContent();
+        userLocation.textContent = "Manual Override: UK/Ireland";
+        return;
+    }
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
             (position) => {
@@ -86,8 +98,8 @@ function getCountryFromCoords(lat, lng) {
 }
 
 function getCountryFromIP() {
-    // Fallback to IP-based geolocation
-    fetch('https://api.ipapi.com/api/check?access_key=free')
+    // Fallback to IP-based geolocation using ipapi.co (no API key required)
+    fetch('https://ipapi.co/json/')
         .then(response => response.json())
         .then(data => {
             const country = data.country_name;
@@ -101,16 +113,59 @@ function getCountryFromIP() {
             }
         })
         .catch(error => {
-            console.log("IP geolocation error:", error);
-            // If all geolocation methods fail, show restriction by default
-            userLocation.textContent = "Unknown Location";
-            showGeoRestriction();
+            console.log("IP geolocation error (ipapi.co):", error);
+            // Try a second fallback
+            getCountryFromIPInfo();
         });
 }
 
-function showGeoRestriction() {
+function getCountryFromIPInfo() {
+    // Second fallback to ipinfo.io
+    fetch('https://ipinfo.io/json?token=demo') // Remove token or use your own for production
+        .then(response => response.json())
+        .then(data => {
+            const country = data.country || '';
+            const city = data.city || 'Unknown';
+            // ipinfo.io returns country code, so map to full name
+            let countryName = country;
+            if (country === 'GB') countryName = 'United Kingdom';
+            if (country === 'IE') countryName = 'Ireland';
+            userLocation.textContent = `${city}, ${countryName}`;
+            if (isAllowedCountry(countryName)) {
+                showMainContent();
+            } else {
+                showGeoRestriction(true); // true = show manual override
+            }
+        })
+        .catch(error => {
+            console.log("IP geolocation error (ipinfo.io):", error);
+            userLocation.textContent = "Unknown Location (please enable location, disable VPN, or check your connection)";
+            showGeoRestriction(true); // true = show manual override
+        });
+}
+
+function showGeoRestriction(showOverride) {
     geoRestriction.style.display = 'flex';
     mainContent.style.display = 'none';
+    // Show manual override button if requested
+    let overrideBtn = document.getElementById('manual-override-btn');
+    if (showOverride) {
+        if (!overrideBtn) {
+            overrideBtn = document.createElement('button');
+            overrideBtn.className = 'btn btn-accent';
+            overrideBtn.id = 'manual-override-btn';
+            overrideBtn.innerHTML = '<i class="fas fa-unlock"></i> I am in the UK or Ireland';
+            overrideBtn.onclick = function() {
+                localStorage.setItem('toolbox_radio_region_override', 'allowed');
+                showMainContent();
+                userLocation.textContent = "Manual Override: UK/Ireland";
+            };
+            document.querySelector('.geo-actions').appendChild(overrideBtn);
+        }
+        overrideBtn.style.display = 'inline-block';
+    } else if (overrideBtn) {
+        overrideBtn.style.display = 'none';
+    }
 }
 
 function showMainContent() {
@@ -135,8 +190,15 @@ function openDashboard(event) {
 function initializeMainContent() {
     // Initialize all the existing functionality
     initializeNavigation();
-    initializePlayer();
-    initializeForm();
+    if (document.getElementById('play-btn')) {
+        initializePlayer();
+    }
+    if (document.getElementById('contact-form')) {
+        initializeForm();
+    }
+    if (document.getElementById('request-form')) {
+        initializeRequestForm();
+    }
     initializeAnimations();
 }
 
@@ -185,6 +247,17 @@ function initializeForm() {
         // Reset form
         contactForm.reset();
     });
+}
+
+function initializeRequestForm() {
+    const reqForm = document.getElementById('request-form');
+    if (reqForm) {
+        reqForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Thank you for your request! We will try to play your song or shoutout soon.');
+            this.reset();
+        });
+    }
 }
 
 function initializeAnimations() {
