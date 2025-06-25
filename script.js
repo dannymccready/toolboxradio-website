@@ -11,6 +11,9 @@ const progressFill = document.getElementById('progress-fill');
 const currentTime = document.getElementById('current-time');
 const totalTime = document.getElementById('total-time');
 const contactForm = document.getElementById('contact-form');
+const geoRestriction = document.getElementById('geo-restriction');
+const mainContent = document.getElementById('main-content');
+const userLocation = document.getElementById('user-location');
 
 // Player State
 let isPlaying = false;
@@ -27,19 +30,163 @@ const playlist = [
     { title: "Foundation Funk", artist: "Concrete Kings", duration: "4:05" }
 ];
 
-// Navigation Toggle
-hamburger.addEventListener('click', () => {
-    hamburger.classList.toggle('active');
-    navMenu.classList.toggle('active');
-});
+// Geolocation Functions
+function checkLocation() {
+    userLocation.textContent = "Checking...";
+    
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+            (position) => {
+                const { latitude, longitude } = position.coords;
+                getCountryFromCoords(latitude, longitude);
+            },
+            (error) => {
+                console.log("Geolocation error:", error);
+                // Fallback to IP-based geolocation
+                getCountryFromIP();
+            }
+        );
+    } else {
+        // Fallback to IP-based geolocation
+        getCountryFromIP();
+    }
+}
 
-// Close mobile menu when clicking on a link
-navLinks.forEach(link => {
-    link.addEventListener('click', () => {
-        hamburger.classList.remove('active');
-        navMenu.classList.remove('active');
+function getCountryFromCoords(lat, lng) {
+    // Using a free geocoding service to get country from coordinates
+    fetch(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lng}&localityLanguage=en`)
+        .then(response => response.json())
+        .then(data => {
+            const country = data.countryName;
+            const city = data.city || data.locality || 'Unknown';
+            userLocation.textContent = `${city}, ${country}`;
+            
+            if (country === 'United Kingdom' || country === 'UK') {
+                showMainContent();
+            } else {
+                showGeoRestriction();
+            }
+        })
+        .catch(error => {
+            console.log("Geocoding error:", error);
+            getCountryFromIP();
+        });
+}
+
+function getCountryFromIP() {
+    // Fallback to IP-based geolocation
+    fetch('https://api.ipapi.com/api/check?access_key=free')
+        .then(response => response.json())
+        .then(data => {
+            const country = data.country_name;
+            const city = data.city || 'Unknown';
+            userLocation.textContent = `${city}, ${country}`;
+            
+            if (country === 'United Kingdom' || country === 'UK') {
+                showMainContent();
+            } else {
+                showGeoRestriction();
+            }
+        })
+        .catch(error => {
+            console.log("IP geolocation error:", error);
+            // If all geolocation methods fail, show restriction by default
+            userLocation.textContent = "Unknown Location";
+            showGeoRestriction();
+        });
+}
+
+function showGeoRestriction() {
+    geoRestriction.style.display = 'flex';
+    mainContent.style.display = 'none';
+}
+
+function showMainContent() {
+    geoRestriction.style.display = 'none';
+    mainContent.style.display = 'block';
+    // Initialize the main content
+    initializeMainContent();
+}
+
+function showContactInfo() {
+    showNotification('Contact us at hello@toolboxradio.com or call 1-800-TOOLBOX for licensing inquiries.', 'info');
+}
+
+// Login Button Fix
+function openDashboard(event) {
+    event.preventDefault();
+    const url = 'http://134.209.28.199/dashboard';
+    window.open(url, '_blank');
+}
+
+// Initialize main content functionality
+function initializeMainContent() {
+    // Initialize all the existing functionality
+    initializeNavigation();
+    initializePlayer();
+    initializeForm();
+    initializeAnimations();
+}
+
+function initializeNavigation() {
+    // Navigation Toggle
+    hamburger.addEventListener('click', () => {
+        hamburger.classList.toggle('active');
+        navMenu.classList.toggle('active');
     });
-});
+
+    // Close mobile menu when clicking on a link
+    navLinks.forEach(link => {
+        link.addEventListener('click', () => {
+            hamburger.classList.remove('active');
+            navMenu.classList.remove('active');
+        });
+    });
+
+    // Add smooth scrolling to all navigation links
+    navLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            const targetId = link.getAttribute('href').substring(1);
+            scrollToSection(targetId);
+        });
+    });
+}
+
+function initializePlayer() {
+    // Initialize player
+    updateTrackInfo();
+}
+
+function initializeForm() {
+    // Form Handling
+    contactForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        
+        // Get form data
+        const formData = new FormData(contactForm);
+        const data = Object.fromEntries(formData);
+        
+        // Simulate form submission
+        showNotification('Message sent successfully! We\'ll get back to you soon.', 'success');
+        
+        // Reset form
+        contactForm.reset();
+    });
+}
+
+function initializeAnimations() {
+    // Set initial states for animations
+    const elements = document.querySelectorAll('.feature-card, .contact-item, .player-card');
+    elements.forEach(element => {
+        element.style.opacity = '0';
+        element.style.transform = 'translateY(20px)';
+        element.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+    });
+    
+    // Trigger initial animation check
+    animateOnScroll();
+}
 
 // Smooth scrolling for navigation links
 function scrollToSection(sectionId) {
@@ -51,15 +198,6 @@ function scrollToSection(sectionId) {
         });
     }
 }
-
-// Add smooth scrolling to all navigation links
-navLinks.forEach(link => {
-    link.addEventListener('click', (e) => {
-        e.preventDefault();
-        const targetId = link.getAttribute('href').substring(1);
-        scrollToSection(targetId);
-    });
-});
 
 // Player Controls
 function togglePlay() {
@@ -129,24 +267,6 @@ function updateTrackInfo() {
     currentTime.textContent = '0:00';
 }
 
-// Initialize player
-updateTrackInfo();
-
-// Form Handling
-contactForm.addEventListener('submit', (e) => {
-    e.preventDefault();
-    
-    // Get form data
-    const formData = new FormData(contactForm);
-    const data = Object.fromEntries(formData);
-    
-    // Simulate form submission
-    showNotification('Message sent successfully! We\'ll get back to you soon.', 'success');
-    
-    // Reset form
-    contactForm.reset();
-});
-
 // Notification system
 function showNotification(message, type = 'info') {
     // Create notification element
@@ -207,30 +327,16 @@ function animateOnScroll() {
     });
 }
 
-// Initialize scroll animations
-document.addEventListener('DOMContentLoaded', () => {
-    // Set initial states for animations
-    const elements = document.querySelectorAll('.feature-card, .contact-item, .player-card');
-    elements.forEach(element => {
-        element.style.opacity = '0';
-        element.style.transform = 'translateY(20px)';
-        element.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-    });
-    
-    // Trigger initial animation check
-    animateOnScroll();
-});
-
 // Add scroll event listener
 window.addEventListener('scroll', animateOnScroll);
 
 // Navbar scroll effect
 window.addEventListener('scroll', () => {
     const navbar = document.querySelector('.navbar');
-    if (window.scrollY > 100) {
+    if (navbar && window.scrollY > 100) {
         navbar.style.background = 'rgba(255, 255, 255, 0.98)';
         navbar.style.boxShadow = '0 4px 20px rgba(0, 0, 0, 0.1)';
-    } else {
+    } else if (navbar) {
         navbar.style.background = 'rgba(255, 255, 255, 0.95)';
         navbar.style.boxShadow = '0 4px 6px rgba(0, 0, 0, 0.1)';
     }
@@ -306,13 +412,15 @@ document.body.style.opacity = '0';
 let clickCount = 0;
 const logo = document.querySelector('.nav-logo');
 
-logo.addEventListener('click', () => {
-    clickCount++;
-    if (clickCount === 5) {
-        showNotification('🏗️ Construction workers unite! You found the secret! 🏗️', 'success');
-        clickCount = 0;
-    }
-});
+if (logo) {
+    logo.addEventListener('click', () => {
+        clickCount++;
+        if (clickCount === 5) {
+            showNotification('🏗️ Construction workers unite! You found the secret! 🏗️', 'success');
+            clickCount = 0;
+        }
+    });
+}
 
 // Add keyboard shortcuts
 document.addEventListener('keydown', (e) => {
@@ -334,7 +442,9 @@ document.addEventListener('keydown', (e) => {
 
 // Add tooltip for keyboard shortcuts
 const playButton = document.getElementById('play-btn');
-playButton.title = 'Press Spacebar to play/pause';
+if (playButton) {
+    playButton.title = 'Press Spacebar to play/pause';
+}
 
 // Add some dynamic content updates
 setInterval(() => {
@@ -355,8 +465,15 @@ function playConstructionSound() {
 }
 
 // Add this to the play button for extra effect
-playBtn.addEventListener('click', () => {
-    if (!isPlaying) {
-        playConstructionSound();
-    }
+if (playBtn) {
+    playBtn.addEventListener('click', () => {
+        if (!isPlaying) {
+            playConstructionSound();
+        }
+    });
+}
+
+// Start geolocation check when page loads
+document.addEventListener('DOMContentLoaded', () => {
+    checkLocation();
 }); 
