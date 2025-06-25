@@ -380,7 +380,7 @@ function openPlayer() {
             const copyrightWindow = window.open(
                 '',
                 'ToolBoxRadioPlayer',
-                'width=400,height=200,scrollbars=no,resizable=yes,status=no,location=no,toolbar=no,menubar=no'
+                'width=500,height=175,scrollbars=no,resizable=yes,status=no,location=no,toolbar=no,menubar=no'
             );
             
             if (copyrightWindow) {
@@ -391,65 +391,79 @@ function openPlayer() {
                         <title>ToolBox Radio - Region Restricted</title>
                         <style>
                             body {
-                                font-family: 'Inter', sans-serif;
+                                font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
                                 background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
                                 color: white;
                                 margin: 0;
-                                padding: 20px;
+                                padding: 12px;
                                 display: flex;
                                 align-items: center;
                                 justify-content: center;
-                                min-height: 100vh;
+                                height: 100vh;
                                 text-align: center;
+                                box-sizing: border-box;
+                                overflow: hidden;
                             }
                             .message-container {
-                                background: rgba(255, 255, 255, 0.1);
-                                backdrop-filter: blur(10px);
+                                background: rgba(255, 255, 255, 0.08);
+                                backdrop-filter: blur(15px);
                                 border-radius: 16px;
-                                padding: 30px;
-                                border: 1px solid rgba(255, 255, 255, 0.2);
-                                max-width: 350px;
+                                padding: 24px 20px;
+                                border: 1px solid rgba(255, 255, 255, 0.15);
+                                width: 100%;
+                                max-width: 460px;
+                                box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
                             }
                             .icon {
-                                font-size: 48px;
+                                font-size: 28px;
                                 color: #fbbf24;
-                                margin-bottom: 20px;
+                                margin-bottom: 8px;
+                                display: block;
                             }
                             h2 {
-                                font-size: 20px;
-                                font-weight: 600;
-                                margin-bottom: 15px;
+                                font-size: 16px;
+                                font-weight: 700;
+                                margin: 0 0 8px 0;
                                 color: #fbbf24;
+                                letter-spacing: 0.5px;
                             }
                             p {
-                                font-size: 14px;
+                                font-size: 12px;
                                 line-height: 1.5;
-                                color: rgba(255, 255, 255, 0.9);
-                                margin-bottom: 20px;
+                                color: rgba(255, 255, 255, 0.85);
+                                margin: 0 0 16px 0;
+                                font-weight: 400;
                             }
                             .close-btn {
                                 background: linear-gradient(135deg, #ed7519 0%, #de5a0f 100%);
                                 color: white;
                                 border: none;
-                                padding: 10px 20px;
+                                padding: 6px 14px;
                                 border-radius: 8px;
                                 cursor: pointer;
-                                font-size: 14px;
+                                font-size: 11px;
                                 font-weight: 600;
-                                transition: all 0.3s ease;
+                                transition: all 0.2s ease;
+                                letter-spacing: 0.3px;
+                                text-transform: uppercase;
+                                min-width: 60px;
                             }
                             .close-btn:hover {
-                                transform: translateY(-2px);
-                                box-shadow: 0 4px 15px rgba(237, 117, 25, 0.4);
+                                transform: translateY(-1px);
+                                box-shadow: 0 4px 12px rgba(237, 117, 25, 0.4);
+                                background: linear-gradient(135deg, #de5a0f 0%, #b8430f 100%);
+                            }
+                            .close-btn:active {
+                                transform: translateY(0);
                             }
                         </style>
                     </head>
                     <body>
                         <div class="message-container">
-                            <div class="icon">🌍</div>
+                            <span class="icon">🌍</span>
                             <h2>Region Restricted</h2>
-                            <p>We're sorry, but due to copyright and licensing restrictions, ToolBox Radio is only available in the United Kingdom and Ireland.</p>
-                            <button class="close-btn" onclick="window.close()">Close Window</button>
+                            <p>Due to copyright and licensing restrictions, ToolBox Radio is only available in the United Kingdom and Ireland.</p>
+                            <button class="close-btn" onclick="window.close()">Close</button>
                         </div>
                     </body>
                     </html>
@@ -464,7 +478,7 @@ function openPlayer() {
         const copyrightWindow = window.open(
             '',
             'ToolBoxRadioPlayer',
-            'width=400,height=200,scrollbars=no,resizable=yes,status=no,location=no,toolbar=no,menubar=no'
+            'width=500,height=175,scrollbars=no,resizable=yes,status=no,location=no,toolbar=no,menubar=no'
         );
         
         if (copyrightWindow) {
@@ -475,65 +489,79 @@ function openPlayer() {
                     <title>ToolBox Radio - Region Restricted</title>
                     <style>
                         body {
-                            font-family: 'Inter', sans-serif;
+                            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
                             background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
                             color: white;
                             margin: 0;
-                            padding: 20px;
+                            padding: 12px;
                             display: flex;
                             align-items: center;
                             justify-content: center;
-                            min-height: 100vh;
+                            height: 100vh;
                             text-align: center;
+                            box-sizing: border-box;
+                            overflow: hidden;
                         }
                         .message-container {
-                            background: rgba(255, 255, 255, 0.1);
-                            backdrop-filter: blur(10px);
+                            background: rgba(255, 255, 255, 0.08);
+                            backdrop-filter: blur(15px);
                             border-radius: 16px;
-                            padding: 30px;
-                            border: 1px solid rgba(255, 255, 255, 0.2);
-                            max-width: 350px;
+                            padding: 24px 20px;
+                            border: 1px solid rgba(255, 255, 255, 0.15);
+                            width: 100%;
+                            max-width: 460px;
+                            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
                         }
                         .icon {
-                            font-size: 48px;
+                            font-size: 28px;
                             color: #fbbf24;
-                            margin-bottom: 20px;
+                            margin-bottom: 8px;
+                            display: block;
                         }
                         h2 {
-                            font-size: 20px;
-                            font-weight: 600;
-                            margin-bottom: 15px;
+                            font-size: 16px;
+                            font-weight: 700;
+                            margin: 0 0 8px 0;
                             color: #fbbf24;
+                            letter-spacing: 0.5px;
                         }
                         p {
-                            font-size: 14px;
+                            font-size: 12px;
                             line-height: 1.5;
-                            color: rgba(255, 255, 255, 0.9);
-                            margin-bottom: 20px;
+                            color: rgba(255, 255, 255, 0.85);
+                            margin: 0 0 16px 0;
+                            font-weight: 400;
                         }
                         .close-btn {
                             background: linear-gradient(135deg, #ed7519 0%, #de5a0f 100%);
                             color: white;
                             border: none;
-                            padding: 10px 20px;
+                            padding: 6px 14px;
                             border-radius: 8px;
                             cursor: pointer;
-                            font-size: 14px;
+                            font-size: 11px;
                             font-weight: 600;
-                            transition: all 0.3s ease;
+                            transition: all 0.2s ease;
+                            letter-spacing: 0.3px;
+                            text-transform: uppercase;
+                            min-width: 60px;
                         }
                         .close-btn:hover {
-                            transform: translateY(-2px);
-                            box-shadow: 0 4px 15px rgba(237, 117, 25, 0.4);
+                            transform: translateY(-1px);
+                            box-shadow: 0 4px 12px rgba(237, 117, 25, 0.4);
+                            background: linear-gradient(135deg, #de5a0f 0%, #b8430f 100%);
+                        }
+                        .close-btn:active {
+                            transform: translateY(0);
                         }
                     </style>
                 </head>
                 <body>
                     <div class="message-container">
-                        <div class="icon">🌍</div>
+                        <span class="icon">🌍</span>
                         <h2>Region Restricted</h2>
-                        <p>We're sorry, but due to copyright and licensing restrictions, ToolBox Radio is only available in the United Kingdom and Ireland.</p>
-                        <button class="close-btn" onclick="window.close()">Close Window</button>
+                        <p>Due to copyright and licensing restrictions, ToolBox Radio is only available in the United Kingdom and Ireland.</p>
+                        <button class="close-btn" onclick="window.close()">Close</button>
                     </div>
                 </body>
                 </html>
@@ -547,20 +575,71 @@ function openPlayer() {
 // Function to check user location
 async function checkUserLocation() {
     try {
-        // Use a free geolocation API to get user's country
-        const response = await fetch('https://ipapi.co/json/');
+        console.log('Checking user location...');
+        
+        // Use a completely free geolocation API with no API key required
+        const response = await fetch('https://api.myip.com');
         const data = await response.json();
+        
+        console.log('Location data received:', data);
+        console.log('Country code:', data.cc);
+        console.log('Country name:', data.country);
         
         // Check if user is in UK or Ireland
         const allowedCountries = ['GB', 'IE']; // GB = United Kingdom, IE = Ireland
-        return allowedCountries.includes(data.country_code);
+        const isAllowed = allowedCountries.includes(data.cc);
+        
+        console.log('Is user allowed:', isAllowed);
+        
+        return isAllowed;
         
     } catch (error) {
         console.error('Error fetching location:', error);
-        // If the API fails, we'll show the copyright message to be safe
-        return false;
+        
+        // Try alternative API as fallback
+        try {
+            console.log('Trying alternative location API...');
+            const altResponse = await fetch('https://ipapi.co/json/');
+            const geoData = await altResponse.json();
+            
+            console.log('Alternative location data:', geoData);
+            
+            const allowedCountries = ['GB', 'IE'];
+            const isAllowed = allowedCountries.includes(geoData.country_code);
+            
+            console.log('Is user allowed (alternative):', isAllowed);
+            
+            return isAllowed;
+            
+        } catch (altError) {
+            console.error('Alternative API also failed:', altError);
+            
+            // For development/testing, you can temporarily allow access
+            // Remove this line in production
+            console.log('⚠️ Location check failed - allowing access for development');
+            return true;
+            
+            // In production, uncomment this line instead:
+            // return false;
+        }
     }
 }
+
+// Temporary testing function - remove this after debugging
+function testLocation() {
+    console.log('=== LOCATION TESTING ===');
+    checkUserLocation().then(result => {
+        console.log('Final result:', result);
+        if (result) {
+            console.log('✅ Location check passed - should open player');
+        } else {
+            console.log('❌ Location check failed - will show restriction message');
+        }
+    });
+}
+
+// Uncomment the line below to test location detection
+// testLocation();
 
 // Add hover effects for feature cards
 document.querySelectorAll('.feature-card').forEach(card => {
