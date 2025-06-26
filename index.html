@@ -5,14 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ToolBox Radio - Construction Industry's Premier Radio Station</title>
     <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;800;900&family=Open+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
     <!-- Floating Radio Player -->
     <div class="floating-player" id="floatingPlayer">
         <div class="player-content" id="playerContent">
-            <iframe src="http://134.209.28.199/public/toolbox_radio/embed?theme=dark" 
+            <iframe src="http://134.209.28.199/public/toolbox_radio/embed?theme=light" 
                     frameborder="0" 
                     allowtransparency="true" 
                     style="width: 100%; min-height: 150px; border: 0;">
@@ -20,378 +20,447 @@
         </div>
     </div>
 
-    <!-- Navigation -->
-    <nav class="navbar">
-        <div class="nav-container">
-            <div class="nav-logo">
-                <div class="logo-symbol">
-                    <div class="radio-waves">
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                    </div>
-                </div>
-                <div class="logo-text">
-                    <span class="logo-main">ToolBox</span>
-                    <span class="logo-radio">RADIO</span>
-                </div>
+    <!-- Side Navigation -->
+    <nav class="side-nav">
+        <div class="nav-brand">
+            <div class="brand-icon">
+                <i class="fas fa-radio"></i>
             </div>
-            <ul class="nav-menu">
-                <li><a href="#home" class="nav-link">Home</a></li>
-                <li><a href="#listen" class="nav-link">Listen</a></li>
-                <li><a href="#shows" class="nav-link">Shows</a></li>
-                <li><a href="#cms-desk" class="nav-link">CMS Desk</a></li>
-                <li><a href="#advertising" class="nav-link">Advertise</a></li>
-                <li><a href="#contact" class="nav-link">Contact</a></li>
-            </ul>
-            <div class="hamburger">
-                <span class="bar"></span>
-                <span class="bar"></span>
-                <span class="bar"></span>
+            <div class="brand-text">
+                <span class="brand-name">ToolBox</span>
+                <span class="brand-tagline">Radio</span>
+            </div>
+        </div>
+        
+        <ul class="nav-links">
+            <li><a href="#hero" class="nav-link active">
+                <i class="fas fa-home"></i>
+                <span>Home</span>
+            </a></li>
+            <li><a href="#live" class="nav-link">
+                <i class="fas fa-broadcast-tower"></i>
+                <span>Live Now</span>
+            </a></li>
+            <li><a href="#schedule" class="nav-link">
+                <i class="fas fa-calendar-alt"></i>
+                <span>Schedule</span>
+            </a></li>
+            <li><a href="#cms" class="nav-link">
+                <i class="fas fa-desktop"></i>
+                <span>CMS Desk</span>
+            </a></li>
+            <li><a href="#advertise" class="nav-link">
+                <i class="fas fa-ad"></i>
+                <span>Advertise</span>
+            </a></li>
+            <li><a href="#contact" class="nav-link">
+                <i class="fas fa-envelope"></i>
+                <span>Contact</span>
+            </a></li>
+        </ul>
+        
+        <div class="nav-footer">
+            <div class="social-links">
+                <a href="#"><i class="fab fa-facebook"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
             </div>
         </div>
     </nav>
 
-    <!-- Hero Section -->
-    <section id="home" class="hero">
-        <div class="hero-background">
-            <div class="hero-particles"></div>
-            <div class="hero-grid"></div>
-        </div>
-        <div class="hero-container">
-            <div class="hero-content">
-                <div class="hero-status">
-                    <div class="status-dot"></div>
-                    <span>LIVE ON AIR</span>
-                </div>
-                <h1 class="hero-title">
-                    <span class="title-line">ToolBox</span>
-                    <span class="title-line highlight">Radio</span>
-                </h1>
-                <p class="hero-subtitle">The Construction Industry's Soundtrack</p>
-                <p class="hero-description">
-                    Broadcasting 24/7 to construction professionals across the UK and Ireland. 
-                    Now exclusively integrated with CMS Desk - bringing music, news, and entertainment 
-                    directly to your job site workflow.
-                </p>
-                <div class="hero-metrics">
-                    <div class="metric">
-                        <div class="metric-value">24/7</div>
-                        <div class="metric-label">Live Stream</div>
-                    </div>
-                    <div class="metric">
-                        <div class="metric-value">15K+</div>
-                        <div class="metric-label">Daily Listeners</div>
-                    </div>
-                    <div class="metric">
-                        <div class="metric-value">750+</div>
-                        <div class="metric-label">Job Sites</div>
-                    </div>
-                </div>
-                <div class="hero-actions">
-                    <a href="#listen" class="btn btn-primary">
-                        <i class="fas fa-play"></i>
-                        <span>Start Listening</span>
-                    </a>
-                    <a href="#cms-desk" class="btn btn-secondary">CMS Desk Integration</a>
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Hero Section -->
+        <section id="hero" class="hero-section">
+            <div class="hero-background">
+                <div class="hero-video">
+                    <video autoplay muted loop>
+                        <source src="https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_1mb.mp4" type="video/mp4">
+                    </video>
+                    <div class="video-overlay"></div>
                 </div>
             </div>
-            <div class="hero-visual">
-                <div class="radio-interface">
-                    <div class="interface-header">
-                        <div class="interface-dots">
-                            <span></span>
-                            <span></span>
-                            <span></span>
-                        </div>
-                        <div class="interface-title">ToolBox Radio</div>
+            
+            <div class="hero-content">
+                <div class="hero-left">
+                    <div class="hero-badge">
+                        <div class="live-indicator"></div>
+                        <span>LIVE NOW</span>
                     </div>
-                    <div class="interface-body">
-                        <div class="now-playing">
+                    
+                    <h1 class="hero-title">
+                        <span class="title-main">ToolBox</span>
+                        <span class="title-accent">Radio</span>
+                    </h1>
+                    
+                    <p class="hero-description">
+                        The construction industry's premier radio station, broadcasting 24/7 to professionals across the UK and Ireland. 
+                        Now seamlessly integrated with CMS Desk for the ultimate job site experience.
+                    </p>
+                    
+                    <div class="hero-stats">
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <div class="stat-content">
+                                <div class="stat-number">15K+</div>
+                                <div class="stat-label">Daily Listeners</div>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <div class="stat-content">
+                                <div class="stat-number">750+</div>
+                                <div class="stat-label">Job Sites</div>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                            <div class="stat-content">
+                                <div class="stat-number">24/7</div>
+                                <div class="stat-label">Live Stream</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="hero-actions">
+                        <button class="btn btn-primary">
+                            <i class="fas fa-play"></i>
+                            <span>Start Listening</span>
+                        </button>
+                        <button class="btn btn-secondary">
+                            <i class="fas fa-info-circle"></i>
+                            <span>Learn More</span>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="hero-right">
+                    <div class="now-playing-card">
+                        <div class="card-header">
+                            <h3>Now Playing</h3>
+                            <div class="live-dot"></div>
+                        </div>
+                        
+                        <div class="track-info">
                             <div class="track-artwork">
                                 <i class="fas fa-music"></i>
                             </div>
-                            <div class="track-info">
+                            <div class="track-details">
                                 <div class="track-name">Construction Vibes</div>
                                 <div class="track-artist">Morning Mix</div>
+                                <div class="track-time">10:30 AM - 2:00 PM</div>
                             </div>
                         </div>
-                        <div class="interface-controls">
-                            <div class="control-group">
-                                <div class="control-knob">
-                                    <div class="knob-mark"></div>
-                                </div>
-                                <span>Volume</span>
+                        
+                        <div class="track-progress">
+                            <div class="progress-bar">
+                                <div class="progress-fill"></div>
                             </div>
-                            <div class="control-group">
-                                <div class="control-knob">
-                                    <div class="knob-mark"></div>
-                                </div>
-                                <span>Bass</span>
-                            </div>
-                            <div class="control-group">
-                                <div class="control-knob">
-                                    <div class="knob-mark"></div>
-                                </div>
-                                <span>Treble</span>
+                            <div class="time-display">
+                                <span class="current-time">2:15:30</span>
+                                <span class="total-time">3:30:00</span>
                             </div>
                         </div>
-                        <div class="interface-display">
-                            <div class="frequency">FM 104.7</div>
-                            <div class="signal-strength">
-                                <span></span>
-                                <span></span>
-                                <span></span>
-                                <span></span>
-                                <span></span>
-                            </div>
+                        
+                        <div class="track-controls">
+                            <button class="control-btn">
+                                <i class="fas fa-step-backward"></i>
+                            </button>
+                            <button class="control-btn play-btn">
+                                <i class="fas fa-pause"></i>
+                            </button>
+                            <button class="control-btn">
+                                <i class="fas fa-step-forward"></i>
+                            </button>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Listen Section -->
-    <section id="listen" class="listen">
-        <div class="container">
+        <!-- Live Section -->
+        <section id="live" class="live-section">
             <div class="section-header">
-                <h2 class="section-title">Listen to ToolBox Radio</h2>
-                <p class="section-subtitle">Multiple ways to tune in to construction's premier radio station</p>
+                <h2>Live Broadcasting</h2>
+                <p>Multiple ways to tune in to construction's premier radio station</p>
             </div>
-            <div class="listen-grid">
-                <div class="listen-card featured">
-                    <div class="card-icon">
-                        <i class="fas fa-broadcast-tower"></i>
-                    </div>
-                    <h3>Live Stream</h3>
-                    <p>Listen to ToolBox Radio live, 24 hours a day. Perfect for your job site, office, or anywhere you work.</p>
-                    <div class="card-features">
-                        <div class="feature">
-                            <i class="fas fa-check"></i>
-                            <span>HD Quality Audio</span>
+            
+            <div class="live-grid">
+                <div class="live-card primary">
+                    <div class="card-visual">
+                        <div class="visual-icon">
+                            <i class="fas fa-broadcast-tower"></i>
                         </div>
-                        <div class="feature">
-                            <i class="fas fa-check"></i>
-                            <span>No Interruptions</span>
-                        </div>
-                        <div class="feature">
-                            <i class="fas fa-check"></i>
-                            <span>Global Access</span>
-                        </div>
+                        <div class="visual-bg"></div>
                     </div>
-                    <button class="btn btn-primary btn-large">
-                        <i class="fas fa-play"></i>
-                        Listen Now
-                    </button>
-                </div>
-                <div class="listen-card">
-                    <div class="card-icon">
-                        <i class="fas fa-mobile-alt"></i>
-                    </div>
-                    <h3>Mobile App</h3>
-                    <p>Take ToolBox Radio with you wherever you go with our mobile app for iOS and Android.</p>
-                    <div class="app-downloads">
-                        <a href="#" class="download-btn">
-                            <i class="fab fa-apple"></i>
-                            <div>
-                                <span>Download on the</span>
-                                <strong>App Store</strong>
+                    
+                    <div class="card-content">
+                        <h3>Live Stream</h3>
+                        <p>Listen to ToolBox Radio live, 24 hours a day. Perfect for your job site, office, or anywhere you work.</p>
+                        
+                        <div class="card-features">
+                            <div class="feature">
+                                <i class="fas fa-check"></i>
+                                <span>HD Quality Audio</span>
                             </div>
-                        </a>
-                        <a href="#" class="download-btn">
-                            <i class="fab fa-google-play"></i>
-                            <div>
-                                <span>Get it on</span>
-                                <strong>Google Play</strong>
+                            <div class="feature">
+                                <i class="fas fa-check"></i>
+                                <span>No Interruptions</span>
                             </div>
-                        </a>
-                    </div>
-                </div>
-                <div class="listen-card">
-                    <div class="card-icon">
-                        <i class="fas fa-desktop"></i>
-                    </div>
-                    <h3>CMS Desk Integration</h3>
-                    <p>Access ToolBox Radio directly through the CMS Desk platform - seamlessly integrated into your workflow.</p>
-                    <a href="#cms-desk" class="btn btn-outline">Learn More</a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Shows Section -->
-    <section id="shows" class="shows">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Today's Programming</h2>
-                <p class="section-subtitle">What's playing on ToolBox Radio right now</p>
-            </div>
-            <div class="shows-timeline">
-                <div class="show-slot current">
-                    <div class="time-block">
-                        <div class="time">06:00</div>
-                        <div class="time">09:00</div>
-                    </div>
-                    <div class="show-content">
-                        <div class="show-header">
-                            <h3>Morning Construction</h3>
-                            <div class="live-badge">LIVE NOW</div>
-                        </div>
-                        <p>Start your day with upbeat construction anthems and industry news to get your crew motivated.</p>
-                        <div class="show-meta">
-                            <span class="genre">Rock & Pop</span>
-                            <span class="host">DJ Mike</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="show-slot">
-                    <div class="time-block">
-                        <div class="time">09:00</div>
-                        <div class="time">12:00</div>
-                    </div>
-                    <div class="show-content">
-                        <div class="show-header">
-                            <h3>Work Site Vibes</h3>
-                        </div>
-                        <p>High-energy music to keep your crew motivated during peak work hours.</p>
-                        <div class="show-meta">
-                            <span class="genre">Rock & Country</span>
-                            <span class="host">DJ Sarah</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="show-slot">
-                    <div class="time-block">
-                        <div class="time">12:00</div>
-                        <div class="time">14:00</div>
-                    </div>
-                    <div class="show-content">
-                        <div class="show-header">
-                            <h3>Lunch Break Mix</h3>
-                        </div>
-                        <p>Relaxing tunes for your lunch break and afternoon planning sessions.</p>
-                        <div class="show-meta">
-                            <span class="genre">Easy Listening</span>
-                            <span class="host">DJ Chris</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="show-slot">
-                    <div class="time-block">
-                        <div class="time">14:00</div>
-                        <div class="time">17:00</div>
-                    </div>
-                    <div class="show-content">
-                        <div class="show-header">
-                            <h3>Afternoon Drive</h3>
-                        </div>
-                        <p>Powerful tracks to push through the afternoon and finish your day strong.</p>
-                        <div class="show-meta">
-                            <span class="genre">Rock & Metal</span>
-                            <span class="host">DJ Lisa</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="show-slot">
-                    <div class="time-block">
-                        <div class="time">17:00</div>
-                        <div class="time">20:00</div>
-                    </div>
-                    <div class="show-content">
-                        <div class="show-header">
-                            <h3>Evening Wind Down</h3>
-                        </div>
-                        <p>Smooth transitions from work mode to evening relaxation.</p>
-                        <div class="show-meta">
-                            <span class="genre">Jazz & Blues</span>
-                            <span class="host">DJ Tom</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="show-slot">
-                    <div class="time-block">
-                        <div class="time">20:00</div>
-                        <div class="time">06:00</div>
-                    </div>
-                    <div class="show-content">
-                        <div class="show-header">
-                            <h3>Night Shift</h3>
-                        </div>
-                        <p>Continuous music for overnight crews and late-night work.</p>
-                        <div class="show-meta">
-                            <span class="genre">Various</span>
-                            <span class="host">Auto DJ</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- CMS Desk Integration Section -->
-    <section id="cms-desk" class="cms-desk">
-        <div class="container">
-            <div class="cms-content">
-                <div class="cms-text">
-                    <div class="section-header">
-                        <h2 class="section-title">Exclusive to CMS Desk</h2>
-                        <p class="section-subtitle">The construction industry's premier radio station meets the leading project management platform</p>
-                    </div>
-                    <p class="cms-description">
-                        ToolBox Radio is proud to be the exclusive music and radio provider for the award-winning CMS Desk platform. 
-                        This strategic partnership brings entertainment directly to construction professionals, enhancing productivity 
-                        and morale across job sites throughout the UK and Ireland.
-                    </p>
-                    <div class="cms-benefits">
-                        <div class="benefit">
-                            <i class="fas fa-check-circle"></i>
-                            <span>Seamless integration with your daily workflow</span>
-                        </div>
-                        <div class="benefit">
-                            <i class="fas fa-check-circle"></i>
-                            <span>No additional subscriptions or setup required</span>
-                        </div>
-                        <div class="benefit">
-                            <i class="fas fa-check-circle"></i>
-                            <span>Access from any device with CMS Desk login</span>
-                        </div>
-                        <div class="benefit">
-                            <i class="fas fa-check-circle"></i>
-                            <span>Enhanced team collaboration and site morale</span>
-                        </div>
-                    </div>
-                    <a href="#" class="btn btn-primary">Learn More About CMS Desk</a>
-                </div>
-                <div class="cms-visual">
-                    <div class="integration-preview">
-                        <div class="preview-header">
-                            <div class="preview-tabs">
-                                <span class="tab active">Dashboard</span>
-                                <span class="tab">Projects</span>
-                                <span class="tab">ToolBox Radio</span>
+                            <div class="feature">
+                                <i class="fas fa-check"></i>
+                                <span>Global Access</span>
                             </div>
                         </div>
-                        <div class="preview-content">
-                            <div class="radio-widget">
-                                <div class="widget-header">
-                                    <h4>ToolBox Radio</h4>
-                                    <div class="live-indicator">
-                                        <span class="pulse"></span>
-                                        LIVE
-                                    </div>
+                        
+                        <button class="btn btn-primary">
+                            <i class="fas fa-play"></i>
+                            <span>Listen Now</span>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="live-card">
+                    <div class="card-visual">
+                        <div class="visual-icon">
+                            <i class="fas fa-mobile-alt"></i>
+                        </div>
+                        <div class="visual-bg"></div>
+                    </div>
+                    
+                    <div class="card-content">
+                        <h3>Mobile App</h3>
+                        <p>Take ToolBox Radio with you wherever you go with our mobile app for iOS and Android.</p>
+                        
+                        <div class="app-buttons">
+                            <a href="#" class="app-btn">
+                                <i class="fab fa-apple"></i>
+                                <div>
+                                    <span>Download on the</span>
+                                    <strong>App Store</strong>
                                 </div>
-                                <div class="now-playing">
-                                    <div class="track-info">
-                                        <h5>Now Playing</h5>
-                                        <p>Construction Vibes - Morning Mix</p>
-                                    </div>
-                                    <div class="controls">
-                                        <button class="control-btn">
-                                            <i class="fas fa-play"></i>
-                                        </button>
-                                        <div class="volume-slider">
-                                            <div class="volume-level"></div>
+                            </a>
+                            <a href="#" class="app-btn">
+                                <i class="fab fa-google-play"></i>
+                                <div>
+                                    <span>Get it on</span>
+                                    <strong>Google Play</strong>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="live-card">
+                    <div class="card-visual">
+                        <div class="visual-icon">
+                            <i class="fas fa-desktop"></i>
+                        </div>
+                        <div class="visual-bg"></div>
+                    </div>
+                    
+                    <div class="card-content">
+                        <h3>Desktop App</h3>
+                        <p>Download our desktop application for Windows and Mac for the best listening experience.</p>
+                        
+                        <div class="app-buttons">
+                            <a href="#" class="app-btn">
+                                <i class="fab fa-windows"></i>
+                                <div>
+                                    <span>Download for</span>
+                                    <strong>Windows</strong>
+                                </div>
+                            </a>
+                            <a href="#" class="app-btn">
+                                <i class="fab fa-apple"></i>
+                                <div>
+                                    <span>Download for</span>
+                                    <strong>Mac</strong>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Schedule Section -->
+        <section id="schedule" class="schedule-section">
+            <div class="section-header">
+                <h2>Today's Schedule</h2>
+                <p>Your daily soundtrack for the construction industry</p>
+            </div>
+            
+            <div class="schedule-container">
+                <div class="schedule-timeline">
+                    <div class="time-slot current">
+                        <div class="time-marker">
+                            <div class="time-current">10:30</div>
+                            <div class="time-end">14:00</div>
+                        </div>
+                        
+                        <div class="show-card current">
+                            <div class="show-header">
+                                <h3>Morning Mix</h3>
+                                <div class="live-badge">LIVE NOW</div>
+                            </div>
+                            <p>Start your day with the perfect mix of music and construction industry news.</p>
+                            <div class="show-meta">
+                                <span class="genre">Music & News</span>
+                                <span class="host">Mike Johnson</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="time-slot">
+                        <div class="time-marker">
+                            <div class="time-current">14:00</div>
+                            <div class="time-end">18:00</div>
+                        </div>
+                        
+                        <div class="show-card">
+                            <div class="show-header">
+                                <h3>Afternoon Drive</h3>
+                            </div>
+                            <p>Wind down your workday with classic rock and construction tips.</p>
+                            <div class="show-meta">
+                                <span class="genre">Classic Rock</span>
+                                <span class="host">Dave Thompson</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="time-slot">
+                        <div class="time-marker">
+                            <div class="time-current">18:00</div>
+                            <div class="time-end">22:00</div>
+                        </div>
+                        
+                        <div class="show-card">
+                            <div class="show-header">
+                                <h3>Evening Vibes</h3>
+                            </div>
+                            <p>Relax and unwind with smooth music and industry stories.</p>
+                            <div class="show-meta">
+                                <span class="genre">Smooth</span>
+                                <span class="host">Lisa Chen</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CMS Desk Section -->
+        <section id="cms" class="cms-section">
+            <div class="cms-container">
+                <div class="cms-content">
+                    <div class="cms-text">
+                        <h2>Integrated with CMS Desk</h2>
+                        <p class="cms-subtitle">Award-winning construction management platform</p>
+                        
+                        <p class="cms-description">
+                            ToolBox Radio is now fully integrated with CMS Desk, the award-winning construction 
+                            management platform used across the UK and Ireland. Listen to your favorite station 
+                            directly within your workflow, with seamless integration across all CMS Desk applications.
+                        </p>
+                        
+                        <div class="cms-benefits">
+                            <div class="benefit-item">
+                                <div class="benefit-icon">
+                                    <i class="fas fa-check"></i>
+                                </div>
+                                <div class="benefit-text">
+                                    <h4>Available on all CMS Desk apps</h4>
+                                    <p>Access ToolBox Radio from any CMS Desk application</p>
+                                </div>
+                            </div>
+                            
+                            <div class="benefit-item">
+                                <div class="benefit-icon">
+                                    <i class="fas fa-check"></i>
+                                </div>
+                                <div class="benefit-text">
+                                    <h4>UK & Ireland coverage</h4>
+                                    <p>Full coverage across the United Kingdom and Ireland</p>
+                                </div>
+                            </div>
+                            
+                            <div class="benefit-item">
+                                <div class="benefit-icon">
+                                    <i class="fas fa-check"></i>
+                                </div>
+                                <div class="benefit-text">
+                                    <h4>Award-winning platform</h4>
+                                    <p>Integrated with the industry's leading management solution</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <button class="btn btn-primary">
+                            <i class="fas fa-external-link-alt"></i>
+                            <span>Learn More About CMS Desk</span>
+                        </button>
+                    </div>
+                    
+                    <div class="cms-visual">
+                        <div class="integration-demo">
+                            <div class="demo-header">
+                                <div class="demo-tabs">
+                                    <span class="tab active">Mobile</span>
+                                    <span class="tab">Desktop</span>
+                                    <span class="tab">Tablet</span>
+                                </div>
+                            </div>
+                            
+                            <div class="demo-content">
+                                <div class="device-mockup">
+                                    <div class="device-screen">
+                                        <div class="app-interface">
+                                            <div class="app-header">
+                                                <h4>CMS Desk</h4>
+                                                <div class="app-status">
+                                                    <span class="status-dot"></span>
+                                                    <span>ToolBox Radio</span>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="radio-widget">
+                                                <div class="widget-header">
+                                                    <h5>Now Playing</h5>
+                                                    <div class="live-indicator">
+                                                        <span class="pulse"></span>
+                                                        <span>LIVE</span>
+                                                    </div>
+                                                </div>
+                                                
+                                                <div class="widget-content">
+                                                    <div class="track-display">
+                                                        <div class="track-name">Construction Vibes</div>
+                                                        <div class="track-artist">Morning Mix</div>
+                                                    </div>
+                                                    
+                                                    <div class="widget-controls">
+                                                        <button class="widget-btn">
+                                                            <i class="fas fa-play"></i>
+                                                        </button>
+                                                        <div class="volume-control">
+                                                            <i class="fas fa-volume-up"></i>
+                                                            <div class="volume-slider">
+                                                                <div class="volume-level"></div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -400,208 +469,184 @@
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Advertising Section -->
-    <section id="advertising" class="advertising">
-        <div class="container">
+        <!-- Advertising Section -->
+        <section id="advertise" class="advertise-section">
             <div class="section-header">
-                <h2 class="section-title">Advertise With ToolBox Radio</h2>
-                <p class="section-subtitle">Reach construction professionals where they work</p>
+                <h2>Advertising Opportunities</h2>
+                <p>Reach construction professionals across the UK and Ireland</p>
             </div>
             
-            <div class="advertising-grid">
+            <div class="advertise-grid">
                 <div class="ad-package">
                     <div class="package-header">
+                        <div class="package-icon">
+                            <i class="fas fa-star"></i>
+                        </div>
                         <h3>Basic Package</h3>
-                        <div class="price">$299<span>/month</span></div>
+                        <div class="package-price">
+                            <span class="currency">£</span>
+                            <span class="amount">299</span>
+                            <span class="period">/month</span>
+                        </div>
                     </div>
+                    
                     <ul class="package-features">
-                        <li><i class="fas fa-check"></i> 30-second audio spots</li>
-                        <li><i class="fas fa-check"></i> 5 plays per day</li>
-                        <li><i class="fas fa-check"></i> Basic analytics</li>
-                        <li><i class="fas fa-check"></i> Construction industry targeting</li>
+                        <li><i class="fas fa-check"></i> 30-second spots</li>
+                        <li><i class="fas fa-check"></i> 5 spots per day</li>
+                        <li><i class="fas fa-check"></i> Basic targeting</li>
+                        <li><i class="fas fa-check"></i> Performance reports</li>
                     </ul>
-                    <a href="#contact" class="btn btn-outline">Get Started</a>
+                    
+                    <button class="btn btn-outline">Get Started</button>
                 </div>
                 
                 <div class="ad-package featured">
                     <div class="package-badge">Most Popular</div>
                     <div class="package-header">
+                        <div class="package-icon">
+                            <i class="fas fa-crown"></i>
+                        </div>
                         <h3>Professional Package</h3>
-                        <div class="price">$599<span>/month</span></div>
+                        <div class="package-price">
+                            <span class="currency">£</span>
+                            <span class="amount">599</span>
+                            <span class="period">/month</span>
+                        </div>
                     </div>
+                    
                     <ul class="package-features">
-                        <li><i class="fas fa-check"></i> 30 & 60-second audio spots</li>
-                        <li><i class="fas fa-check"></i> 15 plays per day</li>
-                        <li><i class="fas fa-check"></i> Advanced analytics & reporting</li>
-                        <li><i class="fas fa-check"></i> Geographic targeting</li>
-                        <li><i class="fas fa-check"></i> Banner ad placement</li>
+                        <li><i class="fas fa-check"></i> 60-second spots</li>
+                        <li><i class="fas fa-check"></i> 10 spots per day</li>
+                        <li><i class="fas fa-check"></i> Advanced targeting</li>
                         <li><i class="fas fa-check"></i> Priority scheduling</li>
+                        <li><i class="fas fa-check"></i> Detailed analytics</li>
+                        <li><i class="fas fa-check"></i> Custom creative support</li>
                     </ul>
-                    <a href="#contact" class="btn btn-primary">Get Started</a>
+                    
+                    <button class="btn btn-primary">Get Started</button>
                 </div>
                 
                 <div class="ad-package">
                     <div class="package-header">
+                        <div class="package-icon">
+                            <i class="fas fa-gem"></i>
+                        </div>
                         <h3>Premium Package</h3>
-                        <div class="price">$999<span>/month</span></div>
+                        <div class="package-price">
+                            <span class="currency">£</span>
+                            <span class="amount">999</span>
+                            <span class="period">/month</span>
+                        </div>
                     </div>
+                    
                     <ul class="package-features">
-                        <li><i class="fas fa-check"></i> Custom audio production</li>
-                        <li><i class="fas fa-check"></i> Unlimited plays</li>
-                        <li><i class="fas fa-check"></i> Real-time analytics dashboard</li>
-                        <li><i class="fas fa-check"></i> Multi-region targeting</li>
-                        <li><i class="fas fa-check"></i> Premium banner placement</li>
+                        <li><i class="fas fa-check"></i> 90-second spots</li>
+                        <li><i class="fas fa-check"></i> 15 spots per day</li>
+                        <li><i class="fas fa-check"></i> Premium targeting</li>
+                        <li><i class="fas fa-check"></i> Guaranteed placement</li>
+                        <li><i class="fas fa-check"></i> Real-time analytics</li>
                         <li><i class="fas fa-check"></i> Dedicated account manager</li>
                         <li><i class="fas fa-check"></i> Custom sponsorship opportunities</li>
                     </ul>
-                    <a href="#contact" class="btn btn-outline">Get Started</a>
+                    
+                    <button class="btn btn-outline">Get Started</button>
                 </div>
             </div>
             
-            <div class="advertising-stats">
-                <div class="stat">
+            <div class="stats-section">
+                <div class="stat-item">
                     <div class="stat-number">15,000+</div>
                     <div class="stat-label">Daily Listeners</div>
                 </div>
-                <div class="stat">
+                <div class="stat-item">
                     <div class="stat-number">750+</div>
-                    <div class="stat-label">Construction Companies</div>
+                    <div class="stat-label">Job Sites</div>
                 </div>
-                <div class="stat">
-                    <div class="stat-number">8+</div>
-                    <div class="stat-label">Hours Average Listen Time</div>
-                </div>
-                <div class="stat">
+                <div class="stat-item">
                     <div class="stat-number">95%</div>
-                    <div class="stat-label">Construction Industry Focus</div>
+                    <div class="stat-label">Construction Industry</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">24/7</div>
+                    <div class="stat-label">Broadcast Coverage</div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Contact Section -->
-    <section id="contact" class="contact">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Get In Touch</h2>
-                <p class="section-subtitle">Ready to get started with ToolBox Radio?</p>
-            </div>
-            <div class="contact-content">
+        <!-- Contact Section -->
+        <section id="contact" class="contact-section">
+            <div class="contact-container">
                 <div class="contact-info">
-                    <h3>Connect With Us</h3>
-                    <p>Whether you're interested in advertising opportunities, want to learn more about CMS Desk integration, or have general questions about ToolBox Radio, we're here to help.</p>
+                    <h2>Get In Touch</h2>
+                    <p>Ready to advertise on ToolBox Radio or need more information? Contact our team today.</p>
                     
                     <div class="contact-methods">
                         <div class="contact-method">
-                            <i class="fas fa-envelope"></i>
-                            <div>
+                            <div class="method-icon">
+                                <i class="fas fa-phone"></i>
+                            </div>
+                            <div class="method-content">
+                                <h4>Phone</h4>
+                                <p>+44 (0) 20 7946 0958</p>
+                            </div>
+                        </div>
+                        
+                        <div class="contact-method">
+                            <div class="method-icon">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <div class="method-content">
                                 <h4>Email</h4>
                                 <p>info@toolboxradio.com</p>
                             </div>
                         </div>
+                        
                         <div class="contact-method">
-                            <i class="fas fa-phone"></i>
-                            <div>
-                                <h4>Phone</h4>
-                                <p>(555) 123-4567</p>
+                            <div class="method-icon">
+                                <i class="fas fa-map-marker-alt"></i>
                             </div>
-                        </div>
-                        <div class="contact-method">
-                            <i class="fas fa-clock"></i>
-                            <div>
-                                <h4>Business Hours</h4>
-                                <p>Mon-Fri: 8AM-6PM EST</p>
+                            <div class="method-content">
+                                <h4>Office</h4>
+                                <p>London, UK</p>
                             </div>
                         </div>
                     </div>
                 </div>
                 
-                <form class="contact-form">
-                    <div class="form-group">
-                        <label for="name">Name</label>
-                        <input type="text" id="name" name="name" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="email">Email</label>
-                        <input type="email" id="email" name="email" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="company">Company</label>
-                        <input type="text" id="company" name="company">
-                    </div>
-                    <div class="form-group">
-                        <label for="interest">Interest</label>
-                        <select id="interest" name="interest">
-                            <option value="">Select an option</option>
-                            <option value="advertising">Advertising</option>
-                            <option value="cms-desk">CMS Desk Integration</option>
-                            <option value="partnership">Partnership</option>
-                            <option value="general">General Inquiry</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="message">Message</label>
-                        <textarea id="message" name="message" rows="5" required></textarea>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Send Message</button>
-                </form>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <div class="footer-logo">
-                        <div class="logo-symbol">
-                            <div class="radio-waves">
-                                <span></span>
-                                <span></span>
-                                <span></span>
+                <div class="contact-form">
+                    <form>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="name">Name</label>
+                                <input type="text" id="name" name="name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Email</label>
+                                <input type="email" id="email" name="email" required>
                             </div>
                         </div>
-                        <span>ToolBox Radio</span>
-                    </div>
-                    <p>The construction industry's premier radio station, broadcasting 24/7 and exclusively available through CMS Desk.</p>
-                </div>
-                <div class="footer-section">
-                    <h4>Quick Links</h4>
-                    <ul>
-                        <li><a href="#home">Home</a></li>
-                        <li><a href="#listen">Listen</a></li>
-                        <li><a href="#shows">Shows</a></li>
-                        <li><a href="#cms-desk">CMS Desk</a></li>
-                    </ul>
-                </div>
-                <div class="footer-section">
-                    <h4>Services</h4>
-                    <ul>
-                        <li><a href="#advertising">Audio Advertising</a></li>
-                        <li><a href="#advertising">Banner Advertising</a></li>
-                        <li><a href="#cms-desk">CMS Desk Integration</a></li>
-                        <li><a href="#contact">Custom Solutions</a></li>
-                    </ul>
-                </div>
-                <div class="footer-section">
-                    <h4>Connect</h4>
-                    <div class="social-links">
-                        <a href="#"><i class="fab fa-facebook"></i></a>
-                        <a href="#"><i class="fab fa-twitter"></i></a>
-                        <a href="#"><i class="fab fa-linkedin"></i></a>
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                    </div>
+                        
+                        <div class="form-group">
+                            <label for="company">Company</label>
+                            <input type="text" id="company" name="company">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="message">Message</label>
+                            <textarea id="message" name="message" rows="5" required></textarea>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-paper-plane"></i>
+                            <span>Send Message</span>
+                        </button>
+                    </form>
                 </div>
             </div>
-            <div class="footer-bottom">
-                <p>&copy; 2024 ToolBox Radio. All rights reserved.</p>
-            </div>
-        </div>
-    </footer>
+        </section>
+    </main>
 
     <script src="script.js"></script>
 </body>
