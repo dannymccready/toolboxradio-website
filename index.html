@@ -3,452 +3,438 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ToolBox Radio - Construction Industry Radio Station</title>
-    <meta name="description" content="The premier radio station dedicated to the construction industry and trades. Listen to the latest news, tips, and insights from construction professionals.">
-    <meta name="keywords" content="construction radio, trades radio, construction industry, toolbox radio, construction news, building trades">
-    
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    
-    <!-- Font Awesome for icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <!-- Custom CSS -->
+    <title>ToolBox Radio - The Sound of the Site</title>
+    <meta name="description" content="ToolBox Radio - The radio station for tradespeople and construction sites. Listen live, request songs, and advertise.">
     <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
-    <!-- Navigation -->
-    <nav class="navbar">
-        <div class="nav-container">
-            <div class="nav-logo">
-                <div class="logo-icon">
-                    <i class="fas fa-radio"></i>
+    <!-- Main Content: Always visible, no region check -->
+    <div id="main-content">
+        <!-- Header -->
+        <header class="main-header">
+            <div class="container header-flex">
+                <div class="logo-mascot">
+                    <span class="logo-svg">
+                        <svg width="60" height="60" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <rect x="10" y="30" width="60" height="30" rx="6" fill="#ff6b35" stroke="#2c3e50" stroke-width="3"/>
+                          <rect x="30" y="20" width="20" height="12" rx="4" fill="#f39c12" stroke="#2c3e50" stroke-width="3"/>
+                          <rect x="38" y="8" width="4" height="16" rx="2" fill="#2c3e50"/>
+                          <circle cx="40" cy="8" r="3" fill="#2c3e50"/>
+                          <circle cx="60" cy="45" r="6" fill="#fff" stroke="#2c3e50" stroke-width="2"/>
+                          <circle cx="60" cy="45" r="2" fill="#2c3e50"/>
+                          <ellipse cx="28" cy="45" rx="2" ry="2.5" fill="#2c3e50"/>
+                          <ellipse cx="52" cy="45" rx="2" ry="2.5" fill="#2c3e50"/>
+                          <path d="M32 54 Q40 60 48 54" stroke="#2c3e50" stroke-width="2" fill="none" stroke-linecap="round"/>
+                        </svg>
+                    </span>
+                    <span class="logo-text">ToolBox Radio</span>
                 </div>
-                <div class="logo-text">
-                    <h1>ToolBox Radio</h1>
-                    <p>Construction Industry Radio</p>
-                </div>
-            </div>
-            
-            <ul class="nav-menu">
-                <li><a href="#home" class="nav-link">Home</a></li>
-                <li><a href="player.html" class="nav-link">Live Player</a></li>
-                <li><a href="#about" class="nav-link">About</a></li>
-                <li><a href="advertising.html" class="nav-link">Advertising</a></li>
-                <li><a href="cms-desk.html" class="nav-link">CMS Desk</a></li>
-                <li><a href="#contact" class="nav-link">Contact</a></li>
-            </ul>
-            
-            <div class="nav-cta">
-                <a href="advertising.html" class="btn btn-primary">Advertise With Us</a>
-            </div>
-            
-            <div class="hamburger">
-                <span class="bar"></span>
-                <span class="bar"></span>
-                <span class="bar"></span>
-            </div>
-        </div>
-    </nav>
-
-    <!-- Hero Section -->
-    <section id="home" class="hero">
-        <div class="hero-background">
-            <div class="hero-overlay"></div>
-            <div class="construction-pattern">
-                <div class="pattern-circle"></div>
-                <div class="pattern-square"></div>
-                <div class="pattern-diamond"></div>
-            </div>
-        </div>
-        
-        <div class="hero-content">
-            <div class="hero-text">
-                <h1 class="hero-title">
-                    <span class="text-gradient">ToolBox</span> Radio
-                </h1>
-                <p class="hero-subtitle">The Premier Radio Station for the Construction Industry & Trades</p>
-                <p class="hero-description">
-                    Stay connected with the latest industry news, expert insights, and professional tips. 
-                    From construction updates to trade secrets, we bring you the pulse of the building world.
-                </p>
-                
-                <div class="hero-buttons">
-                    <button class="btn btn-primary btn-large" onclick="openPlayer()">
-                        <i class="fas fa-play"></i>
-                        Listen Live Now
-                    </button>
-                    <button class="btn btn-secondary btn-large">
-                        <i class="fas fa-radio"></i>
-                        Learn More
-                    </button>
-                </div>
-            </div>
-            
-            <div class="hero-stats">
-                <div class="stat-item">
-                    <div class="stat-icon">
-                        <i class="fas fa-hard-hat"></i>
-                    </div>
-                    <div class="stat-number">24/7</div>
-                    <div class="stat-label">Live Coverage</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-icon">
-                        <i class="fas fa-users"></i>
-                    </div>
-                    <div class="stat-number">10K+</div>
-                    <div class="stat-label">Industry Listeners</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-icon">
-                        <i class="fas fa-wrench"></i>
-                    </div>
-                    <div class="stat-number">50+</div>
-                    <div class="stat-label">Expert Shows</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-icon">
-                        <i class="fas fa-chart-line"></i>
-                    </div>
-                    <div class="stat-number">100%</div>
-                    <div class="stat-label">Industry Focused</div>
-                </div>
-            </div>
-        </div>
-        
-        <div class="scroll-indicator">
-            <div class="scroll-arrow"></div>
-        </div>
-    </section>
-
-    <!-- Features Section -->
-    <section id="features" class="features">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">
-                    Why Choose <span class="text-gradient">ToolBox Radio</span>?
-                </h2>
-                <p class="section-description">
-                    We're not just another radio station. We're your construction industry companion, 
-                    delivering the content that matters to professionals like you.
-                </p>
-            </div>
-            
-            <div class="features-grid">
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-radio"></i>
-                    </div>
-                    <h3>24/7 Live Streaming</h3>
-                    <p>Round-the-clock construction industry coverage with live shows, news updates, and expert interviews.</p>
-                </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-hard-hat"></i>
-                    </div>
-                    <h3>Industry Expert Hosts</h3>
-                    <p>Shows hosted by construction professionals, contractors, and industry leaders sharing real-world insights.</p>
-                </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-wrench"></i>
-                    </div>
-                    <h3>Trade-Specific Content</h3>
-                    <p>Specialized programming for electricians, plumbers, carpenters, and all construction trades.</p>
-                </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-users"></i>
-                    </div>
-                    <h3>Community Connection</h3>
-                    <p>Connect with fellow professionals, share experiences, and build your network within the industry.</p>
-                </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-chart-line"></i>
-                    </div>
-                    <h3>Market Updates</h3>
-                    <p>Stay informed with the latest construction trends, material prices, and industry forecasts.</p>
-                </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-clock"></i>
-                    </div>
-                    <h3>Convenient Listening</h3>
-                    <p>Listen on your schedule - stream live or catch up with on-demand content anytime, anywhere.</p>
-                </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-shield-alt"></i>
-                    </div>
-                    <h3>Safety First</h3>
-                    <p>Regular safety tips, compliance updates, and best practices to keep your team protected.</p>
-                </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-award"></i>
-                    </div>
-                    <h3>Quality Content</h3>
-                    <p>Curated content that educates, entertains, and empowers construction professionals.</p>
-                </div>
-            </div>
-            
-            <div class="cta-section">
-                <div class="cta-card">
-                    <h3>Ready to Tune In?</h3>
-                    <p>Join thousands of construction professionals who trust ToolBox Radio for their daily industry insights.</p>
-                    <div class="cta-buttons">
-                        <button class="btn btn-primary">
-                            <i class="fas fa-radio"></i>
-                            Start Listening Now
-                        </button>
-                        <button class="btn btn-secondary">
-                            <i class="fas fa-users"></i>
-                            Join Our Community
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- About Section -->
-    <section id="about" class="about">
-        <div class="container">
-            <div class="about-content">
-                <div class="about-text">
-                    <h2 class="section-title">About <span class="text-gradient">ToolBox Radio</span></h2>
-                    <p class="about-description">
-                        ToolBox Radio was founded with a simple mission: to provide construction professionals 
-                        with a dedicated platform for industry news, insights, and community connection. 
-                        We understand the unique challenges and opportunities in the construction world, 
-                        and we're here to support your success.
-                    </p>
-                    <p class="about-description">
-                        Our team consists of industry veterans, contractors, and construction professionals 
-                        who bring real-world experience to every broadcast. We're not just talking about 
-                        construction – we're living it, breathing it, and sharing it with you.
-                    </p>
-                    <div class="about-stats">
-                        <div class="about-stat">
-                            <div class="stat-number">5+</div>
-                            <div class="stat-label">Years of Service</div>
-                        </div>
-                        <div class="about-stat">
-                            <div class="stat-number">1000+</div>
-                            <div class="stat-label">Episodes Produced</div>
-                        </div>
-                        <div class="about-stat">
-                            <div class="stat-number">50+</div>
-                            <div class="stat-label">Industry Partners</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="about-image">
-                    <div class="image-placeholder">
-                        <i class="fas fa-construction"></i>
-                        <p>Construction Team at Work</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- CMS Desk Promotion Section -->
-    <section class="cms-desk-promo">
-        <div class="container">
-            <div class="promo-content">
-                <div class="promo-text">
-                    <h2 class="section-title">
-                        Powered by <span class="text-gradient">CMS Desk</span>
-                    </h2>
-                    <p class="promo-description">
-                        ToolBox Radio is proud to partner with CMS Desk, the leading construction and 
-                        business management platform. Together, we're revolutionizing how construction 
-                        professionals manage their projects and grow their businesses.
-                    </p>
-                    <div class="promo-features">
-                        <div class="promo-feature">
-                            <i class="fas fa-check-circle"></i>
-                            <span>Integrated project management</span>
-                        </div>
-                        <div class="promo-feature">
-                            <i class="fas fa-check-circle"></i>
-                            <span>Real-time collaboration tools</span>
-                        </div>
-                        <div class="promo-feature">
-                            <i class="fas fa-check-circle"></i>
-                            <span>Financial tracking & reporting</span>
-                        </div>
-                        <div class="promo-feature">
-                            <i class="fas fa-check-circle"></i>
-                            <span>Mobile app for on-site access</span>
-                        </div>
-                    </div>
-                    <a href="cms-desk.html" class="btn btn-accent">
-                        <i class="fas fa-external-link-alt"></i>
-                        Learn More About CMS Desk
+                <nav class="main-nav">
+                    <a href="#home" class="nav-link">Home</a>
+                    <a href="#nowplaying" class="nav-link">Now Playing</a>
+                    <a href="#shows" class="nav-link">Shows</a>
+                    <a href="#request" class="nav-link">Request</a>
+                    <a href="#advertise" class="nav-link">Advertise</a>
+                    <a href="#about" class="nav-link">About</a>
+                    <a href="http://134.209.28.199/dashboard" class="nav-link login-btn" target="_blank" onclick="openDashboard(event)">
+                        <i class="fas fa-sign-in-alt"></i> Login
                     </a>
-                </div>
-                <div class="promo-image">
-                    <div class="image-placeholder">
-                        <i class="fas fa-desktop"></i>
-                        <p>CMS Desk Platform</p>
-                    </div>
-                </div>
+                </nav>
             </div>
-        </div>
-    </section>
+        </header>
 
-    <!-- Contact Section -->
-    <section id="contact" class="contact">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Get in <span class="text-gradient">Touch</span></h2>
-                <p class="section-description">
-                    Have questions about ToolBox Radio or want to learn more about advertising opportunities? 
-                    We'd love to hear from you.
-                </p>
+        <!-- Hero Section -->
+        <section id="home" class="hero mainstream-hero">
+            <div class="container hero-flex">
+                <div class="hero-main">
+                    <h1 class="hero-title">The Sound of the Site</h1>
+                    <p class="hero-tagline">Music, banter, and site news for tradespeople and construction crews across the UK & Ireland.</p>
+                    <div class="hero-cta">
+                        <a href="#nowplaying" class="btn btn-primary btn-lg"><i class="fas fa-play"></i> Listen Live</a>
+                        <a href="#request" class="btn btn-accent btn-lg"><i class="fas fa-paper-plane"></i> Request a Song</a>
+                    </div>
+                </div>
+                <div class="hero-art">
+                    <img src="https://img.icons8.com/ios-filled/100/ff6b35/construction.png" alt="Construction" class="hero-construction-img" />
+                    <img src="https://img.icons8.com/ios-filled/100/2c3e50/radio.png" alt="Radio" class="hero-radio-img" />
+                </div>
             </div>
-            
-            <div class="contact-content">
-                <div class="contact-info">
-                    <div class="contact-item">
-                        <div class="contact-icon">
-                            <i class="fas fa-envelope"></i>
-                        </div>
-                        <div class="contact-details">
-                            <h3>Email Us</h3>
-                            <p>info@toolboxradio.com</p>
-                        </div>
-                    </div>
-                    
-                    <div class="contact-item">
-                        <div class="contact-icon">
-                            <i class="fas fa-phone"></i>
-                        </div>
-                        <div class="contact-details">
-                            <h3>Call Us</h3>
-                            <p>+1 (555) 123-4567</p>
-                        </div>
-                    </div>
-                    
-                    <div class="contact-item">
-                        <div class="contact-icon">
-                            <i class="fas fa-map-marker-alt"></i>
-                        </div>
-                        <div class="contact-details">
-                            <h3>Visit Us</h3>
-                            <p>123 Construction Ave<br>Building City, BC 12345</p>
+        </section>
+
+        <!-- Now Playing Section -->
+        <section id="nowplaying" class="nowplaying-section">
+            <div class="container">
+                <div class="section-header">
+                    <h2><i class="fas fa-broadcast-tower"></i> Now Playing</h2>
+                    <p>Live from the ToolBox Radio studio</p>
+                </div>
+                <div class="nowplaying-flex">
+                    <div class="nowplaying-player">
+                        <!-- Embedded Player: Always visible -->
+                        <iframe 
+                            src="http://134.209.28.199/public/toolbox_radio/embed"
+                            width="100%" 
+                            height="150" 
+                            frameborder="0" 
+                            allow="autoplay; encrypted-media">
+                        </iframe>
+                        <div class="embed-actions">
+                            <a href="http://134.209.28.199/public/toolbox_radio" target="_blank" class="btn btn-primary">
+                                <i class="fas fa-external-link-alt"></i> Open Full Player
+                            </a>
                         </div>
                     </div>
+                    <div class="nowplaying-info">
+                        <h3>Current Show: <span id="current-show">Site Anthems</span></h3>
+                        <p>Presenter: <span id="current-presenter">Big Dave</span></p>
+                        <p>Song: <span id="current-song-title">Loading...</span></p>
+                        <div class="nowplaying-icons">
+                            <i class="fas fa-hard-hat"></i>
+                            <i class="fas fa-microphone-alt"></i>
+                            <i class="fas fa-music"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section id="features" class="features">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">
+                        Why Choose <span class="text-gradient">ToolBox Radio</span>?
+                    </h2>
+                    <p class="section-description">
+                        We're not just another radio station. We're your construction industry companion, 
+                        delivering the content that matters to professionals like you.
+                    </p>
                 </div>
                 
-                <div class="contact-form">
-                    <form id="contactForm">
-                        <div class="form-group">
-                            <input type="text" id="name" name="name" placeholder="Your Name" required>
-                        </div>
-                        <div class="form-group">
-                            <input type="email" id="email" name="email" placeholder="Your Email" required>
-                        </div>
-                        <div class="form-group">
-                            <input type="text" id="subject" name="subject" placeholder="Subject" required>
-                        </div>
-                        <div class="form-group">
-                            <textarea id="message" name="message" placeholder="Your Message" rows="5" required></textarea>
-                        </div>
-                        <button type="submit" class="btn btn-primary">
-                            <i class="fas fa-paper-plane"></i>
-                            Send Message
-                        </button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <div class="footer-logo">
-                        <div class="logo-icon">
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">
                             <i class="fas fa-radio"></i>
                         </div>
-                        <div class="logo-text">
-                            <h3>ToolBox Radio</h3>
-                            <p>Construction Industry Radio</p>
+                        <h3>24/7 Live Streaming</h3>
+                        <p>Round-the-clock construction industry coverage with live shows, news updates, and expert interviews.</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-hard-hat"></i>
+                        </div>
+                        <h3>Industry Expert Hosts</h3>
+                        <p>Shows hosted by construction professionals, contractors, and industry leaders sharing real-world insights.</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-wrench"></i>
+                        </div>
+                        <h3>Trade-Specific Content</h3>
+                        <p>Specialized programming for electricians, plumbers, carpenters, and all construction trades.</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <h3>Community Connection</h3>
+                        <p>Connect with fellow professionals, share experiences, and build your network within the industry.</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <h3>Market Updates</h3>
+                        <p>Stay informed with the latest construction trends, material prices, and industry forecasts.</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <h3>Convenient Listening</h3>
+                        <p>Listen on your schedule - stream live or catch up with on-demand content anytime, anywhere.</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <h3>Safety First</h3>
+                        <p>Regular safety tips, compliance updates, and best practices to keep your team protected.</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-award"></i>
+                        </div>
+                        <h3>Quality Content</h3>
+                        <p>Curated content that educates, entertains, and empowers construction professionals.</p>
+                    </div>
+                </div>
+                
+                <div class="cta-section">
+                    <div class="cta-card">
+                        <h3>Ready to Tune In?</h3>
+                        <p>Join thousands of construction professionals who trust ToolBox Radio for their daily industry insights.</p>
+                        <div class="cta-buttons">
+                            <button class="btn btn-primary">
+                                <i class="fas fa-radio"></i>
+                                Start Listening Now
+                            </button>
+                            <button class="btn btn-secondary">
+                                <i class="fas fa-users"></i>
+                                Join Our Community
+                            </button>
                         </div>
                     </div>
-                    <p class="footer-description">
-                        The premier radio station dedicated to the construction industry and trades. 
-                        Connecting professionals through quality content and community.
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="about">
+            <div class="container">
+                <div class="about-content">
+                    <div class="about-text">
+                        <h2 class="section-title">About <span class="text-gradient">ToolBox Radio</span></h2>
+                        <p class="about-description">
+                            ToolBox Radio was founded with a simple mission: to provide construction professionals 
+                            with a dedicated platform for industry news, insights, and community connection. 
+                            We understand the unique challenges and opportunities in the construction world, 
+                            and we're here to support your success.
+                        </p>
+                        <p class="about-description">
+                            Our team consists of industry veterans, contractors, and construction professionals 
+                            who bring real-world experience to every broadcast. We're not just talking about 
+                            construction – we're living it, breathing it, and sharing it with you.
+                        </p>
+                        <div class="about-stats">
+                            <div class="about-stat">
+                                <div class="stat-number">5+</div>
+                                <div class="stat-label">Years of Service</div>
+                            </div>
+                            <div class="about-stat">
+                                <div class="stat-number">1000+</div>
+                                <div class="stat-label">Episodes Produced</div>
+                            </div>
+                            <div class="about-stat">
+                                <div class="stat-number">50+</div>
+                                <div class="stat-label">Industry Partners</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="about-image">
+                        <div class="image-placeholder">
+                            <i class="fas fa-construction"></i>
+                            <p>Construction Team at Work</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CMS Desk Promotion Section -->
+        <section class="cms-desk-promo">
+            <div class="container">
+                <div class="promo-content">
+                    <div class="promo-text">
+                        <h2 class="section-title">
+                            Powered by <span class="text-gradient">CMS Desk</span>
+                        </h2>
+                        <p class="promo-description">
+                            ToolBox Radio is proud to partner with CMS Desk, the leading construction and 
+                            business management platform. Together, we're revolutionizing how construction 
+                            professionals manage their projects and grow their businesses.
+                        </p>
+                        <div class="promo-features">
+                            <div class="promo-feature">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Integrated project management</span>
+                            </div>
+                            <div class="promo-feature">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Real-time collaboration tools</span>
+                            </div>
+                            <div class="promo-feature">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Financial tracking & reporting</span>
+                            </div>
+                            <div class="promo-feature">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Mobile app for on-site access</span>
+                            </div>
+                        </div>
+                        <a href="cms-desk.html" class="btn btn-accent">
+                            <i class="fas fa-external-link-alt"></i>
+                            Learn More About CMS Desk
+                        </a>
+                    </div>
+                    <div class="promo-image">
+                        <div class="image-placeholder">
+                            <i class="fas fa-desktop"></i>
+                            <p>CMS Desk Platform</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="contact">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">Get in <span class="text-gradient">Touch</span></h2>
+                    <p class="section-description">
+                        Have questions about ToolBox Radio or want to learn more about advertising opportunities? 
+                        We'd love to hear from you.
                     </p>
-                    <div class="social-links">
-                        <a href="#" class="social-link"><i class="fab fa-facebook"></i></a>
-                        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
-                        <a href="#" class="social-link"><i class="fab fa-linkedin"></i></a>
-                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                </div>
+                
+                <div class="contact-content">
+                    <div class="contact-info">
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <div class="contact-details">
+                                <h3>Email Us</h3>
+                                <p>info@toolboxradio.com</p>
+                            </div>
+                        </div>
+                        
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fas fa-phone"></i>
+                            </div>
+                            <div class="contact-details">
+                                <h3>Call Us</h3>
+                                <p>+1 (555) 123-4567</p>
+                            </div>
+                        </div>
+                        
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <div class="contact-details">
+                                <h3>Visit Us</h3>
+                                <p>123 Construction Ave<br>Building City, BC 12345</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-form">
+                        <form id="contactForm">
+                            <div class="form-group">
+                                <input type="text" id="name" name="name" placeholder="Your Name" required>
+                            </div>
+                            <div class="form-group">
+                                <input type="email" id="email" name="email" placeholder="Your Email" required>
+                            </div>
+                            <div class="form-group">
+                                <input type="text" id="subject" name="subject" placeholder="Subject" required>
+                            </div>
+                            <div class="form-group">
+                                <textarea id="message" name="message" placeholder="Your Message" rows="5" required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-paper-plane"></i>
+                                Send Message
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="container">
+                <div class="footer-content">
+                    <div class="footer-section">
+                        <div class="footer-logo">
+                            <div class="logo-icon">
+                                <i class="fas fa-radio"></i>
+                            </div>
+                            <div class="logo-text">
+                                <h3>ToolBox Radio</h3>
+                                <p>Construction Industry Radio</p>
+                            </div>
+                        </div>
+                        <p class="footer-description">
+                            The premier radio station dedicated to the construction industry and trades. 
+                            Connecting professionals through quality content and community.
+                        </p>
+                        <div class="social-links">
+                            <a href="#" class="social-link"><i class="fab fa-facebook"></i></a>
+                            <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                            <a href="#" class="social-link"><i class="fab fa-linkedin"></i></a>
+                            <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                        </div>
+                    </div>
+                    
+                    <div class="footer-section">
+                        <h4>Quick Links</h4>
+                        <ul class="footer-links">
+                            <li><a href="#home">Home</a></li>
+                            <li><a href="player.html">Live Player</a></li>
+                            <li><a href="#about">About</a></li>
+                            <li><a href="advertising.html">Advertising</a></li>
+                            <li><a href="cms-desk.html">CMS Desk</a></li>
+                            <li><a href="#contact">Contact</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="footer-section">
+                        <h4>Services</h4>
+                        <ul class="footer-links">
+                            <li><a href="#">Live Streaming</a></li>
+                            <li><a href="#">On-Demand Content</a></li>
+                            <li><a href="#">Industry News</a></li>
+                            <li><a href="#">Expert Interviews</a></li>
+                            <li><a href="#">Community Events</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="footer-section">
+                        <h4>Newsletter</h4>
+                        <p>Stay updated with the latest construction industry news and ToolBox Radio updates.</p>
+                        <form class="newsletter-form">
+                            <input type="email" placeholder="Enter your email" required>
+                            <button type="submit" class="btn btn-primary">Subscribe</button>
+                        </form>
                     </div>
                 </div>
                 
-                <div class="footer-section">
-                    <h4>Quick Links</h4>
-                    <ul class="footer-links">
-                        <li><a href="#home">Home</a></li>
-                        <li><a href="player.html">Live Player</a></li>
-                        <li><a href="#about">About</a></li>
-                        <li><a href="advertising.html">Advertising</a></li>
-                        <li><a href="cms-desk.html">CMS Desk</a></li>
-                        <li><a href="#contact">Contact</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-section">
-                    <h4>Services</h4>
-                    <ul class="footer-links">
-                        <li><a href="#">Live Streaming</a></li>
-                        <li><a href="#">On-Demand Content</a></li>
-                        <li><a href="#">Industry News</a></li>
-                        <li><a href="#">Expert Interviews</a></li>
-                        <li><a href="#">Community Events</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-section">
-                    <h4>Newsletter</h4>
-                    <p>Stay updated with the latest construction industry news and ToolBox Radio updates.</p>
-                    <form class="newsletter-form">
-                        <input type="email" placeholder="Enter your email" required>
-                        <button type="submit" class="btn btn-primary">Subscribe</button>
-                    </form>
+                <div class="footer-bottom">
+                    <p>&copy; 2024 ToolBox Radio. All rights reserved.</p>
+                    <div class="footer-bottom-links">
+                        <a href="#">Privacy Policy</a>
+                        <a href="#">Terms of Service</a>
+                        <a href="#">Cookie Policy</a>
+                    </div>
                 </div>
             </div>
-            
-            <div class="footer-bottom">
-                <p>&copy; 2024 ToolBox Radio. All rights reserved.</p>
-                <div class="footer-bottom-links">
-                    <a href="#">Privacy Policy</a>
-                    <a href="#">Terms of Service</a>
-                    <a href="#">Cookie Policy</a>
-                </div>
-            </div>
-        </div>
-    </footer>
-
-    <!-- JavaScript -->
+        </footer>
+    </div>
     <script src="script.js"></script>
+    <script>
+    // Request form handler
+    const reqForm = document.getElementById('request-form');
+    if (reqForm) {
+        reqForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Thank you for your request! We will try to play your song or shoutout soon.');
+            this.reset();
+        });
+    }
+    </script>
 </body>
 </html> 
