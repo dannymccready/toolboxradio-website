@@ -1,209 +1,174 @@
 # ToolBox Radio Website
 
-A modern, professional website for ToolBox Radio - the premier radio station dedicated to the construction industry and trades.
+A modern, responsive website for ToolBox Radio - the construction industry's premier music and radio provider, exclusively available through the CMS Desk platform.
 
-## 🌟 Features
+## 🎵 Features
 
-### Main Website (`index.html`)
-- **Hero Section**: Eye-catching introduction with construction industry theme
-- **Features Section**: 8 key features highlighting what makes ToolBox Radio special
-- **About Section**: Information about the station and its mission
-- **CMS Desk Promotion**: Showcasing the partnership with CMS Desk platform
-- **Contact Section**: Contact form and information
-- **Responsive Design**: Works perfectly on all devices
+### Core Functionality
+- **Floating Radio Player**: Persistent radio player that stays in place while navigating different pages
+- **Responsive Design**: Fully responsive layout that works on all devices
+- **Modern UI/UX**: Clean, professional design targeting the construction industry
+- **Smooth Animations**: Engaging scroll animations and interactive elements
 
-### Advertising Page (`advertising.html`)
-- **Audience Statistics**: Detailed breakdown of listener demographics
-- **Advertising Benefits**: Why businesses should advertise on ToolBox Radio
-- **Pricing Packages**: Three tiers (Starter, Professional, Enterprise)
-- **Contact Form**: Dedicated advertising inquiry form
-- **Professional Design**: Focused on converting visitors to advertisers
+### Key Sections
+1. **Hero Section**: Eye-catching introduction with construction-themed visuals
+2. **About Section**: Features and benefits of ToolBox Radio
+3. **CMS Desk Integration**: Showcases the exclusive partnership with CMS Desk
+4. **Advertising Packages**: Three-tier advertising options with pricing
+5. **Contact Form**: Interactive contact form with validation
+6. **Floating Player**: Embedded radio player that persists across page navigation
 
-### CMS Desk Page (`cms-desk.html`)
-- **Partnership Showcase**: Highlighting the collaboration between ToolBox Radio and CMS Desk
-- **Platform Features**: 6 key features of the CMS Desk construction management platform
-- **User Testimonials**: Real feedback from construction professionals
-- **Statistics**: Impressive numbers showing platform adoption
-- **Demo Section**: Call-to-action for platform demonstrations
-
-## 🎨 Design Features
-
-### Color Scheme
-- **Primary**: Orange gradient (#ed7519 to #de5a0f) - Construction industry theme
-- **Secondary**: Slate grays (#1e293b to #64748b) - Professional and modern
-- **Accent**: Blue gradient (#3b82f6 to #2563eb) - Trust and technology
-
-### Typography
-- **Headings**: Poppins font family - Modern and professional
-- **Body Text**: Inter font family - Highly readable
-
-### Interactive Elements
-- **Hover Effects**: Smooth animations on buttons and cards
-- **Mobile Navigation**: Hamburger menu for mobile devices
-- **Smooth Scrolling**: Navigation links scroll smoothly to sections
-- **Form Validation**: Client-side validation with user-friendly notifications
-- **Loading States**: Visual feedback during form submissions
-
-## 📱 Responsive Design
-
-The website is fully responsive and optimized for:
-- **Desktop**: Full-featured experience with side-by-side layouts
-- **Tablet**: Adapted layouts with appropriate spacing
-- **Mobile**: Stacked layouts with touch-friendly navigation
+### Technical Features
+- **Mobile-First Design**: Optimized for mobile devices
+- **Smooth Scrolling**: Seamless navigation between sections
+- **Form Validation**: Client-side validation with user feedback
+- **Loading Animations**: Smooth page load and element animations
+- **Counter Animations**: Animated statistics display
+- **Parallax Effects**: Subtle parallax scrolling in hero section
 
 ## 🚀 Getting Started
 
 ### Prerequisites
 - A modern web browser (Chrome, Firefox, Safari, Edge)
-- A local web server (optional, for development)
+- No additional dependencies required - everything is included via CDN
 
 ### Installation
-1. Download all files to your web server directory
-2. Ensure all files are in the same directory:
-   - `index.html`
-   - `advertising.html`
-   - `cms-desk.html`
-   - `styles.css`
-   - `script.js`
+1. Clone or download the project files
+2. Open `index.html` in your web browser
+3. The website is ready to use!
 
-### Running Locally
-1. Open `index.html` in your web browser
-2. Or use a local server:
-   ```bash
-   # Using Python
-   python -m http.server 8000
-   
-   # Using Node.js
-   npx serve .
-   
-   # Using PHP
-   php -S localhost:8000
-   ```
-
-## 📁 File Structure
-
+### File Structure
 ```
-toolbox-radio/
-├── index.html          # Main homepage
-├── advertising.html    # Advertising page
-├── cms-desk.html      # CMS Desk partnership page
-├── styles.css         # All CSS styles
-├── script.js          # JavaScript functionality
-└── README.md          # This file
+ToolBox Radio/
+├── index.html          # Main HTML file
+├── styles.css          # All CSS styles
+├── script.js           # JavaScript functionality
+└── README.md           # This documentation
 ```
 
-## 🛠️ Customization
+## 🎨 Design System
 
-### Colors
-Edit the CSS variables in `styles.css` to change the color scheme:
-```css
-/* Primary colors */
-.btn-primary {
-    background: linear-gradient(135deg, #ed7519 0%, #de5a0f 100%);
-}
+### Color Palette
+- **Primary Blue**: #2563eb (Used for buttons, links, accents)
+- **Secondary Purple**: #667eea to #764ba2 (Gradient backgrounds)
+- **Success Green**: #10b981 (Success states, checkmarks)
+- **Error Red**: #ef4444 (Error states, warnings)
+- **Neutral Grays**: #1f2937, #6b7280, #f8fafc (Text, backgrounds)
 
-/* Secondary colors */
-.text-secondary-900 { color: #1e293b; }
-```
+### Typography
+- **Font Family**: Inter (Google Fonts)
+- **Weights**: 300, 400, 500, 600, 700
+- **Responsive**: Scales appropriately across device sizes
 
-### Content
-- **Text**: Edit the HTML files directly to change text content
-- **Images**: Replace placeholder divs with actual images
-- **Contact Information**: Update phone numbers, emails, and addresses
-- **Social Media**: Update social media links in the footer
+### Components
+- **Buttons**: Primary, secondary, and outline variants
+- **Cards**: Feature cards, advertising packages, statistics
+- **Forms**: Contact form with validation
+- **Navigation**: Fixed navbar with mobile hamburger menu
 
-### Features
-- **Radio Player**: Add your embedded player to the hero section
-- **Analytics**: Add Google Analytics or other tracking codes
-- **Forms**: Connect contact forms to your email service or CRM
+## 📱 Responsive Breakpoints
 
-## 🎯 Key Sections to Customize
+- **Mobile**: < 480px
+- **Tablet**: 480px - 768px
+- **Desktop**: > 768px
 
-### 1. Contact Information
-Update in all HTML files:
-- Phone numbers
-- Email addresses
-- Physical address
-- Social media links
+## 🎵 Radio Player Integration
 
-### 2. Radio Player Integration
-Add your embedded player to the hero section in `index.html`:
+The floating radio player uses the provided embed code:
 ```html
-<!-- Replace the "Listen Live Now" button with your player -->
-<div class="radio-player">
-    <!-- Your embedded player code here -->
-</div>
+<iframe src="http://134.209.28.199/public/toolbox_radio/embed?theme=dark" 
+        frameborder="0" 
+        allowtransparency="true" 
+        style="width: 100%; min-height: 150px; border: 0;">
+</iframe>
 ```
 
-### 3. CMS Desk Integration
-- Update CMS Desk features and statistics
-- Add actual demo video
-- Update partnership details
+### Player Features
+- **Collapsible**: Users can minimize/maximize the player
+- **Persistent**: Stays in position while navigating
+- **Responsive**: Adapts to different screen sizes
+- **Dark Theme**: Matches the embedded player theme
 
-### 4. Advertising Information
-- Update pricing packages
-- Modify audience statistics
-- Add your advertising policies
+## 💼 Advertising Packages
 
-## 🔧 Technical Features
+### Basic Package - $299/month
+- 30-second audio spots
+- 5 plays per day
+- Basic analytics
+- Construction industry targeting
 
-### JavaScript Functionality
-- **Mobile Navigation**: Hamburger menu toggle
-- **Smooth Scrolling**: Navigation links scroll to sections
-- **Form Handling**: Contact and newsletter form processing
-- **Animations**: Intersection Observer for scroll animations
-- **Notifications**: User-friendly success/error messages
-- **Counter Animations**: Animated statistics on scroll
+### Professional Package - $599/month (Most Popular)
+- 30 & 60-second audio spots
+- 15 plays per day
+- Advanced analytics & reporting
+- Geographic targeting
+- Banner ad placement
+- Priority scheduling
 
-### CSS Features
-- **CSS Grid & Flexbox**: Modern layout techniques
-- **CSS Custom Properties**: Easy theming
-- **Animations**: Smooth transitions and hover effects
-- **Media Queries**: Responsive breakpoints
-- **Gradients**: Modern visual effects
+### Premium Package - $999/month
+- Custom audio production
+- Unlimited plays
+- Real-time analytics dashboard
+- Multi-region targeting
+- Premium banner placement
+- Dedicated account manager
+- Custom sponsorship opportunities
 
-## 📊 Performance Optimizations
+## 🔧 Customization
 
-- **Minimal Dependencies**: Only Font Awesome for icons
-- **Optimized Images**: Placeholder divs ready for optimized images
-- **Efficient CSS**: Minimal, focused styles
-- **Fast Loading**: No heavy frameworks or libraries
+### Modifying Colors
+Update the CSS custom properties in `styles.css`:
+```css
+:root {
+    --primary-color: #2563eb;
+    --secondary-color: #667eea;
+    --success-color: #10b981;
+    --error-color: #ef4444;
+}
+```
 
-## 🔒 Security Considerations
+### Adding New Sections
+1. Add HTML structure to `index.html`
+2. Add corresponding styles to `styles.css`
+3. Add any JavaScript functionality to `script.js`
 
-- **Form Validation**: Client-side validation implemented
-- **XSS Prevention**: Proper HTML escaping
-- **HTTPS Ready**: All external resources use HTTPS
+### Updating Content
+- **Company Information**: Update contact details in the contact section
+- **Pricing**: Modify advertising package prices and features
+- **Statistics**: Update the numbers in the advertising stats section
 
-## 📈 SEO Features
+## 🌐 Browser Support
 
-- **Meta Tags**: Proper title, description, and keywords
-- **Semantic HTML**: Proper heading structure and semantic elements
-- **Open Graph**: Social media sharing optimization
-- **Structured Data**: Ready for schema markup
+- **Chrome**: 60+
+- **Firefox**: 55+
+- **Safari**: 12+
+- **Edge**: 79+
 
-## 🎵 Next Steps
+## 📞 Contact Information
 
-1. **Add Your Radio Player**: Replace the placeholder with your actual embedded player
-2. **Update Content**: Customize all text and images to match your brand
-3. **Add Analytics**: Implement Google Analytics or other tracking
-4. **Connect Forms**: Set up form handling for contact and advertising inquiries
-5. **Add Images**: Replace placeholder divs with actual construction industry images
-6. **Test Thoroughly**: Test on all devices and browsers
-7. **Deploy**: Upload to your web hosting service
+For questions about the website or ToolBox Radio:
+- **Email**: info@toolboxradio.com
+- **Phone**: (555) 123-4567
+- **Business Hours**: Mon-Fri: 8AM-6PM EST
 
-## 📞 Support
+## 🚀 Deployment
 
-For questions about customizing or extending the website:
-- Review the code comments for guidance
-- Check browser console for any JavaScript errors
-- Test on multiple devices and browsers
-- Validate HTML and CSS for best practices
+The website is ready for deployment to any web hosting service:
 
-## 🎉 Congratulations!
+1. **Static Hosting**: Upload files to services like Netlify, Vercel, or GitHub Pages
+2. **Traditional Hosting**: Upload to any web server
+3. **CDN**: Serve static files through a CDN for better performance
 
-You now have a professional, modern website for ToolBox Radio that showcases your construction industry radio station and partnerships. The website is ready to help you connect with construction professionals and grow your audience!
+### Performance Optimization
+- Images are optimized and use modern formats
+- CSS and JavaScript are minified-ready
+- Fonts are loaded efficiently via Google Fonts
+- No heavy dependencies or frameworks
+
+## 📄 License
+
+This project is proprietary to ToolBox Radio. All rights reserved.
 
 ---
 
-**ToolBox Radio** - Connecting the Construction Industry Through Quality Content 🎵 
+**Built with ❤️ for the construction industry** 
