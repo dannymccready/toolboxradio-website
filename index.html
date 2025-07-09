@@ -23,15 +23,40 @@
         
         <main class="main-content">
             <div class="player-container">
+                <!-- Primary iframe with better mobile support -->
                 <iframe 
+                    id="radioPlayer"
                     src="https://radio.toolboxradio.com/public/toolbox_radio/embed?theme=light" 
                     frameborder="0" 
                     allowtransparency="true" 
                     allowfullscreen="true"
+                    allow="autoplay; encrypted-media"
                     loading="lazy"
-                    style="width: 100%; min-height: 150px; border: 0;"
-                    title="Toolbox Radio Player">
+                    style="width: 100%; min-height: 200px; border: 0;"
+                    title="Toolbox Radio Player"
+                    onload="iframeLoaded()"
+                    onerror="iframeError()">
                 </iframe>
+                
+                <!-- Fallback for mobile devices -->
+                <div id="mobileFallback" class="mobile-fallback" style="display: none;">
+                    <div class="fallback-content">
+                        <div class="fallback-icon">📻</div>
+                        <h3>Toolbox Radio</h3>
+                        <p>Click below to open the radio player</p>
+                        <a href="https://radio.toolboxradio.com/public/toolbox_radio/embed?theme=light" 
+                           target="_blank" 
+                           class="fallback-button">
+                            Open Radio Player
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Loading indicator -->
+                <div id="loadingIndicator" class="loading-indicator">
+                    <div class="spinner"></div>
+                    <p>Loading radio player...</p>
+                </div>
             </div>
         </main>
         
@@ -39,5 +64,65 @@
             <p>&copy; 2024 Toolbox Radio. All rights reserved.</p>
         </footer>
     </div>
+    
+    <script>
+        // Check if device is mobile
+        function isMobile() {
+            return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || 
+                   window.innerWidth <= 768;
+        }
+        
+        // Handle iframe load success
+        function iframeLoaded() {
+            console.log('Iframe loaded successfully');
+            document.getElementById('loadingIndicator').style.display = 'none';
+            document.getElementById('radioPlayer').style.display = 'block';
+        }
+        
+        // Handle iframe load error
+        function iframeError() {
+            console.log('Iframe failed to load');
+            document.getElementById('loadingIndicator').style.display = 'none';
+            
+            if (isMobile()) {
+                // Show mobile fallback
+                document.getElementById('mobileFallback').style.display = 'block';
+                document.getElementById('radioPlayer').style.display = 'none';
+            } else {
+                // Show error message for desktop
+                document.getElementById('radioPlayer').style.display = 'block';
+            }
+        }
+        
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            const iframe = document.getElementById('radioPlayer');
+            const loadingIndicator = document.getElementById('loadingIndicator');
+            
+            // Hide iframe initially, show loading
+            iframe.style.display = 'none';
+            loadingIndicator.style.display = 'block';
+            
+            // Set timeout for iframe loading
+            setTimeout(function() {
+                if (iframe.style.display === 'none') {
+                    iframeError();
+                }
+            }, 10000); // 10 second timeout
+            
+            // Check if iframe is actually visible after load
+            iframe.addEventListener('load', function() {
+                setTimeout(function() {
+                    const rect = iframe.getBoundingClientRect();
+                    if (rect.height < 50) {
+                        // Iframe is too small, probably not loading properly
+                        iframeError();
+                    } else {
+                        iframeLoaded();
+                    }
+                }, 2000);
+            });
+        });
+    </script>
 </body>
 </html> 
