@@ -2,127 +2,575 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="format-detection" content="telephone=no">
-    <title>Toolbox Radio</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ToolBox Radio - Non-Stop Construction Music</title>
     <link rel="stylesheet" href="styles.css">
-    <!-- Fallback font loading for better mobile performance -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
-    <div class="container">
-        <header class="header">
-            <div class="logo-container">
-                <h1 class="logo">Toolbox Radio 4</h1>
-                <div class="logo-subtitle">Live Music & Entertainment</div>
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loading-content">
+            <div class="loading-logo">
+                <i class="fas fa-tools"></i>
+                <span>ToolBox Radio</span>
             </div>
-        </header>
+            <div class="loading-bar">
+                <div class="loading-progress"></div>
+            </div>
+            <p>Loading your construction soundtrack...</p>
+        </div>
+    </div>
+
+    <!-- Floating Logo -->
+    <div class="floating-logo">
+        <img src="images/logo.png" alt="ToolBox Radio" class="logo-image">
+    </div>
+
+    <!-- Floating Navigation -->
+    <nav class="floating-nav">
+        <div class="nav-menu">
+            <a href="#home" class="nav-link">Home</a>
+            <a href="#cms-desk" class="nav-link">CMS Desk</a>
+            <a href="#music" class="nav-link">Music</a>
+            <a href="#sponsor" class="nav-link">Sponsor</a>
+            <a href="#contact" class="nav-link">Contact</a>
+        </div>
+        <div class="nav-toggle" id="navToggle">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </nav>
+
+    <!-- Floating LIVE NOW Badge -->
+    <div class="floating-live">
+        <div class="player-header">
+            <i class="fas fa-broadcast-tower"></i>
+            <span>LIVE NOW</span>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-background">
+            <div class="hero-particles">
+                <div class="particle"></div>
+                <div class="particle"></div>
+                <div class="particle"></div>
+                <div class="particle"></div>
+                <div class="particle"></div>
+                <div class="particle"></div>
+                <div class="particle"></div>
+                <div class="particle"></div>
+            </div>
+            <div class="construction-grid">
+                <div class="grid-line"></div>
+                <div class="grid-line"></div>
+                <div class="grid-line"></div>
+                <div class="grid-line"></div>
+            </div>
+        </div>
         
-        <main class="main-content">
-            <div class="player-container">
-                <!-- Primary iframe with better mobile support -->
-                <iframe 
-                    id="radioPlayer"
-                    src="https://radio.toolboxradio.com/public/toolbox_radio/embed?theme=light" 
-                    frameborder="0" 
-                    allowtransparency="true" 
-                    allowfullscreen="true"
-                    allow="autoplay; encrypted-media"
-                    loading="lazy"
-                    style="width: 100%; min-height: 200px; border: 0;"
-                    title="Toolbox Radio Player"
-                    onload="iframeLoaded()"
-                    onerror="iframeError()">
-                </iframe>
+        <div class="hero-content">
+            <div class="hero-text">
+                <h1 class="hero-title">
+                    <span class="title-line">Sod the Chat</span>
+                    <span class="title-line">Just the Tunes</span>
+                </h1>
+                <p class="hero-subtitle">Non-Stop Music for the Construction Industry</p>
+                <p class="hero-description">
+                    Your ultimate construction soundtrack. No talking pointless chat - just cracking tunes 
+                    to power through your workday. From the jobsite to the office, we keep the rhythm 
+                    flowing 24/7.
+                </p>
+                <div class="hero-stats">
+                    <div class="stat">
+                        <span class="stat-number">24/7</span>
+                        <span class="stat-label">Non-Stop Music</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number">0</span>
+                        <span class="stat-label">talk shows</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number">100%</span>
+                        <span class="stat-label">Construction Focused</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="hero-player">
+                <div class="player-container">
+                    <div class="iframe-container">
+                        <iframe 
+                            src="https://radio.toolboxradio.com/public/toolbox_radio/embed?theme=light" 
+                            frameborder="0" 
+                            allowtransparency="true" 
+                            style="width: 90%; min-height: 100px; border: 0; border-radius: 12px;"
+                        ></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="scroll-indicator">
+            <div class="scroll-arrow"></div>
+            <span>Scroll to explore</span>
+        </div>
+    </section>
+
+    <!-- CMS Desk Section -->
+    <section id="cms-desk" class="cms-desk">
+        <div class="container">
+            <div class="section-header">
+                <div class="cms-title-logo">
+                    <img src="images/cms.png" alt="CMS Desk" class="cms-title-image">
+                </div>
+                <p>ToolBox Radio is now the official radio partner of CMS Desk</p>
+            </div>
+            
+            <div class="cms-content">
+                <div class="cms-hero">
+                    <div class="cms-logo-hero">
+                        <img src="images/dash.png" alt="CMS Desk Dashboard" class="cms-image-hero">
+                    </div>
+                    <div class="cms-hero-text">
+                        <h3>CMS Desk - All-in-One Construction Platform</h3>
+                        <p>CMS Desk is the comprehensive construction management solution that brings together all the tools you need in one powerful platform. From administration and payroll to timesheets, drawing management, procurement, and much more - CMS Desk has everything covered.</p>
+                    </div>
+                </div>
                 
-                <!-- Fallback for mobile devices -->
-                <div id="mobileFallback" class="mobile-fallback" style="display: none;">
-                    <div class="fallback-content">
-                        <div class="fallback-icon">📻</div>
-                        <h3>Toolbox Radio</h3>
-                        <p>Click below to open the radio player</p>
-                        <a href="https://radio.toolboxradio.com/public/toolbox_radio/embed?theme=light" 
-                           target="_blank" 
-                           class="fallback-button">
-                            Open Radio Player
+                <div class="cms-features">
+                    <div class="cms-feature">
+                        <div class="feature-icon">
+                            <i class="fas fa-cogs"></i>
+                        </div>
+                        <div class="feature-content">
+                            <h4>CMS Products</h4>
+                            <p>Streamline your business with our integrated platform for procurement, HR, invoicing, and beyond.</p>
+                        </div>
+                    </div>
+                    <div class="cms-feature">
+                        <div class="feature-icon">
+                            <img src="images/os.png" alt="OnSite Selfie" class="feature-image">
+                        </div>
+                        <div class="feature-content">
+                            <h4>OnSite Selfie</h4>
+                            <p>Our on-site selfie feature offers a quick, accurate and engaging way to track employee attendance.</p>
+                        </div>
+                    </div>
+                    <div class="cms-feature">
+                        <div class="feature-icon">
+                            <img src="images/procure.png" alt="Procure" class="feature-image">
+                        </div>
+                        <div class="feature-content">
+                            <h4>Procure</h4>
+                            <p>CMS Procurement makes it easy to track spending, manage suppliers and secure better deals.</p>
+                        </div>
+                    </div>
+                    <div class="cms-feature">
+                        <div class="feature-icon">
+                            <img src="images/base.png" alt="Base" class="feature-image">
+                        </div>
+                        <div class="feature-content">
+                            <h4>Base</h4>
+                            <p>Helps you manage your team with ease. Track attendance, streamline onboarding and keep everything organised.</p>
+                        </div>
+                    </div>
+                    <div class="cms-feature">
+                        <div class="feature-icon">
+                            <img src="images/qa.png" alt="TraQA" class="feature-image">
+                        </div>
+                        <div class="feature-content">
+                            <h4>TraQA</h4>
+                            <p>Track tasks, monitor performance and keep quality on point. From inspections to reports.</p>
+                        </div>
+                    </div>
+                    <div class="cms-feature">
+                        <div class="feature-icon">
+                            <i class="fas fa-handshake"></i>
+                        </div>
+                        <div class="feature-content">
+                            <h4>Buying Group</h4>
+                            <p>Connects you to pre-negotiated prices on essential construction materials. Save time, cut costs, and buy with confidence.</p>
+                        </div>
+                    </div>
+                    <div class="cms-feature">
+                        <div class="feature-icon">
+                            <img src="images/costing.png" alt="Costing" class="feature-image">
+                        </div>
+                        <div class="feature-content">
+                            <h4>Costing</h4>
+                            <p>Track multiple projects, break them into phases and keep a clear view of what's been ordered, invoiced and paid.</p>
+                        </div>
+                    </div>
+                    <div class="cms-feature">
+                        <div class="feature-icon">
+                            <img src="images/voucher.png" alt="Vouchers" class="feature-image">
+                        </div>
+                        <div class="feature-content">
+                            <h4>Vouchers</h4>
+                            <p>Create and track vouchers in one place, with real-time updates and standardised processes across all locations.</p>
+                        </div>
+                    </div>
+                    <div class="cms-feature">
+                        <div class="feature-icon">
+                            <img src="images/skedge.png" alt="Skedge" class="feature-image">
+                        </div>
+                        <div class="feature-content">
+                            <h4>Skedge</h4>
+                            <p>Assign and manage schedules in real time, while workers access their tasks on the go with no delays.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="cms-integration">
+                    <div class="integration-card">
+                        <div class="integration-icon">
+                            <i class="fas fa-home"></i>
+                        </div>
+                        <h4>Home of ToolBox Radio</h4>
+                        <p>CMS Desk is the official home of ToolBox Radio, providing seamless integration of construction music into your daily workflow.</p>
+                    </div>
+                    
+                    <div class="integration-card">
+                        <div class="integration-icon">
+                            <i class="fas fa-desktop"></i>
+                        </div>
+                        <h4>Desktop Streaming</h4>
+                        <p>Enjoy ToolBox Radio directly on your CMS Desk desktop application while managing your construction projects.</p>
+                    </div>
+                    
+                    <div class="integration-card">
+                        <div class="integration-icon">
+                            <i class="fas fa-mobile-alt"></i>
+                        </div>
+                        <h4>Mobile Apps</h4>
+                        <p>Stream ToolBox Radio on both Android and iOS apps, with Apple CarPlay and Android Auto support for your commute home.</p>
+                    </div>
+                    
+                    <div class="integration-card">
+                        <div class="integration-icon">
+                            <i class="fas fa-gift"></i>
+                        </div>
+                        <h4>Free for All Users</h4>
+                        <p>ToolBox Radio is completely free for all CMS Desk users, enhancing your construction experience at no additional cost.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Music Section -->
+    <section id="music" class="music">
+        <div class="container">
+            <div class="section-header">
+                <h2>Your Construction Soundtrack</h2>
+                <p>Curated music that matches the rhythm of your workday</p>
+            </div>
+            
+            <div class="music-features">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-music"></i>
+                    </div>
+                    <h3>Non-Stop Music</h3>
+                    <p>Continuous music flow with no interruptions, announcements, or commercials. Just pure music to keep you moving.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <h3>24/7 Streaming</h3>
+                    <p>Available around the clock for early morning starts, late night shifts, and everything in between.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3>Construction Focused</h3>
+                    <p>Music selected specifically for construction professionals - high energy, motivating, and work-appropriate.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h3>Worksite Ready</h3>
+                    <p>Stream on any device - phones, tablets, laptops, or jobsite radios. Perfect for any construction environment.</p>
+                </div>
+            </div>
+            
+            <div class="music-stats">
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-headphones"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h4>Thousands of Songs</h4>
+                        <p>Extensive library covering all genres</p>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-wifi"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h4>High Quality Stream</h4>
+                        <p>Crystal clear audio for any device</p>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h4>Workplace Safe</h4>
+                        <p>Family-friendly content only</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sponsor Section -->
+    <section id="sponsor" class="sponsor">
+        <div class="container">
+            <div class="sponsor-content">
+                <div class="sponsor-text">
+                    <div class="section-header">
+                        <h2>Reach Construction Professionals</h2>
+                        <p>Get your brand in front of thousands of construction workers, managers, and industry leaders</p>
+                    </div>
+                    
+                    <div class="sponsor-highlights">
+                        <div class="highlight">
+                            <div class="highlight-number">10,000+</div>
+                            <div class="highlight-text">Daily Listeners</div>
+                        </div>
+                        <div class="highlight">
+                            <div class="highlight-number">24/7</div>
+                            <div class="highlight-text">Exposure Time</div>
+                        </div>
+                        <div class="highlight">
+                            <div class="highlight-number">100%</div>
+                            <div class="highlight-text">Targeted Audience</div>
+                        </div>
+                    </div>
+                    
+                    <div class="sponsor-benefits">
+                        <div class="benefit-item">
+                            <i class="fas fa-chart-line"></i>
+                            <div>
+                                <h4>Proven Results</h4>
+                                <p>Track your advertising success with detailed analytics</p>
+                            </div>
+                        </div>
+                        <div class="benefit-item">
+                            <i class="fas fa-bullseye"></i>
+                            <div>
+                                <h4>Precision Targeting</h4>
+                                <p>Reach decision-makers in the construction industry</p>
+                            </div>
+                        </div>
+                        <div class="benefit-item">
+                            <i class="fas fa-star"></i>
+                            <div>
+                                <h4>Premium Placement</h4>
+                                <p>Exclusive advertising opportunities available</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="cta-section">
+                        <h3>Ready to Advertise?</h3>
+                        <p>Contact Deu Na Media to apply for advertising opportunities and get your brand heard by construction professionals.</p>
+                        <a href="#contact" class="cta-button">
+                            <span>Get Started</span>
+                            <i class="fas fa-arrow-right"></i>
                         </a>
                     </div>
                 </div>
                 
-                <!-- Loading indicator -->
-                <div id="loadingIndicator" class="loading-indicator">
-                    <div class="spinner"></div>
-                    <p>Loading radio player...</p>
+                <div class="sponsor-visual">
+                    <div class="sponsor-card">
+                        <div class="card-header">
+                            <i class="fas fa-ad"></i>
+                            <h3>Advertising Opportunities</h3>
+                        </div>
+                        <div class="card-content">
+                            <div class="opportunity">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Audio Commercials</span>
+                            </div>
+                            <div class="opportunity">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Brand Sponsorship</span>
+                            </div>
+                            <div class="opportunity">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Digital Display Ads</span>
+                            </div>
+                            <div class="opportunity">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Event Promotion</span>
+                            </div>
+                            <div class="opportunity">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Industry Partnerships</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </main>
-        
-        <footer class="footer">
-            <p>&copy; 2024 Toolbox Radio. All rights reserved.</p>
-        </footer>
-    </div>
-    
-    <script>
-        // Check if device is mobile
-        function isMobile() {
-            return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || 
-                   window.innerWidth <= 768;
-        }
-        
-        // Handle iframe load success
-        function iframeLoaded() {
-            console.log('Iframe loaded successfully');
-            document.getElementById('loadingIndicator').style.display = 'none';
-            document.getElementById('radioPlayer').style.display = 'block';
-        }
-        
-        // Handle iframe load error
-        function iframeError() {
-            console.log('Iframe failed to load');
-            document.getElementById('loadingIndicator').style.display = 'none';
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <div class="section-header">
+                <h2>Get In Touch</h2>
+                <p>Ready to start advertising or have questions? We're here to help.</p>
+            </div>
             
-            if (isMobile()) {
-                // Show mobile fallback
-                document.getElementById('mobileFallback').style.display = 'block';
-                document.getElementById('radioPlayer').style.display = 'none';
-            } else {
-                // Show error message for desktop
-                document.getElementById('radioPlayer').style.display = 'block';
-            }
-        }
-        
-        // Initialize on page load
-        document.addEventListener('DOMContentLoaded', function() {
-            const iframe = document.getElementById('radioPlayer');
-            const loadingIndicator = document.getElementById('loadingIndicator');
+            <div class="contact-content">
+                <div class="contact-info">
+                    <div class="contact-card">
+                        <div class="contact-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div class="contact-details">
+                            <h4>Advertising & Sponsorship</h4>
+                            <p>Contact Deu Na Media for all advertising and sponsorship opportunities</p>
+                            <a href="mailto:advertising@deunamedia.com" class="contact-link">Get Started</a>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-card">
+                        <div class="contact-icon">
+                            <i class="fas fa-phone"></i>
+                        </div>
+                        <div class="contact-details">
+                            <h4>General Inquiries</h4>
+                            <p>Questions about ToolBox Radio or technical support</p>
+                            <a href="mailto:info@toolboxradio.com" class="contact-link">info@toolboxradio.com</a>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-card">
+                        <div class="contact-icon">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <div class="contact-details">
+                            <h4>Studio Location</h4>
+                            <p>Construction District, Downtown</p>
+                            <span class="contact-link">Broadcasting 24/7</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="contact-form">
+                    <div class="form-header">
+                        <h3>Send us a Message</h3>
+                        <p>We'll get back to you within 24 hours</p>
+                    </div>
+                    <form id="contactForm">
+                        <div class="form-group">
+                            <input type="text" id="name" placeholder="Your Name" required>
+                            <label for="name">Name</label>
+                        </div>
+                        <div class="form-group">
+                            <input type="email" id="email" placeholder="Your Email" required>
+                            <label for="email">Email</label>
+                        </div>
+                        <div class="form-group">
+                            <select id="topic" required>
+                                <option value="">Select Topic</option>
+                                <option value="general">General Inquiry</option>
+                                <option value="advertising">Advertising</option>
+                                <option value="sponsorship">Show Sponsorship</option>
+                                <option value="technical">Technical Support</option>
+                            </select>
+                            <label for="topic">Topic</label>
+                        </div>
+                        <div class="form-group">
+                            <textarea id="message" placeholder="Your Message" rows="4" required></textarea>
+                            <label for="message">Message</label>
+                        </div>
+                        <button type="submit" class="submit-btn">
+                            <span>Send Message</span>
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-logo">
+                        <i class="fas fa-tools"></i>
+                        <span>ToolBox Radio</span>
+                    </div>
+                    <p>Your 24/7 construction soundtrack. Non-stop music to power your workday.</p>
+                    <div class="footer-social">
+                        <a href="#" class="social-link"><i class="fab fa-facebook"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <a href="#home">Home</a>
+                    <a href="#music">Music</a>
+                    <a href="#sponsor">Sponsor</a>
+                    <a href="#contact">Contact</a>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Features</h4>
+                    <a href="#music">Non-Stop Music</a>
+                    <a href="#music">24/7 Streaming</a>
+                    <a href="#music">Construction Focused</a>
+                    <a href="#music">Worksite Ready</a>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Advertising</h4>
+                    <a href="#sponsor">Get Started</a>
+                    <a href="#sponsor">Pricing</a>
+                    <a href="#sponsor">Success Stories</a>
+                    <a href="#contact">Contact Sales</a>
+                </div>
+            </div>
             
-            // Hide iframe initially, show loading
-            iframe.style.display = 'none';
-            loadingIndicator.style.display = 'block';
-            
-            // Set timeout for iframe loading
-            setTimeout(function() {
-                if (iframe.style.display === 'none') {
-                    iframeError();
-                }
-            }, 10000); // 10 second timeout
-            
-            // Check if iframe is actually visible after load
-            iframe.addEventListener('load', function() {
-                setTimeout(function() {
-                    const rect = iframe.getBoundingClientRect();
-                    if (rect.height < 50) {
-                        // Iframe is too small, probably not loading properly
-                        iframeError();
-                    } else {
-                        iframeLoaded();
-                    }
-                }, 2000);
-            });
-        });
-    </script>
+            <div class="footer-bottom">
+                <div class="footer-info">
+                    <p>&copy; 2024 ToolBox Radio. All rights reserved.</p>
+                    <p>Powered by construction professionals, for construction professionals.</p>
+                </div>
+                <div class="footer-links">
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                    <a href="#">Cookie Policy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
 </body>
 </html> 
