@@ -127,14 +127,51 @@
             </div>
             
             <div class="hero-player">
-                <div class="player-container">
-                    <div class="iframe-container">
-                        <iframe 
-                            src="https://radio.toolboxradio.com/public/toolbox_radio/embed?theme=light" 
-                            frameborder="0" 
-                            allowtransparency="true" 
-                            style="width: 90%; min-height: 100px; border: 0; border-radius: 12px;"
-                        ></iframe>
+                <div class="desktop-player-container">
+                    <!-- Live Indicator -->
+                    <div class="desktop-live-indicator">
+                        <div class="desktop-live-dot"></div>
+                        <span>LIVE NOW</span>
+                    </div>
+                    
+                    <!-- Album Art Display -->
+                    <div class="desktop-album-display">
+                        <div class="desktop-album-cover">
+                            <img src="images/logo1.png" alt="Album Art" class="desktop-album-cover-image" id="desktopAlbumCoverImage">
+                        </div>
+                    </div>
+                    
+                    <!-- Track Progress Bar -->
+                    <div class="desktop-progress-section">
+                        <div class="desktop-progress-bar-container">
+                            <div class="desktop-progress-bar">
+                                <div class="desktop-progress-fill" id="desktopProgressFill"></div>
+                                <div class="desktop-progress-dot" id="desktopProgressDot"></div>
+                            </div>
+                        </div>
+                        <div class="desktop-progress-times">
+                            <span class="desktop-time-current" id="desktopCurrentTime">0:00</span>
+                            <span class="desktop-time-total" id="desktopTotalTime">∞</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Track Information -->
+                    <div class="desktop-track-display">
+                        <h3 class="desktop-track-name" id="desktopTrackName">Loading...</h3>
+                        <p class="desktop-artist-name" id="desktopArtistName">Fetching current song...</p>
+                    </div>
+                    
+                    <!-- Audio Player -->
+                    <audio id="desktopRadioPlayer" preload="none">
+                        <source src="https://radio.toolboxradio.com/radio/8000/radio.mp3" type="audio/mpeg">
+                        Your browser does not support the audio element.
+                    </audio>
+                    
+                    <!-- Player Controls -->
+                    <div class="desktop-player-controls">
+                        <button class="desktop-control-btn desktop-play-pause-btn" id="desktopPlayPauseBtn">
+                            <i class="fas fa-play"></i>
+                        </button>
                     </div>
                 </div>
             </div>

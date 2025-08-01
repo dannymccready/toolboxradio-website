@@ -63,9 +63,8 @@ function initMobileLayout() {
                     </div>
                 </div>
                 
-                <!-- Now Playing Information -->
+                <!-- Track Information -->
                 <div class="mobile-track-display">
-                    <div class="now-playing-text">Now Playing</div>
                     <h2 class="mobile-track-name" id="mobileTrackName">Loading...</h2>
                     <p class="mobile-artist-name" id="mobileArtistName">Fetching current song...</p>
                 </div>
@@ -380,7 +379,52 @@ async function fetchCurrentlyPlaying() {
         img.src = artUrl;
     }
     
-    // Function to update track display
+    // Function to update desktop album art
+    function updateDesktopAlbumArt(artUrl, fallbackUrl = 'images/logo1.png') {
+        const albumCoverImage = document.getElementById('desktopAlbumCoverImage');
+        if (!albumCoverImage) return;
+        
+        console.log('Attempting to load desktop album art:', artUrl);
+        
+        // Add loading class
+        albumCoverImage.classList.add('loading');
+        
+        // If it's already the fallback, just use it directly
+        if (artUrl === fallbackUrl) {
+            console.log('Using fallback image directly for desktop');
+            albumCoverImage.src = fallbackUrl;
+            albumCoverImage.classList.remove('loading');
+            return;
+        }
+        
+        const img = new Image();
+        img.crossOrigin = 'anonymous'; // Try to handle CORS
+        
+        img.onload = function() {
+            console.log('Desktop album art loaded successfully:', artUrl);
+            albumCoverImage.src = artUrl;
+            albumCoverImage.classList.remove('loading');
+        };
+        
+        img.onerror = function() {
+            console.log('Failed to load desktop album art:', artUrl, 'Using fallback:', fallbackUrl);
+            albumCoverImage.src = fallbackUrl;
+            albumCoverImage.classList.remove('loading');
+        };
+        
+        // Set a timeout in case the image takes too long
+        setTimeout(() => {
+            if (albumCoverImage.classList.contains('loading')) {
+                console.log('Desktop image loading timeout, using fallback');
+                albumCoverImage.src = fallbackUrl;
+                albumCoverImage.classList.remove('loading');
+            }
+        }, 5000);
+        
+        img.src = artUrl;
+    }
+    
+    // Function to update track display (both mobile and desktop)
     async function updateTrackDisplay(track, artist, providedAlbumArt = null, duration = null) {
         // Only update if song has changed
         const newSong = `${track} - ${artist}`;
@@ -391,36 +435,89 @@ async function fetchCurrentlyPlaying() {
         currentSong = newSong;
         console.log('Now playing:', track, 'by', artist, 'Duration:', duration, 'Album Art:', providedAlbumArt);
         
-        // Reset and restart progress for new song
-        resetSongProgress();
-        if (duration && duration > 0) {
-            updateSongProgress(duration);
-        } else {
-            // For live streams or unknown duration, use estimated duration
-            updateSongProgress(null);
+        // Get elements for both mobile and desktop
+        const mobileTrackName = document.getElementById('mobileTrackName');
+        const mobileArtistName = document.getElementById('mobileArtistName');
+        const mobileAlbumImage = document.getElementById('albumCoverImage');
+        
+        const desktopTrackName = document.getElementById('desktopTrackName');
+        const desktopArtistName = document.getElementById('desktopArtistName');
+        const desktopAlbumImage = document.getElementById('desktopAlbumCoverImage');
+        
+        // Reset and restart progress for mobile
+        if (mobileTrackName) {
+            resetSongProgress();
+            if (duration && duration > 0) {
+                updateSongProgress(duration);
+            } else {
+                updateSongProgress(null);
+            }
         }
         
-        // Fade out
-        trackName.style.opacity = '0.3';
-        artistName.style.opacity = '0.3';
-        albumCoverImage.style.opacity = '0.3';
+        // Reset and restart progress for desktop
+        if (desktopTrackName) {
+            resetDesktopProgress();
+            if (duration && duration > 0) {
+                updateDesktopSongProgress(duration);
+            } else {
+                updateDesktopSongProgress(null);
+            }
+        }
+        
+        // Fade out mobile elements
+        if (mobileTrackName) {
+            mobileTrackName.style.opacity = '0.3';
+            mobileArtistName.style.opacity = '0.3';
+            mobileAlbumImage.style.opacity = '0.3';
+        }
+        
+        // Fade out desktop elements
+        if (desktopTrackName) {
+            desktopTrackName.style.opacity = '0.3';
+            desktopArtistName.style.opacity = '0.3';
+            desktopAlbumImage.style.opacity = '0.3';
+        }
         
         setTimeout(async () => {
-            // Update content
-            trackName.textContent = track;
-            artistName.textContent = artist;
+            // Update mobile content
+            if (mobileTrackName) {
+                mobileTrackName.textContent = track;
+                mobileArtistName.textContent = artist;
+            }
+            
+            // Update desktop content
+            if (desktopTrackName) {
+                desktopTrackName.textContent = track;
+                desktopArtistName.textContent = artist;
+            }
             
             // Use provided album art first, then fallback to API
             let albumArt = providedAlbumArt;
             if (!albumArt || albumArt === '') {
                 albumArt = await fetchAlbumArt(track, artist);
             }
-            updateAlbumArt(albumArt);
             
-            // Fade in
-            trackName.style.opacity = '1';
-            artistName.style.opacity = '1';
-            albumCoverImage.style.opacity = '1';
+            // Update album art for both players
+            if (mobileAlbumImage) {
+                updateAlbumArt(albumArt);
+            }
+            if (desktopAlbumImage) {
+                updateDesktopAlbumArt(albumArt);
+            }
+            
+            // Fade in mobile elements
+            if (mobileTrackName) {
+                mobileTrackName.style.opacity = '1';
+                mobileArtistName.style.opacity = '1';
+                mobileAlbumImage.style.opacity = '1';
+            }
+            
+            // Fade in desktop elements
+            if (desktopTrackName) {
+                desktopTrackName.style.opacity = '1';
+                desktopArtistName.style.opacity = '1';
+                desktopAlbumImage.style.opacity = '1';
+            }
         }, 400);
     }
     
@@ -1002,16 +1099,178 @@ function initParallaxEffect() {
     });
 }
 
+// Desktop player functions (similar to mobile but for desktop elements)
+function initDesktopPlayer() {
+    const audioPlayer = document.getElementById('desktopRadioPlayer');
+    const playPauseBtn = document.getElementById('desktopPlayPauseBtn');
+    let isPlaying = false;
+    
+    if (audioPlayer && playPauseBtn) {
+        // Play/Pause functionality
+        playPauseBtn.addEventListener('click', () => {
+            if (!isPlaying) {
+                // Start playing
+                audioPlayer.play().then(() => {
+                    playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
+                    playPauseBtn.classList.add('playing');
+                    isPlaying = true;
+                    // Reset and start progress for new session
+                    resetDesktopProgress();
+                    startDesktopProgressAnimation();
+                    // Refresh metadata when starting to play
+                    fetchCurrentlyPlaying();
+                }).catch(error => {
+                    console.log('Desktop playback failed:', error);
+                });
+            } else {
+                // Pause
+                audioPlayer.pause();
+                playPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
+                playPauseBtn.classList.remove('playing');
+                isPlaying = false;
+                stopDesktopProgressAnimation();
+            }
+        });
+        
+        // Handle audio events
+        audioPlayer.addEventListener('pause', () => {
+            if (isPlaying) {
+                playPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
+                playPauseBtn.classList.remove('playing');
+                isPlaying = false;
+                stopDesktopProgressAnimation();
+            }
+        });
+        
+        audioPlayer.addEventListener('ended', () => {
+            playPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
+            playPauseBtn.classList.remove('playing');
+            isPlaying = false;
+            stopDesktopProgressAnimation();
+        });
+        
+        console.log('Desktop player initialized');
+    }
+}
+
+// Desktop progress functions
+let desktopProgressInterval = null;
+let desktopProgressStartTime = null;
+let desktopSongDuration = null;
+let desktopSongStartTime = null;
+
+function startDesktopProgressAnimation() {
+    stopDesktopProgressAnimation();
+    
+    const progressFill = document.getElementById('desktopProgressFill');
+    const progressDot = document.getElementById('desktopProgressDot');
+    const currentTimeElement = document.getElementById('desktopCurrentTime');
+    
+    if (!progressFill || !progressDot || !currentTimeElement) return;
+    
+    desktopProgressStartTime = Date.now();
+    
+    desktopProgressInterval = setInterval(() => {
+        updateDesktopProgressDisplay();
+    }, 1000);
+}
+
+function stopDesktopProgressAnimation() {
+    if (desktopProgressInterval) {
+        clearInterval(desktopProgressInterval);
+        desktopProgressInterval = null;
+    }
+    
+    const progressFill = document.getElementById('desktopProgressFill');
+    const progressDot = document.getElementById('desktopProgressDot');
+    const currentTimeElement = document.getElementById('desktopCurrentTime');
+    
+    if (progressFill) progressFill.style.width = '0%';
+    if (progressDot) progressDot.style.left = '0%';
+    if (currentTimeElement) currentTimeElement.textContent = '0:00';
+}
+
+function resetDesktopProgress() {
+    const progressFill = document.getElementById('desktopProgressFill');
+    const progressDot = document.getElementById('desktopProgressDot');
+    const currentTimeElement = document.getElementById('desktopCurrentTime');
+    
+    if (progressFill) progressFill.style.width = '0%';
+    if (progressDot) progressDot.style.left = '0%';
+    if (currentTimeElement) currentTimeElement.textContent = '0:00';
+    
+    desktopSongStartTime = Date.now();
+    desktopSongDuration = null;
+    
+    console.log('Desktop progress reset for new song');
+}
+
+function updateDesktopSongProgress(duration) {
+    desktopSongDuration = duration;
+    desktopSongStartTime = Date.now();
+    
+    const totalTimeElement = document.getElementById('desktopTotalTime');
+    
+    if (duration && duration > 0) {
+        const minutes = Math.floor(duration / 60);
+        const seconds = duration % 60;
+        const durationString = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+        if (totalTimeElement) totalTimeElement.textContent = durationString;
+        
+        console.log(`Desktop song duration set to: ${durationString} (${duration} seconds)`);
+    } else {
+        desktopSongDuration = 210; // 3.5 minutes as default
+        if (totalTimeElement) totalTimeElement.textContent = '3:30';
+        console.log('Desktop using estimated duration: 3:30');
+    }
+    
+    updateDesktopProgressDisplay();
+}
+
+function updateDesktopProgressDisplay() {
+    const progressFill = document.getElementById('desktopProgressFill');
+    const progressDot = document.getElementById('desktopProgressDot');
+    const currentTimeElement = document.getElementById('desktopCurrentTime');
+    
+    if (!progressFill || !progressDot || !currentTimeElement || !desktopSongStartTime) return;
+    
+    const now = Date.now();
+    const elapsed = Math.floor((now - desktopSongStartTime) / 1000);
+    
+    const minutes = Math.floor(elapsed / 60);
+    const seconds = elapsed % 60;
+    const timeString = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+    currentTimeElement.textContent = timeString;
+    
+    let progressPercent = 0;
+    
+    if (desktopSongDuration && desktopSongDuration > 0) {
+        progressPercent = Math.min((elapsed / desktopSongDuration) * 100, 100);
+        
+        if (elapsed >= (desktopSongDuration - 2)) {
+            console.log(`Desktop song nearly finished (${elapsed}s/${desktopSongDuration}s), fetching new metadata...`);
+            setTimeout(() => {
+                fetchCurrentlyPlaying();
+            }, 2000);
+        }
+    } else {
+        progressPercent = 0;
+    }
+    
+    progressFill.style.width = `${progressPercent}%`;
+    progressDot.style.left = `${progressPercent}%`;
+}
+
 // Initialize everything when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
     // Check if mobile device and initialize appropriate layout
     if (isMobileDevice()) {
         initMobileLayout();
-        // Only initialize basic player functionality for mobile
-        setTimeout(() => {
-            const player = new ToolBoxRadioPlayer();
-        }, 2500);
+        initAppPlayer();
+        startHeaderPhraseRotation();
+        fetchCurrentlyPlaying();
     } else {
+        // Desktop device - use standard layout with new player
         // Initialize the radio player
         const player = new ToolBoxRadioPlayer();
         
@@ -1024,6 +1283,14 @@ document.addEventListener('DOMContentLoaded', () => {
         initMobileNav();
         initNavbarScroll();
         initParallaxEffect();
+        
+        // Initialize desktop player
+        initDesktopPlayer();
+        
+        // Start fetching metadata for desktop player
+        setTimeout(() => {
+            fetchCurrentlyPlaying();
+        }, 2000);
         
         // Add some interactive features
         addInteractiveFeatures();
