@@ -1725,7 +1725,7 @@ body {
     align-items: center;
     justify-content: center;
     height: 100vh;
-    padding: 100px 20px 20px;
+    padding: 80px 20px 20px;
     text-align: center;
 }
 
@@ -1910,7 +1910,7 @@ body {
     letter-spacing: 1px;
     box-shadow: 0 4px 15px rgba(255, 107, 53, 0.4);
     backdrop-filter: blur(10px);
-    margin-bottom: 20px;
+    margin-bottom: 15px;
 }
 
 .mobile-live-dot {

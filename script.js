@@ -216,9 +216,19 @@ function resetSongProgress() {
     console.log('Progress reset for new song');
 }
 
-function updateSongProgress(duration) {
+function updateSongProgress(duration, elapsed = null) {
     songDuration = duration;
-    songStartTime = Date.now(); // Fresh start time for this song
+    
+    // Calculate the actual song start time based on elapsed time
+    const now = Date.now();
+    if (elapsed && elapsed > 0) {
+        // Song started (elapsed) seconds ago
+        songStartTime = now - (elapsed * 1000);
+        console.log(`Song has been playing for ${elapsed} seconds already`);
+    } else {
+        // Song is starting now (user just pressed play)
+        songStartTime = now;
+    }
     
     const totalTimeElement = document.getElementById('totalTime');
     
@@ -425,7 +435,7 @@ async function fetchCurrentlyPlaying() {
     }
     
     // Function to update track display (both mobile and desktop)
-    async function updateTrackDisplay(track, artist, providedAlbumArt = null, duration = null) {
+    async function updateTrackDisplay(track, artist, providedAlbumArt = null, duration = null, elapsed = null) {
         // Only update if song has changed
         const newSong = `${track} - ${artist}`;
         if (newSong === currentSong) {
@@ -433,7 +443,7 @@ async function fetchCurrentlyPlaying() {
         }
         
         currentSong = newSong;
-        console.log('Now playing:', track, 'by', artist, 'Duration:', duration, 'Album Art:', providedAlbumArt);
+        console.log('Now playing:', track, 'by', artist, 'Duration:', duration, 'Elapsed:', elapsed, 'Album Art:', providedAlbumArt);
         
         // Get elements for both mobile and desktop
         const mobileTrackName = document.getElementById('mobileTrackName');
@@ -448,9 +458,9 @@ async function fetchCurrentlyPlaying() {
         if (mobileTrackName) {
             resetSongProgress();
             if (duration && duration > 0) {
-                updateSongProgress(duration);
+                updateSongProgress(duration, elapsed);
             } else {
-                updateSongProgress(null);
+                updateSongProgress(null, elapsed);
             }
         }
         
@@ -458,9 +468,9 @@ async function fetchCurrentlyPlaying() {
         if (desktopTrackName) {
             resetDesktopProgress();
             if (duration && duration > 0) {
-                updateDesktopSongProgress(duration);
+                updateDesktopSongProgress(duration, elapsed);
             } else {
-                updateDesktopSongProgress(null);
+                updateDesktopSongProgress(null, elapsed);
             }
         }
         
@@ -542,6 +552,15 @@ async function fetchCurrentlyPlaying() {
                     let artist = song.artist || 'Live Stream';
                     let albumArt = song.art || null;
                     let duration = song.duration || null;
+                    let elapsed = song.elapsed || null;
+                    let startedAt = song.started_at || null;
+                    
+                    // Calculate real elapsed time if we have start time
+                    if (startedAt && !elapsed) {
+                        const songStartTime = new Date(startedAt).getTime();
+                        const now = Date.now();
+                        elapsed = Math.floor((now - songStartTime) / 1000);
+                    }
                     
                     // Clean up metadata
                     if (track.includes(' - ')) {
@@ -550,8 +569,8 @@ async function fetchCurrentlyPlaying() {
                         track = parts[1];
                     }
                     
-                    // Update track display with real album art and duration
-                    await updateTrackDisplay(track, artist, albumArt, duration);
+                    // Update track display with real album art, duration, and elapsed time
+                    await updateTrackDisplay(track, artist, albumArt, duration, elapsed);
                     return;
                 }
             }
@@ -582,7 +601,7 @@ async function fetchCurrentlyPlaying() {
                         track = parts[1];
                     }
                     
-                    await updateTrackDisplay(track, artist, null, null);
+                    await updateTrackDisplay(track, artist, null, null, null);
                     return;
                 }
             }
@@ -598,7 +617,7 @@ async function fetchCurrentlyPlaying() {
         }
         
         // Final fallback
-        await updateTrackDisplay('ToolBox Radio', 'Live Construction Music Stream', null, null);
+        await updateTrackDisplay('ToolBox Radio', 'Live Construction Music Stream', null, null, null);
     }
     
     // Function to extract metadata from embedded player
@@ -1205,9 +1224,19 @@ function resetDesktopProgress() {
     console.log('Desktop progress reset for new song');
 }
 
-function updateDesktopSongProgress(duration) {
+function updateDesktopSongProgress(duration, elapsed = null) {
     desktopSongDuration = duration;
-    desktopSongStartTime = Date.now();
+    
+    // Calculate the actual song start time based on elapsed time
+    const now = Date.now();
+    if (elapsed && elapsed > 0) {
+        // Song started (elapsed) seconds ago
+        desktopSongStartTime = now - (elapsed * 1000);
+        console.log(`Desktop: Song has been playing for ${elapsed} seconds already`);
+    } else {
+        // Song is starting now (user just pressed play)
+        desktopSongStartTime = now;
+    }
     
     const totalTimeElement = document.getElementById('desktopTotalTime');
     
