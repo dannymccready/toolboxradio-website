@@ -39,7 +39,7 @@ function initMobileLayout() {
                 <!-- Album Art Display -->
                 <div class="mobile-album-display">
                     <div class="mobile-album-cover">
-                        <img src="images/logo1.png" alt="Album Art" class="album-cover-image" id="albumCoverImage">
+                        <img src="https://i.scdn.co/image/ab67616d0000b273503c2b1acabdd3ad6650db82" alt="Album Art" class="album-cover-image" id="albumCoverImage">
                     </div>
                 </div>
                 
@@ -181,28 +181,79 @@ function startHeaderPhraseRotation() {
     }, 4000);
 }
 
-// Mobile track information rotation
+// Mobile track information rotation with album art
 function startMobileTrackRotation() {
     const trackName = document.getElementById('mobileTrackName');
     const artistName = document.getElementById('mobileArtistName');
+    const albumCoverImage = document.getElementById('albumCoverImage');
     
-    if (!trackName || !artistName) {
+    if (!trackName || !artistName || !albumCoverImage) {
         console.log('Track elements not found');
         return;
     }
     
     const trackInfo = [
-        { track: "Construction Rock Classics", artist: "Various Artists" },
-        { track: "Worksite Hits", artist: "ToolBox Radio" },
-        { track: "Building the Beat", artist: "Construction Crew" },
-        { track: "Heavy Metal & Heavy Machinery", artist: "Industrial Sounds" },
-        { track: "Concrete Jungle", artist: "Urban Builders" },
-        { track: "Steel & Stone", artist: "Foundation FM" },
-        { track: "Power Tools & Power Chords", artist: "Electric Workers" },
-        { track: "Non-Stop Construction Mix", artist: "ToolBox Radio Live" }
+        { 
+            track: "Thunder Road", 
+            artist: "Bruce Springsteen",
+            albumArt: "https://i.scdn.co/image/ab67616d0000b273503c2b1acabdd3ad6650db82"
+        },
+        { 
+            track: "Working Man", 
+            artist: "Rush",
+            albumArt: "https://i.scdn.co/image/ab67616d0000b2738fe0cd8301a5e9a38b50b776"
+        },
+        { 
+            track: "Hammer to Fall", 
+            artist: "Queen",
+            albumArt: "https://i.scdn.co/image/ab67616d0000b273ce4f1737bc8a646c8c4bd25a"
+        },
+        { 
+            track: "Working Class Hero", 
+            artist: "John Lennon",
+            albumArt: "https://i.scdn.co/image/ab67616d0000b273c53d01f4549b35bb7ba67f8e"
+        },
+        { 
+            track: "Takin' Care of Business", 
+            artist: "Bachman-Turner Overdrive",
+            albumArt: "https://i.scdn.co/image/ab67616d0000b273d6038452b0c7b83940d8d76f"
+        },
+        { 
+            track: "Blue Collar Man", 
+            artist: "Styx",
+            albumArt: "https://i.scdn.co/image/ab67616d0000b273a9ac0521e0b38851c51d29c6"
+        },
+        { 
+            track: "Iron Man", 
+            artist: "Black Sabbath",
+            albumArt: "https://i.scdn.co/image/ab67616d0000b273c6c4d513f978d6900a8d490b"
+        },
+        { 
+            track: "Welcome to the Machine", 
+            artist: "Pink Floyd",
+            albumArt: "https://i.scdn.co/image/ab67616d0000b273ea7caaff71dea1051d49b2fe"
+        }
     ];
     
     let index = 0;
+    
+    // Function to update album art
+    function updateAlbumArt(artUrl, fallbackUrl = 'images/logo1.png') {
+        // Add loading class
+        albumCoverImage.classList.add('loading');
+        
+        const img = new Image();
+        img.onload = function() {
+            albumCoverImage.src = artUrl;
+            albumCoverImage.classList.remove('loading');
+        };
+        img.onerror = function() {
+            console.log('Failed to load album art:', artUrl, 'Using fallback:', fallbackUrl);
+            albumCoverImage.src = fallbackUrl;
+            albumCoverImage.classList.remove('loading');
+        };
+        img.src = artUrl;
+    }
     
     setInterval(() => {
         const info = trackInfo[index];
@@ -210,19 +261,48 @@ function startMobileTrackRotation() {
         // Fade out
         trackName.style.opacity = '0.3';
         artistName.style.opacity = '0.3';
+        albumCoverImage.style.opacity = '0.3';
         
         setTimeout(() => {
             // Update content
             trackName.textContent = info.track;
             artistName.textContent = info.artist;
+            updateAlbumArt(info.albumArt);
             
             // Fade in
             trackName.style.opacity = '1';
             artistName.style.opacity = '1';
+            albumCoverImage.style.opacity = '1';
         }, 400);
         
         index = (index + 1) % trackInfo.length;
     }, 6000);
+    
+    // Initialize with first track
+    const firstTrack = trackInfo[0];
+    updateAlbumArt(firstTrack.albumArt);
+}
+
+// Function to fetch album art from external sources
+async function fetchAlbumArt(track, artist) {
+    try {
+        // Try to fetch from iTunes API
+        const itunesResponse = await fetch(`https://itunes.apple.com/search?term=${encodeURIComponent(track + ' ' + artist)}&media=music&limit=1`);
+        const itunesData = await itunesResponse.json();
+        
+        if (itunesData.results && itunesData.results.length > 0) {
+            const artwork = itunesData.results[0].artworkUrl100;
+            if (artwork) {
+                // Convert to higher resolution
+                return artwork.replace('100x100', '600x600');
+            }
+        }
+    } catch (error) {
+        console.log('Failed to fetch from iTunes API:', error);
+    }
+    
+    // Fallback to ToolBox Radio logo
+    return 'images/logo1.png';
 }
 
 // Show helper message for app users
