@@ -33,15 +33,25 @@ function initMobileLayout() {
                 <!-- Album Art Display -->
                 <div class="mobile-album-display">
                     <div class="mobile-album-cover">
-                        <img src="images/logo1.png" alt="ToolBox Radio" class="mobile-cover-image" id="mobileAlbumArt">
+                        <div class="album-artwork">
+                            <img src="images/logo1.png" alt="ToolBox Radio" class="artwork-background">
+                            <div class="artwork-overlay">
+                                <div class="music-icon">
+                                    <i class="fas fa-music"></i>
+                                </div>
+                                <div class="artwork-info">
+                                    <span class="artwork-title">ToolBox Radio</span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 
-                <!-- Track Information -->
+                <!-- Now Playing Information -->
                 <div class="mobile-track-display">
-                    <h2 class="mobile-track-name" id="mobileTrackName">ToolBox Radio</h2>
+                    <div class="now-playing-text">Now Playing</div>
+                    <h2 class="mobile-track-name" id="mobileTrackName">ToolBox Radio Live Stream</h2>
                     <p class="mobile-artist-name" id="mobileArtistName">Construction's #1 Music Station</p>
-                    <p class="mobile-album-name" id="mobileAlbumName">Live Stream - Sod the Chat, Just the Tunes</p>
                 </div>
                 
                 <!-- Audio Player -->
@@ -74,6 +84,7 @@ function initMobileLayout() {
             setTimeout(() => {
                 loadingScreen.style.display = 'none';
                 initAppPlayer();
+                startMobileTrackRotation();
             }, 500);
         }
     }, 2500);
@@ -94,7 +105,6 @@ function initAppPlayer() {
                     playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
                     playPauseBtn.classList.add('playing');
                     isPlaying = true;
-                    startMobileTrackRotation();
                 }).catch(error => {
                     console.log('Playback failed:', error);
                     showAppMessage('Tap to allow audio playback');
@@ -140,19 +150,21 @@ function initAppPlayer() {
 function startMobileTrackRotation() {
     const trackName = document.getElementById('mobileTrackName');
     const artistName = document.getElementById('mobileArtistName');
-    const albumName = document.getElementById('mobileAlbumName');
     
-    if (!trackName || !artistName || !albumName) {
+    if (!trackName || !artistName) {
         console.log('Track elements not found');
         return;
     }
     
     const trackInfo = [
-        { track: "ToolBox Radio", artist: "Construction's #1 Music Station", album: "Live Stream - Sod the Chat, Just the Tunes" },
-        { track: "Non-Stop Music", artist: "No Chat, Just Tunes", album: "24/7 Live Construction Radio" },
-        { track: "Construction Hits", artist: "Worksite Radio", album: "Powered by CMS Desk" },
-        { track: "Live Stream", artist: "ToolBox Radio", album: "High Quality Audio Stream" },
-        { track: "Now Playing", artist: "Construction Music", album: "For the Building Industry" }
+        { track: "Construction Rock Classics", artist: "Various Artists" },
+        { track: "Worksite Hits", artist: "ToolBox Radio" },
+        { track: "Building the Beat", artist: "Construction Crew" },
+        { track: "Heavy Metal & Heavy Machinery", artist: "Industrial Sounds" },
+        { track: "Concrete Jungle", artist: "Urban Builders" },
+        { track: "Steel & Stone", artist: "Foundation FM" },
+        { track: "Power Tools & Power Chords", artist: "Electric Workers" },
+        { track: "Non-Stop Construction Mix", artist: "ToolBox Radio Live" }
     ];
     
     let index = 0;
@@ -161,24 +173,21 @@ function startMobileTrackRotation() {
         const info = trackInfo[index];
         
         // Fade out
-        trackName.style.opacity = '0.5';
-        artistName.style.opacity = '0.5';
-        albumName.style.opacity = '0.5';
+        trackName.style.opacity = '0.3';
+        artistName.style.opacity = '0.3';
         
         setTimeout(() => {
             // Update content
             trackName.textContent = info.track;
             artistName.textContent = info.artist;
-            albumName.textContent = info.album;
             
             // Fade in
             trackName.style.opacity = '1';
             artistName.style.opacity = '1';
-            albumName.style.opacity = '1';
-        }, 300);
+        }, 400);
         
         index = (index + 1) % trackInfo.length;
-    }, 6000);
+    }, 5000);
 }
 
 // Show helper message for app users

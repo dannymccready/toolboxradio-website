@@ -1708,41 +1708,88 @@ body {
     margin: 0 auto;
 }
 
-.mobile-cover-image {
+/* Album Artwork Styling */
+.album-artwork {
+    position: relative;
     width: 100%;
     height: 100%;
     border-radius: 20px;
-    object-fit: cover;
+    overflow: hidden;
     box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5);
+}
+
+.artwork-background {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: brightness(0.7) contrast(1.2);
+}
+
+.artwork-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(255, 107, 53, 0.8) 0%, rgba(255, 140, 66, 0.6) 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.music-icon {
+    font-size: 2.5rem;
+    color: white;
+    margin-bottom: 10px;
+    opacity: 0.9;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.artwork-info {
+    color: white;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.7);
+}
+
+.artwork-title {
+    font-size: 1rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
 /* Mobile Track Display */
 .mobile-track-display {
     margin-bottom: 40px;
-    max-width: 300px;
+    max-width: 320px;
+}
+
+.now-playing-text {
+    font-size: 0.8rem;
+    color: rgba(255, 107, 53, 1);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-weight: 600;
+    margin-bottom: 12px;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
 }
 
 .mobile-track-name {
-    font-size: 1.3rem;
+    font-size: 1.4rem;
     font-weight: 700;
     margin-bottom: 8px;
     color: #ffffff;
-    transition: opacity 0.3s ease;
+    transition: opacity 0.4s ease;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+    line-height: 1.2;
 }
 
 .mobile-artist-name {
-    font-size: 1rem;
-    color: rgba(255, 255, 255, 0.9);
+    font-size: 1.1rem;
+    color: rgba(255, 255, 255, 0.85);
     margin-bottom: 4px;
-    transition: opacity 0.3s ease;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
-}
-
-.mobile-album-name {
-    font-size: 0.85rem;
-    color: rgba(255, 255, 255, 0.7);
-    transition: opacity 0.3s ease;
+    transition: opacity 0.4s ease;
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
     line-height: 1.3;
 }
@@ -1840,11 +1887,7 @@ body {
     }
     
     .mobile-artist-name {
-        font-size: 0.9rem;
-    }
-    
-    .mobile-album-name {
-        font-size: 0.8rem;
+        font-size: 1rem;
     }
     
     .mobile-control-btn {
