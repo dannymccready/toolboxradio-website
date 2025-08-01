@@ -115,11 +115,17 @@ function initAppPlayer() {
                     playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
                     playPauseBtn.classList.add('playing');
                     isPlaying = true;
-                    // Reset and start progress for new session
-                    resetSongProgress();
+                    
+                    // Track when user started playing
+                    userPlayStartTime = Date.now();
+                    
+                    // Only reset progress if this is the first time playing or song changed
+                    if (!songStartTime) {
+                        resetSongProgress();
+                        fetchCurrentlyPlaying();
+                    }
+                    
                     startProgressAnimation();
-                    // Refresh metadata when starting to play
-                    fetchCurrentlyPlaying();
                 }).catch(error => {
                     console.log('Playback failed:', error);
                     showAppMessage('Tap to allow audio playback');
@@ -129,6 +135,15 @@ function initAppPlayer() {
                 audioPlayer.pause();
                 playPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
                 playPauseBtn.classList.remove('playing');
+                
+                // Track pause time to maintain correct elapsed calculation
+                const pauseStartTime = Date.now();
+                if (userPlayStartTime) {
+                    const userListenTime = Math.floor((pauseStartTime - userPlayStartTime) / 1000);
+                    songApiElapsed += userListenTime;
+                    console.log(`Mobile: User paused after listening for ${userListenTime}s, total elapsed now: ${songApiElapsed}s`);
+                }
+                
                 stopProgressAnimation();
                 isPlaying = false;
             }
@@ -167,6 +182,9 @@ let progressInterval = null;
 let progressStartTime = null;
 let songDuration = null;
 let songStartTime = null;
+let songApiElapsed = 0; // Elapsed time from API when last fetched
+let userPlayStartTime = null; // When user pressed play
+let totalPauseTime = 0; // Total time spent paused
 
 function startProgressAnimation() {
     stopProgressAnimation(); // Clear any existing animation
@@ -219,15 +237,22 @@ function resetSongProgress() {
 function updateSongProgress(duration, elapsed = null) {
     songDuration = duration;
     
-    // Calculate the actual song start time based on elapsed time
-    const now = Date.now();
+    // Store the elapsed time from API
     if (elapsed && elapsed > 0) {
-        // Song started (elapsed) seconds ago
+        songApiElapsed = elapsed;
+        // Calculate the actual song start time based on elapsed time
+        const now = Date.now();
         songStartTime = now - (elapsed * 1000);
         console.log(`Mobile: Song has been playing for ${elapsed} seconds already, setting start time to ${elapsed}s ago`);
+    } else if (songApiElapsed > 0) {
+        // Use previous elapsed time if we don't get new data
+        const now = Date.now();
+        songStartTime = now - (songApiElapsed * 1000);
+        console.log(`Mobile: Using previous elapsed time: ${songApiElapsed} seconds`);
     } else {
-        // Song is starting now (user just pressed play) or no elapsed time available
-        songStartTime = now;
+        // Song is starting now or no elapsed time available
+        songApiElapsed = 0;
+        songStartTime = Date.now();
         console.log(`Mobile: No elapsed time, starting progress from 0:00`);
     }
     
@@ -242,10 +267,14 @@ function updateSongProgress(duration, elapsed = null) {
         
         console.log(`Song duration set to: ${durationString} (${duration} seconds)`);
     } else {
-        // For unknown duration, estimate typical song length (3:30)
-        songDuration = 210; // 3.5 minutes as default
-        if (totalTimeElement) totalTimeElement.textContent = '3:30';
-        console.log('Using estimated duration: 3:30');
+        // Keep previous duration if we had one, otherwise use default
+        if (!songDuration) {
+            songDuration = 210; // 3.5 minutes as default only if no previous duration
+            if (totalTimeElement) totalTimeElement.textContent = '3:30';
+            console.log('No duration available, using estimated: 3:30');
+        } else {
+            console.log(`Keeping previous duration: ${songDuration} seconds`);
+        }
     }
     
     // Update progress immediately
@@ -1171,11 +1200,17 @@ function initDesktopPlayer() {
                     playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
                     playPauseBtn.classList.add('playing');
                     isPlaying = true;
-                    // Reset and start progress for new session
-                    resetDesktopProgress();
+                    
+                    // Track when user started playing
+                    desktopUserPlayStartTime = Date.now();
+                    
+                    // Only reset progress if this is the first time playing or song changed
+                    if (!desktopSongStartTime) {
+                        resetDesktopProgress();
+                        fetchCurrentlyPlaying();
+                    }
+                    
                     startDesktopProgressAnimation();
-                    // Refresh metadata when starting to play
-                    fetchCurrentlyPlaying();
                 }).catch(error => {
                     console.log('Desktop playback failed:', error);
                 });
@@ -1185,6 +1220,15 @@ function initDesktopPlayer() {
                 playPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
                 playPauseBtn.classList.remove('playing');
                 isPlaying = false;
+                
+                // Track pause time to maintain correct elapsed calculation
+                const pauseStartTime = Date.now();
+                if (desktopUserPlayStartTime) {
+                    const userListenTime = Math.floor((pauseStartTime - desktopUserPlayStartTime) / 1000);
+                    desktopSongApiElapsed += userListenTime;
+                    console.log(`Desktop: User paused after listening for ${userListenTime}s, total elapsed now: ${desktopSongApiElapsed}s`);
+                }
+                
                 stopDesktopProgressAnimation();
             }
         });
@@ -1215,6 +1259,9 @@ let desktopProgressInterval = null;
 let desktopProgressStartTime = null;
 let desktopSongDuration = null;
 let desktopSongStartTime = null;
+let desktopSongApiElapsed = 0; // Elapsed time from API when last fetched
+let desktopUserPlayStartTime = null; // When user pressed play
+let desktopTotalPauseTime = 0; // Total time spent paused
 
 function startDesktopProgressAnimation() {
     stopDesktopProgressAnimation();
@@ -1266,15 +1313,22 @@ function resetDesktopProgress() {
 function updateDesktopSongProgress(duration, elapsed = null) {
     desktopSongDuration = duration;
     
-    // Calculate the actual song start time based on elapsed time
-    const now = Date.now();
+    // Store the elapsed time from API
     if (elapsed && elapsed > 0) {
-        // Song started (elapsed) seconds ago
+        desktopSongApiElapsed = elapsed;
+        // Calculate the actual song start time based on elapsed time
+        const now = Date.now();
         desktopSongStartTime = now - (elapsed * 1000);
         console.log(`Desktop: Song has been playing for ${elapsed} seconds already, setting start time to ${elapsed}s ago`);
+    } else if (desktopSongApiElapsed > 0) {
+        // Use previous elapsed time if we don't get new data
+        const now = Date.now();
+        desktopSongStartTime = now - (desktopSongApiElapsed * 1000);
+        console.log(`Desktop: Using previous elapsed time: ${desktopSongApiElapsed} seconds`);
     } else {
-        // Song is starting now (user just pressed play) or no elapsed time available
-        desktopSongStartTime = now;
+        // Song is starting now or no elapsed time available
+        desktopSongApiElapsed = 0;
+        desktopSongStartTime = Date.now();
         console.log(`Desktop: No elapsed time, starting progress from 0:00`);
     }
     
@@ -1288,9 +1342,14 @@ function updateDesktopSongProgress(duration, elapsed = null) {
         
         console.log(`Desktop song duration set to: ${durationString} (${duration} seconds)`);
     } else {
-        desktopSongDuration = 210; // 3.5 minutes as default
-        if (totalTimeElement) totalTimeElement.textContent = '3:30';
-        console.log('Desktop using estimated duration: 3:30');
+        // Keep previous duration if we had one, otherwise use default
+        if (!desktopSongDuration) {
+            desktopSongDuration = 210; // 3.5 minutes as default only if no previous duration
+            if (totalTimeElement) totalTimeElement.textContent = '3:30';
+            console.log('Desktop: No duration available, using estimated: 3:30');
+        } else {
+            console.log(`Desktop: Keeping previous duration: ${desktopSongDuration} seconds`);
+        }
     }
     
     updateDesktopProgressDisplay();
