@@ -155,14 +155,14 @@ function startHeaderPhraseRotation() {
     }
     
     const phrases = [
-        "🎶 Now streaming: certified bangers and power hammers.",
-        "👷‍♂️ Our mixtape passed the building inspection.",
-        "🔊 Noise complaint? Nope — just your new favorite station.",
-        "🧱 We don't drop bricks — just beats.",
-        "🚧 Under construction: your taste in music.",
-        "🎛️ Powered by coffee, concrete, and killer playlists.",
+        "Now streaming: certified bangers and power hammers.",
+        "Our mixtape passed the building inspection.",
+        "Noise complaint? Nope — just your new favorite station.",
+        "We don't drop bricks — just beats.",
+        "Under construction: your taste in music.",
+        "Powered by coffee, concrete, and killer playlists.",
         "⚠️ Warning: Tunes may cause spontaneous head nodding on site.",
-        "🛠️ From rebar to reverb — we've got you."
+        "From rebar to reverb — we've got you."
     ];
     
     let phraseIndex = 0;
@@ -180,7 +180,7 @@ function startHeaderPhraseRotation() {
         }, 300);
         
         phraseIndex = (phraseIndex + 1) % phrases.length;
-    }, 4000);
+    }, 10000);
 }
 
 // Fetch currently playing song from ToolBox Radio
@@ -199,19 +199,43 @@ async function fetchCurrentlyPlaying() {
     
     // Function to update album art
     function updateAlbumArt(artUrl, fallbackUrl = 'images/logo1.png') {
+        console.log('Attempting to load album art:', artUrl);
+        
         // Add loading class
         albumCoverImage.classList.add('loading');
         
+        // If it's already the fallback, just use it directly
+        if (artUrl === fallbackUrl) {
+            console.log('Using fallback image directly');
+            albumCoverImage.src = fallbackUrl;
+            albumCoverImage.classList.remove('loading');
+            return;
+        }
+        
         const img = new Image();
+        img.crossOrigin = 'anonymous'; // Try to handle CORS
+        
         img.onload = function() {
+            console.log('Album art loaded successfully:', artUrl);
             albumCoverImage.src = artUrl;
             albumCoverImage.classList.remove('loading');
         };
+        
         img.onerror = function() {
             console.log('Failed to load album art:', artUrl, 'Using fallback:', fallbackUrl);
             albumCoverImage.src = fallbackUrl;
             albumCoverImage.classList.remove('loading');
         };
+        
+        // Set a timeout in case the image takes too long
+        setTimeout(() => {
+            if (albumCoverImage.classList.contains('loading')) {
+                console.log('Image loading timeout, using fallback');
+                albumCoverImage.src = fallbackUrl;
+                albumCoverImage.classList.remove('loading');
+            }
+        }, 5000);
+        
         img.src = artUrl;
     }
     
@@ -326,38 +350,70 @@ async function fetchCurrentlyPlaying() {
 
 // Function to fetch album art from external sources
 async function fetchAlbumArt(track, artist) {
+    console.log(`Fetching album art for: "${track}" by "${artist}"`);
+    
     // Skip API calls for generic/stream titles
     const genericTitles = ['toolbox radio', 'live stream', 'construction music', 'loading', 'fetching'];
     const searchTerm = (track + ' ' + artist).toLowerCase();
     
     if (genericTitles.some(term => searchTerm.includes(term))) {
+        console.log('Generic title detected, using logo');
+        return 'images/logo1.png';
+    }
+    
+    // Clean up track and artist names
+    const cleanTrack = track.replace(/[^\w\s]/gi, '').trim();
+    const cleanArtist = artist.replace(/[^\w\s]/gi, '').trim();
+    
+    if (!cleanTrack || !cleanArtist || cleanTrack.length < 2 || cleanArtist.length < 2) {
+        console.log('Invalid track/artist names, using logo');
         return 'images/logo1.png';
     }
     
     try {
-        // Try to fetch from iTunes API
-        const searchQuery = encodeURIComponent(`${artist} ${track}`);
-        const itunesResponse = await fetch(`https://itunes.apple.com/search?term=${searchQuery}&media=music&limit=5`);
+        // Try to fetch from iTunes API with cleaned names
+        const searchQuery = encodeURIComponent(`${cleanArtist} ${cleanTrack}`);
+        console.log('Searching iTunes with query:', searchQuery);
+        
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 8000); // 8 second timeout
+        
+        const itunesResponse = await fetch(`https://itunes.apple.com/search?term=${searchQuery}&media=music&limit=10&explicit=no`, {
+            signal: controller.signal
+        });
+        
+        clearTimeout(timeoutId);
+        
+        if (!itunesResponse.ok) {
+            throw new Error(`iTunes API returned ${itunesResponse.status}`);
+        }
+        
         const itunesData = await itunesResponse.json();
+        console.log('iTunes API response:', itunesData);
         
         if (itunesData.results && itunesData.results.length > 0) {
             // Look for exact or close matches
             for (const result of itunesData.results) {
                 const artwork = result.artworkUrl100;
                 if (artwork) {
-                    console.log(`Found album art for "${track}" by "${artist}"`);
+                    console.log(`Found album art for "${track}" by "${artist}":`, artwork);
                     // Convert to higher resolution
-                    return artwork.replace('100x100', '600x600');
+                    const highResArt = artwork.replace('100x100', '600x600');
+                    return highResArt;
                 }
             }
         }
         
-        console.log(`No album art found for "${track}" by "${artist}"`);
+        console.log(`No album art found in iTunes for "${track}" by "${artist}"`);
     } catch (error) {
-        console.log('Failed to fetch from iTunes API:', error);
+        if (error.name === 'AbortError') {
+            console.log('iTunes API request timed out');
+        } else {
+            console.log('Failed to fetch from iTunes API:', error.message);
+        }
     }
     
-    // Fallback to ToolBox Radio logo
+    console.log('Using fallback logo');
     return 'images/logo1.png';
 }
 
