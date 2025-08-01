@@ -41,12 +41,48 @@ function initMobileLayout() {
                 
                 <div class="mobile-player">
                     <div class="mobile-player-container">
+                        <!-- Hidden iframe for actual streaming -->
                         <iframe 
+                            id="radioStream"
                             src="https://radio.toolboxradio.com/public/toolbox_radio/embed?theme=light" 
                             frameborder="0" 
                             allowtransparency="true" 
-                            style="width: 100%; height: 120px; border: 0; border-radius: 15px;"
+                            style="width: 1px; height: 1px; opacity: 0; position: absolute; pointer-events: none;"
                         ></iframe>
+                        
+                        <!-- Custom Mobile Player Interface -->
+                        <div class="custom-mobile-player">
+                            <div class="player-top-section">
+                                <div class="album-art">
+                                    <img src="images/logo1.png" alt="ToolBox Radio" class="album-image">
+                                    <div class="album-art-overlay">
+                                        <i class="fas fa-music"></i>
+                                    </div>
+                                </div>
+                                
+                                <div class="track-info">
+                                    <div class="track-title">ToolBox Radio</div>
+                                    <div class="track-artist">Construction's #1 Music Station</div>
+                                    <div class="track-status">
+                                        <div class="status-dot"></div>
+                                        <span>Live Stream</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="player-controls">
+                                <button class="play-btn" id="mobilePlayBtn">
+                                    <i class="fas fa-play"></i>
+                                </button>
+                            </div>
+                            
+                            <div class="player-info">
+                                <div class="stream-quality">
+                                    <i class="fas fa-signal"></i>
+                                    <span>High Quality Stream</span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 
@@ -64,15 +100,184 @@ function initMobileLayout() {
             mobileLoadingScreen.classList.add('hidden');
             setTimeout(() => {
                 mobileLoadingScreen.style.display = 'none';
+                // Initialize mobile player controls after loading screen is hidden
+                initMobilePlayerControls();
             }, 500);
         }
     }, 2000);
 }
 
+// Mobile Player Controls
+function initMobilePlayerControls() {
+    const playBtn = document.getElementById('mobilePlayBtn');
+    const iframe = document.getElementById('radioStream');
+    let isPlaying = false;
+    
+    if (playBtn && iframe) {
+        playBtn.addEventListener('click', () => {
+            if (!isPlaying) {
+                // Start playing
+                iframe.style.width = '300px';
+                iframe.style.height = '150px';
+                iframe.style.opacity = '1';
+                iframe.style.pointerEvents = 'auto';
+                iframe.style.position = 'fixed';
+                iframe.style.top = '50%';
+                iframe.style.left = '50%';
+                iframe.style.transform = 'translate(-50%, -50%)';
+                iframe.style.zIndex = '10000';
+                iframe.style.borderRadius = '15px';
+                iframe.style.boxShadow = '0 10px 30px rgba(0, 0, 0, 0.5)';
+                
+                // Update button state
+                playBtn.innerHTML = '<i class="fas fa-pause"></i>';
+                playBtn.classList.add('playing');
+                
+                // Show helper text
+                showStreamMessage('Tap play in the stream player above');
+                
+                // Hide iframe again after a brief moment (user can click play in iframe)
+                setTimeout(() => {
+                    iframe.style.width = '1px';
+                    iframe.style.height = '1px';
+                    iframe.style.opacity = '0';
+                    iframe.style.pointerEvents = 'none';
+                    iframe.style.position = 'absolute';
+                    iframe.style.top = '0';
+                    iframe.style.left = '0';
+                    iframe.style.transform = 'none';
+                    iframe.style.zIndex = '1';
+                }, 4000);
+                
+                isPlaying = true;
+                
+                // Update track info with animation
+                updateTrackInfo();
+                
+            } else {
+                // Pause (show iframe for user to pause)
+                iframe.style.width = '300px';
+                iframe.style.height = '150px';
+                iframe.style.opacity = '1';
+                iframe.style.pointerEvents = 'auto';
+                
+                playBtn.innerHTML = '<i class="fas fa-play"></i>';
+                playBtn.classList.remove('playing');
+                
+                setTimeout(() => {
+                    iframe.style.width = '1px';
+                    iframe.style.height = '1px';
+                    iframe.style.opacity = '0';
+                    iframe.style.pointerEvents = 'none';
+                }, 3000);
+                
+                isPlaying = false;
+            }
+        });
+        
+        // Add some interactive feedback
+        playBtn.addEventListener('touchstart', () => {
+            playBtn.style.transform = 'scale(0.95)';
+        });
+        
+        playBtn.addEventListener('touchend', () => {
+            playBtn.style.transform = 'scale(1)';
+        });
+    }
+}
+
+// Update track info with dynamic content
+function updateTrackInfo() {
+    const trackTitle = document.querySelector('.track-title');
+    const trackArtist = document.querySelector('.track-artist');
+    
+    if (trackTitle && trackArtist) {
+        // Add some dynamic feel to the player
+        const messages = [
+            { title: "ToolBox Radio", artist: "Construction's #1 Music Station" },
+            { title: "Now Playing", artist: "Non-Stop Construction Music" },
+            { title: "Live Stream", artist: "Sod the Chat - Just the Tunes" }
+        ];
+        
+        let messageIndex = 0;
+        
+        setInterval(() => {
+            const message = messages[messageIndex];
+            trackTitle.style.opacity = '0.5';
+            trackArtist.style.opacity = '0.5';
+            
+            setTimeout(() => {
+                trackTitle.textContent = message.title;
+                trackArtist.textContent = message.artist;
+                trackTitle.style.opacity = '1';
+                trackArtist.style.opacity = '1';
+            }, 300);
+            
+            messageIndex = (messageIndex + 1) % messages.length;
+        }, 5000);
+    }
+}
+
+// Show helper message for mobile users
+function showStreamMessage(message) {
+    const existingMessage = document.querySelector('.stream-helper-message');
+    if (existingMessage) {
+        existingMessage.remove();
+    }
+    
+    const messageDiv = document.createElement('div');
+    messageDiv.className = 'stream-helper-message';
+    messageDiv.textContent = message;
+    messageDiv.style.cssText = `
+        position: fixed;
+        top: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: rgba(0, 0, 0, 0.8);
+        color: white;
+        padding: 10px 20px;
+        border-radius: 25px;
+        font-size: 0.9rem;
+        z-index: 10001;
+        animation: slideDown 0.3s ease;
+    `;
+    
+    document.body.appendChild(messageDiv);
+    
+    // Add animation styles if not already added
+    if (!document.getElementById('helper-message-styles')) {
+        const style = document.createElement('style');
+        style.id = 'helper-message-styles';
+        style.textContent = `
+            @keyframes slideDown {
+                0% {
+                    opacity: 0;
+                    transform: translateX(-50%) translateY(-20px);
+                }
+                100% {
+                    opacity: 1;
+                    transform: translateX(-50%) translateY(0);
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    }
+    
+    // Remove message after 3 seconds
+    setTimeout(() => {
+        messageDiv.style.animation = 'slideDown 0.3s ease reverse';
+        setTimeout(() => {
+            if (messageDiv.parentNode) {
+                messageDiv.parentNode.removeChild(messageDiv);
+            }
+        }, 300);
+    }, 3000);
+}
+
 // Iframe Player Integration
 class ToolBoxRadioPlayer {
     constructor() {
-        this.iframe = document.querySelector('.iframe-container iframe, .mobile-player-container iframe');
+        this.iframe = document.querySelector('.iframe-container iframe, #radioStream');
         this.isMobile = isMobileDevice();
         this.init();
     }
@@ -86,6 +291,11 @@ class ToolBoxRadioPlayer {
             // Handle messages from the iframe if needed
             if (event.origin === 'https://radio.toolboxradio.com') {
                 console.log('Message from radio iframe:', event.data);
+                
+                // If mobile, try to sync custom player state with iframe
+                if (this.isMobile) {
+                    this.syncMobilePlayerState(event.data);
+                }
             }
         });
         
@@ -93,6 +303,28 @@ class ToolBoxRadioPlayer {
         if (this.isMobile && this.iframe) {
             this.iframe.style.touchAction = 'manipulation';
             this.iframe.setAttribute('allow', 'autoplay');
+            
+            // Ensure iframe is properly hidden initially
+            setTimeout(() => {
+                this.iframe.style.width = '1px';
+                this.iframe.style.height = '1px';
+                this.iframe.style.opacity = '0';
+                this.iframe.style.pointerEvents = 'none';
+            }, 100);
+        }
+    }
+    
+    syncMobilePlayerState(data) {
+        const playBtn = document.getElementById('mobilePlayBtn');
+        if (playBtn && data) {
+            // Try to sync play/pause state based on iframe messages
+            if (data.includes('play') || data.includes('start')) {
+                playBtn.innerHTML = '<i class="fas fa-pause"></i>';
+                playBtn.classList.add('playing');
+            } else if (data.includes('pause') || data.includes('stop')) {
+                playBtn.innerHTML = '<i class="fas fa-play"></i>';
+                playBtn.classList.remove('playing');
+            }
         }
     }
 }
