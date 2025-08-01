@@ -162,9 +162,11 @@ function initAppPlayer() {
     }
 }
 
-// Progress Bar Animation for Live Stream
+// Progress Bar Animation for Songs
 let progressInterval = null;
 let progressStartTime = null;
+let songDuration = null;
+let songStartTime = null;
 
 function startProgressAnimation() {
     stopProgressAnimation(); // Clear any existing animation
@@ -178,20 +180,7 @@ function startProgressAnimation() {
     progressStartTime = Date.now();
     
     progressInterval = setInterval(() => {
-        const elapsed = Date.now() - progressStartTime;
-        const seconds = Math.floor(elapsed / 1000);
-        const minutes = Math.floor(seconds / 60);
-        const remainingSeconds = seconds % 60;
-        
-        // Update time display
-        const timeString = `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
-        currentTimeElement.textContent = timeString;
-        
-        // Animate progress bar (resets every 60 seconds for visual effect)
-        const cycleProgress = (seconds % 60) / 60 * 100;
-        
-        progressFill.style.width = `${cycleProgress}%`;
-        progressDot.style.left = `${cycleProgress}%`;
+        updateProgressDisplay();
     }, 1000);
 }
 
@@ -208,6 +197,70 @@ function stopProgressAnimation() {
     if (progressFill) progressFill.style.width = '0%';
     if (progressDot) progressDot.style.left = '0%';
     if (currentTimeElement) currentTimeElement.textContent = '0:00';
+}
+
+function updateSongProgress(duration) {
+    songDuration = duration;
+    songStartTime = Date.now();
+    
+    const totalTimeElement = document.getElementById('totalTime');
+    
+    if (duration && duration > 0) {
+        // Format duration as MM:SS
+        const minutes = Math.floor(duration / 60);
+        const seconds = duration % 60;
+        const durationString = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+        if (totalTimeElement) totalTimeElement.textContent = durationString;
+        
+        console.log(`Song duration set to: ${durationString}`);
+    } else {
+        // Live stream - no specific duration
+        if (totalTimeElement) totalTimeElement.textContent = '∞';
+        console.log('Live stream mode - no specific duration');
+    }
+    
+    // Update progress immediately
+    updateProgressDisplay();
+}
+
+function updateProgressDisplay() {
+    const progressFill = document.getElementById('progressFill');
+    const progressDot = document.getElementById('progressDot');
+    const currentTimeElement = document.getElementById('currentTime');
+    
+    if (!progressFill || !progressDot || !currentTimeElement) return;
+    
+    const now = Date.now();
+    const elapsed = Math.floor((now - (songStartTime || progressStartTime)) / 1000);
+    
+    // Update current time display
+    const minutes = Math.floor(elapsed / 60);
+    const seconds = elapsed % 60;
+    const timeString = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+    currentTimeElement.textContent = timeString;
+    
+    // Update progress bar
+    let progressPercent = 0;
+    
+    if (songDuration && songDuration > 0) {
+        // Real song with known duration
+        progressPercent = Math.min((elapsed / songDuration) * 100, 100);
+        
+        // If song is finished, fetch new metadata
+        if (elapsed >= songDuration) {
+            console.log('Song finished, fetching new metadata...');
+            setTimeout(() => {
+                fetchCurrentlyPlaying();
+            }, 1000);
+        }
+    } else {
+        // Live stream or unknown duration - cycle every 4 minutes for visual effect
+        const cycleLength = 240; // 4 minutes
+        progressPercent = (elapsed % cycleLength) / cycleLength * 100;
+    }
+    
+    progressFill.style.width = `${progressPercent}%`;
+    progressDot.style.left = `${progressPercent}%`;
 }
 
 // Header phrase rotation
@@ -305,7 +358,7 @@ async function fetchCurrentlyPlaying() {
     }
     
     // Function to update track display
-    async function updateTrackDisplay(track, artist) {
+    async function updateTrackDisplay(track, artist, providedAlbumArt = null, duration = null) {
         // Only update if song has changed
         const newSong = `${track} - ${artist}`;
         if (newSong === currentSong) {
@@ -313,7 +366,15 @@ async function fetchCurrentlyPlaying() {
         }
         
         currentSong = newSong;
-        console.log('Now playing:', track, 'by', artist);
+        console.log('Now playing:', track, 'by', artist, 'Duration:', duration, 'Album Art:', providedAlbumArt);
+        
+        // Update song duration and restart progress if we have it
+        if (duration && duration > 0) {
+            updateSongProgress(duration);
+        } else {
+            // For live streams or unknown duration, use continuous progress
+            updateSongProgress(null);
+        }
         
         // Fade out
         trackName.style.opacity = '0.3';
@@ -325,8 +386,11 @@ async function fetchCurrentlyPlaying() {
             trackName.textContent = track;
             artistName.textContent = artist;
             
-            // Fetch album art
-            const albumArt = await fetchAlbumArt(track, artist);
+            // Use provided album art first, then fallback to API
+            let albumArt = providedAlbumArt;
+            if (!albumArt || albumArt === '') {
+                albumArt = await fetchAlbumArt(track, artist);
+            }
             updateAlbumArt(albumArt);
             
             // Fade in
@@ -339,7 +403,7 @@ async function fetchCurrentlyPlaying() {
     // Function to get metadata from radio stream
     async function getRadioMetadata() {
         try {
-            // Try to fetch from ToolBox Radio's metadata API or stream info
+            // Try to fetch from ToolBox Radio's metadata API
             const response = await fetch('https://radio.toolboxradio.com/api/nowplaying/toolbox_radio', {
                 method: 'GET',
                 headers: {
@@ -349,11 +413,14 @@ async function fetchCurrentlyPlaying() {
             
             if (response.ok) {
                 const data = await response.json();
+                console.log('Radio API response:', data);
                 
                 if (data.now_playing && data.now_playing.song) {
                     const song = data.now_playing.song;
                     let track = song.title || song.text || 'ToolBox Radio';
                     let artist = song.artist || 'Live Stream';
+                    let albumArt = song.art || null;
+                    let duration = song.duration || null;
                     
                     // Clean up metadata
                     if (track.includes(' - ')) {
@@ -362,7 +429,8 @@ async function fetchCurrentlyPlaying() {
                         track = parts[1];
                     }
                     
-                    await updateTrackDisplay(track, artist);
+                    // Update track display with real album art and duration
+                    await updateTrackDisplay(track, artist, albumArt, duration);
                     return;
                 }
             }
@@ -370,11 +438,16 @@ async function fetchCurrentlyPlaying() {
             console.log('Failed to fetch from main API, trying alternative:', error);
         }
         
-        // Fallback: Try alternative metadata source
+        // Fallback: Try alternative metadata source with CORS proxy
         try {
-            const streamResponse = await fetch('https://radio.toolboxradio.com/radio/8000/status-json.xsl');
+            const proxyUrl = 'https://corsproxy.io/?';
+            const streamUrl = 'https://radio.toolboxradio.com/radio/8000/status-json.xsl';
+            
+            const streamResponse = await fetch(proxyUrl + encodeURIComponent(streamUrl));
             if (streamResponse.ok) {
                 const streamData = await streamResponse.json();
+                console.log('Stream metadata:', streamData);
+                
                 if (streamData.icestats && streamData.icestats.source) {
                     const source = streamData.icestats.source;
                     const title = source.title || source.stream_title || 'ToolBox Radio Live';
@@ -388,7 +461,7 @@ async function fetchCurrentlyPlaying() {
                         track = parts[1];
                     }
                     
-                    await updateTrackDisplay(track, artist);
+                    await updateTrackDisplay(track, artist, null, null);
                     return;
                 }
             }
@@ -396,21 +469,70 @@ async function fetchCurrentlyPlaying() {
             console.log('Failed to fetch stream metadata:', error);
         }
         
+        // Try to get info from the embed iframe directly
+        try {
+            await getMetadataFromEmbed();
+        } catch (error) {
+            console.log('Failed to get metadata from embed:', error);
+        }
+        
         // Final fallback
-        await updateTrackDisplay('ToolBox Radio', 'Live Construction Music Stream');
+        await updateTrackDisplay('ToolBox Radio', 'Live Construction Music Stream', null, null);
+    }
+    
+    // Function to extract metadata from embedded player
+    async function getMetadataFromEmbed() {
+        // Create a hidden iframe to get metadata like the desktop version
+        const hiddenIframe = document.createElement('iframe');
+        hiddenIframe.src = 'https://radio.toolboxradio.com/public/toolbox_radio/embed?theme=light';
+        hiddenIframe.style.display = 'none';
+        document.body.appendChild(hiddenIframe);
+        
+        // Listen for messages from the iframe
+        const messageHandler = (event) => {
+            if (event.origin === 'https://radio.toolboxradio.com') {
+                console.log('Received iframe message:', event.data);
+                try {
+                    const data = typeof event.data === 'string' ? JSON.parse(event.data) : event.data;
+                    if (data.type === 'metadata' || data.nowplaying) {
+                        const metadata = data.nowplaying || data;
+                        if (metadata.title || metadata.song) {
+                            const track = metadata.title || metadata.song;
+                            const artist = metadata.artist || 'ToolBox Radio';
+                            const albumArt = metadata.albumart || metadata.art;
+                            const duration = metadata.duration;
+                            
+                            updateTrackDisplay(track, artist, albumArt, duration);
+                        }
+                    }
+                } catch (e) {
+                    console.log('Error parsing iframe message:', e);
+                }
+            }
+        };
+        
+        window.addEventListener('message', messageHandler);
+        
+        // Clean up after 10 seconds
+        setTimeout(() => {
+            window.removeEventListener('message', messageHandler);
+            if (hiddenIframe.parentNode) {
+                hiddenIframe.parentNode.removeChild(hiddenIframe);
+            }
+        }, 10000);
     }
     
     // Initial load
     await getRadioMetadata();
     
-    // Check for updates every 30 seconds
+    // Check for updates every 10 seconds for more responsive updates
     if (metadataCheckInterval) {
         clearInterval(metadataCheckInterval);
     }
     
     metadataCheckInterval = setInterval(async () => {
         await getRadioMetadata();
-    }, 30000);
+    }, 10000);
 }
 
 // Function to fetch album art from external sources
@@ -427,87 +549,42 @@ async function fetchAlbumArt(track, artist) {
     }
     
     // Clean up track and artist names
-    const cleanTrack = track.replace(/[^\w\s]/gi, '').trim();
-    const cleanArtist = artist.replace(/[^\w\s]/gi, '').trim();
+    const cleanTrack = track.replace(/[^\w\s-]/gi, '').trim();
+    const cleanArtist = artist.replace(/[^\w\s-]/gi, '').trim();
     
     if (!cleanTrack || !cleanArtist || cleanTrack.length < 2 || cleanArtist.length < 2) {
         console.log('Invalid track/artist names, using logo');
         return 'images/logo1.png';
     }
     
-    // First, try using a CORS proxy for iTunes API
     try {
+        // Use a more reliable CORS proxy
         const searchQuery = encodeURIComponent(`${cleanArtist} ${cleanTrack}`);
-        console.log('Searching iTunes with CORS proxy:', searchQuery);
+        console.log('Searching for album art:', searchQuery);
         
-        const proxyUrl = 'https://corsproxy.io/?';
-        const itunesUrl = `https://itunes.apple.com/search?term=${searchQuery}&media=music&limit=5&explicit=no`;
-        
-        const response = await fetch(proxyUrl + encodeURIComponent(itunesUrl), {
-            method: 'GET',
-            headers: {
-                'Accept': 'application/json',
-            }
-        });
+        // Try direct fetch first (might work on some networks)
+        const response = await fetch(`https://itunes.apple.com/search?term=${searchQuery}&media=music&limit=3&explicit=no`);
         
         if (response.ok) {
             const data = await response.json();
-            console.log('iTunes API response via proxy:', data);
+            console.log('iTunes search results:', data);
             
             if (data.results && data.results.length > 0) {
                 for (const result of data.results) {
                     if (result.artworkUrl100) {
                         const highResArt = result.artworkUrl100.replace('100x100', '600x600');
-                        console.log(`Found album art via proxy: ${highResArt}`);
+                        console.log(`Found album art: ${highResArt}`);
                         return highResArt;
                     }
                 }
             }
         }
     } catch (error) {
-        console.log('Proxy method failed:', error.message);
+        console.log('iTunes API failed:', error.message);
     }
     
-    // Fallback: Try direct iTunes API (might work in some browsers)
-    try {
-        const searchQuery = encodeURIComponent(`${cleanArtist} ${cleanTrack}`);
-        const response = await fetch(`https://itunes.apple.com/search?term=${searchQuery}&media=music&limit=5&explicit=no`);
-        
-        if (response.ok) {
-            const data = await response.json();
-            if (data.results && data.results.length > 0) {
-                for (const result of data.results) {
-                    if (result.artworkUrl100) {
-                        const highResArt = result.artworkUrl100.replace('100x100', '600x600');
-                        console.log(`Found album art direct: ${highResArt}`);
-                        return highResArt;
-                    }
-                }
-            }
-        }
-    } catch (error) {
-        console.log('Direct iTunes API failed:', error.message);
-    }
-    
-    // Final fallback: Use some generic album arts based on artist/genre
-    const fallbackArts = [
-        'https://i.imgur.com/8B3jVjV.jpg', // Rock album art
-        'https://i.imgur.com/2xWBhjl.jpg', // Pop album art
-        'https://i.imgur.com/kV8jQxr.jpg', // Classic rock
-        'https://i.imgur.com/7VjK9mL.jpg', // Alternative
-        'https://i.imgur.com/3kJnVxM.jpg'  // General music
-    ];
-    
-    // Use a deterministic selection based on artist name
-    const artistHash = cleanArtist.split('').reduce((a, b) => {
-        a = ((a << 5) - a) + b.charCodeAt(0);
-        return a & a;
-    }, 0);
-    
-    const fallbackIndex = Math.abs(artistHash) % fallbackArts.length;
-    console.log(`Using fallback album art #${fallbackIndex}`);
-    
-    return fallbackArts[fallbackIndex];
+    console.log('No album art found, using logo fallback');
+    return 'images/logo1.png';
 }
 
 // Show helper message for app users
