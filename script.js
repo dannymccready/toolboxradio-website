@@ -23,9 +23,15 @@ function initMobileLayout() {
 
         <!-- Simple Mobile Layout -->
         <div class="mobile-app-container">
-            <!-- Logo in corner -->
-            <div class="corner-logo">
-                <img src="images/logo1.png" alt="ToolBox Radio" class="corner-logo-image">
+            <!-- Top Header with Logo and Rotating Text -->
+            <div class="mobile-header">
+                <div class="header-logo">
+                    <img src="images/logo1.png" alt="ToolBox Radio" class="header-logo-image">
+                </div>
+                <div class="header-text">
+                    <div class="station-name">ToolBox Radio</div>
+                    <div class="rotating-phrase" id="rotatingPhrase">Construction's #1 Music Station</div>
+                </div>
             </div>
             
             <!-- Main Content -->
@@ -33,25 +39,15 @@ function initMobileLayout() {
                 <!-- Album Art Display -->
                 <div class="mobile-album-display">
                     <div class="mobile-album-cover">
-                        <div class="album-artwork">
-                            <img src="images/logo1.png" alt="ToolBox Radio" class="artwork-background">
-                            <div class="artwork-overlay">
-                                <div class="music-icon">
-                                    <i class="fas fa-music"></i>
-                                </div>
-                                <div class="artwork-info">
-                                    <span class="artwork-title">ToolBox Radio</span>
-                                </div>
-                            </div>
-                        </div>
+                        <img src="images/logo1.png" alt="Album Art" class="album-cover-image" id="albumCoverImage">
                     </div>
                 </div>
                 
                 <!-- Now Playing Information -->
                 <div class="mobile-track-display">
                     <div class="now-playing-text">Now Playing</div>
-                    <h2 class="mobile-track-name" id="mobileTrackName">ToolBox Radio Live Stream</h2>
-                    <p class="mobile-artist-name" id="mobileArtistName">Construction's #1 Music Station</p>
+                    <h2 class="mobile-track-name" id="mobileTrackName">Construction Rock Classics</h2>
+                    <p class="mobile-artist-name" id="mobileArtistName">Various Artists</p>
                 </div>
                 
                 <!-- Audio Player -->
@@ -85,6 +81,7 @@ function initMobileLayout() {
                 loadingScreen.style.display = 'none';
                 initAppPlayer();
                 startMobileTrackRotation();
+                startHeaderPhraseRotation();
             }, 500);
         }
     }, 2500);
@@ -146,6 +143,44 @@ function initAppPlayer() {
     }
 }
 
+// Header phrase rotation
+function startHeaderPhraseRotation() {
+    const rotatingPhrase = document.getElementById('rotatingPhrase');
+    
+    if (!rotatingPhrase) {
+        console.log('Rotating phrase element not found');
+        return;
+    }
+    
+    const phrases = [
+        "Construction's #1 Music Station",
+        "Non-Stop Construction Music",
+        "Sod the Chat - Just the Tunes",
+        "24/7 Live Construction Radio",
+        "Powered by CMS Desk",
+        "Worksite Radio for Professionals",
+        "High Quality Audio Stream",
+        "No Chat, Just Tunes"
+    ];
+    
+    let phraseIndex = 0;
+    
+    setInterval(() => {
+        // Fade out
+        rotatingPhrase.style.opacity = '0.3';
+        
+        setTimeout(() => {
+            // Update content
+            rotatingPhrase.textContent = phrases[phraseIndex];
+            
+            // Fade in
+            rotatingPhrase.style.opacity = '1';
+        }, 300);
+        
+        phraseIndex = (phraseIndex + 1) % phrases.length;
+    }, 4000);
+}
+
 // Mobile track information rotation
 function startMobileTrackRotation() {
     const trackName = document.getElementById('mobileTrackName');
@@ -187,7 +222,7 @@ function startMobileTrackRotation() {
         }, 400);
         
         index = (index + 1) % trackInfo.length;
-    }, 5000);
+    }, 6000);
 }
 
 // Show helper message for app users
