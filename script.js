@@ -30,7 +30,7 @@ function initMobileLayout() {
                 </div>
                 <div class="header-text">
                     <div class="station-name">ToolBox Radio</div>
-                    <div class="rotating-phrase" id="rotatingPhrase">Construction's #1 Music Station</div>
+                    <div class="rotating-phrase" id="rotatingPhrase">🎶 Now streaming: certified bangers and power hammers.</div>
                 </div>
             </div>
             
@@ -39,15 +39,15 @@ function initMobileLayout() {
                 <!-- Album Art Display -->
                 <div class="mobile-album-display">
                     <div class="mobile-album-cover">
-                        <img src="https://i.scdn.co/image/ab67616d0000b273503c2b1acabdd3ad6650db82" alt="Album Art" class="album-cover-image" id="albumCoverImage">
+                        <img src="images/logo1.png" alt="Album Art" class="album-cover-image" id="albumCoverImage">
                     </div>
                 </div>
                 
                 <!-- Now Playing Information -->
                 <div class="mobile-track-display">
                     <div class="now-playing-text">Now Playing</div>
-                    <h2 class="mobile-track-name" id="mobileTrackName">Construction Rock Classics</h2>
-                    <p class="mobile-artist-name" id="mobileArtistName">Various Artists</p>
+                    <h2 class="mobile-track-name" id="mobileTrackName">Loading...</h2>
+                    <p class="mobile-artist-name" id="mobileArtistName">Fetching current song...</p>
                 </div>
                 
                 <!-- Audio Player -->
@@ -80,8 +80,8 @@ function initMobileLayout() {
             setTimeout(() => {
                 loadingScreen.style.display = 'none';
                 initAppPlayer();
-                startMobileTrackRotation();
                 startHeaderPhraseRotation();
+                fetchCurrentlyPlaying();
             }, 500);
         }
     }, 2500);
@@ -102,6 +102,8 @@ function initAppPlayer() {
                     playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
                     playPauseBtn.classList.add('playing');
                     isPlaying = true;
+                    // Refresh metadata when starting to play
+                    fetchCurrentlyPlaying();
                 }).catch(error => {
                     console.log('Playback failed:', error);
                     showAppMessage('Tap to allow audio playback');
@@ -153,14 +155,14 @@ function startHeaderPhraseRotation() {
     }
     
     const phrases = [
-        "Construction's #1 Music Station",
-        "Non-Stop Construction Music",
-        "Sod the Chat - Just the Tunes",
-        "24/7 Live Construction Radio",
-        "Powered by CMS Desk",
-        "Worksite Radio for Professionals",
-        "High Quality Audio Stream",
-        "No Chat, Just Tunes"
+        "🎶 Now streaming: certified bangers and power hammers.",
+        "👷‍♂️ Our mixtape passed the building inspection.",
+        "🔊 Noise complaint? Nope — just your new favorite station.",
+        "🧱 We don't drop bricks — just beats.",
+        "🚧 Under construction: your taste in music.",
+        "🎛️ Powered by coffee, concrete, and killer playlists.",
+        "⚠️ Warning: Tunes may cause spontaneous head nodding on site.",
+        "🛠️ From rebar to reverb — we've got you."
     ];
     
     let phraseIndex = 0;
@@ -181,8 +183,11 @@ function startHeaderPhraseRotation() {
     }, 4000);
 }
 
-// Mobile track information rotation with album art
-function startMobileTrackRotation() {
+// Fetch currently playing song from ToolBox Radio
+let currentSong = null;
+let metadataCheckInterval = null;
+
+async function fetchCurrentlyPlaying() {
     const trackName = document.getElementById('mobileTrackName');
     const artistName = document.getElementById('mobileArtistName');
     const albumCoverImage = document.getElementById('albumCoverImage');
@@ -191,51 +196,6 @@ function startMobileTrackRotation() {
         console.log('Track elements not found');
         return;
     }
-    
-    const trackInfo = [
-        { 
-            track: "Thunder Road", 
-            artist: "Bruce Springsteen",
-            albumArt: "https://i.scdn.co/image/ab67616d0000b273503c2b1acabdd3ad6650db82"
-        },
-        { 
-            track: "Working Man", 
-            artist: "Rush",
-            albumArt: "https://i.scdn.co/image/ab67616d0000b2738fe0cd8301a5e9a38b50b776"
-        },
-        { 
-            track: "Hammer to Fall", 
-            artist: "Queen",
-            albumArt: "https://i.scdn.co/image/ab67616d0000b273ce4f1737bc8a646c8c4bd25a"
-        },
-        { 
-            track: "Working Class Hero", 
-            artist: "John Lennon",
-            albumArt: "https://i.scdn.co/image/ab67616d0000b273c53d01f4549b35bb7ba67f8e"
-        },
-        { 
-            track: "Takin' Care of Business", 
-            artist: "Bachman-Turner Overdrive",
-            albumArt: "https://i.scdn.co/image/ab67616d0000b273d6038452b0c7b83940d8d76f"
-        },
-        { 
-            track: "Blue Collar Man", 
-            artist: "Styx",
-            albumArt: "https://i.scdn.co/image/ab67616d0000b273a9ac0521e0b38851c51d29c6"
-        },
-        { 
-            track: "Iron Man", 
-            artist: "Black Sabbath",
-            albumArt: "https://i.scdn.co/image/ab67616d0000b273c6c4d513f978d6900a8d490b"
-        },
-        { 
-            track: "Welcome to the Machine", 
-            artist: "Pink Floyd",
-            albumArt: "https://i.scdn.co/image/ab67616d0000b273ea7caaff71dea1051d49b2fe"
-        }
-    ];
-    
-    let index = 0;
     
     // Function to update album art
     function updateAlbumArt(artUrl, fallbackUrl = 'images/logo1.png') {
@@ -255,48 +215,144 @@ function startMobileTrackRotation() {
         img.src = artUrl;
     }
     
-    setInterval(() => {
-        const info = trackInfo[index];
+    // Function to update track display
+    async function updateTrackDisplay(track, artist) {
+        // Only update if song has changed
+        const newSong = `${track} - ${artist}`;
+        if (newSong === currentSong) {
+            return;
+        }
+        
+        currentSong = newSong;
+        console.log('Now playing:', track, 'by', artist);
         
         // Fade out
         trackName.style.opacity = '0.3';
         artistName.style.opacity = '0.3';
         albumCoverImage.style.opacity = '0.3';
         
-        setTimeout(() => {
+        setTimeout(async () => {
             // Update content
-            trackName.textContent = info.track;
-            artistName.textContent = info.artist;
-            updateAlbumArt(info.albumArt);
+            trackName.textContent = track;
+            artistName.textContent = artist;
+            
+            // Fetch album art
+            const albumArt = await fetchAlbumArt(track, artist);
+            updateAlbumArt(albumArt);
             
             // Fade in
             trackName.style.opacity = '1';
             artistName.style.opacity = '1';
             albumCoverImage.style.opacity = '1';
         }, 400);
-        
-        index = (index + 1) % trackInfo.length;
-    }, 6000);
+    }
     
-    // Initialize with first track
-    const firstTrack = trackInfo[0];
-    updateAlbumArt(firstTrack.albumArt);
+    // Function to get metadata from radio stream
+    async function getRadioMetadata() {
+        try {
+            // Try to fetch from ToolBox Radio's metadata API or stream info
+            const response = await fetch('https://radio.toolboxradio.com/api/nowplaying/toolbox_radio', {
+                method: 'GET',
+                headers: {
+                    'Accept': 'application/json',
+                },
+            });
+            
+            if (response.ok) {
+                const data = await response.json();
+                
+                if (data.now_playing && data.now_playing.song) {
+                    const song = data.now_playing.song;
+                    let track = song.title || song.text || 'ToolBox Radio';
+                    let artist = song.artist || 'Live Stream';
+                    
+                    // Clean up metadata
+                    if (track.includes(' - ')) {
+                        const parts = track.split(' - ');
+                        artist = parts[0];
+                        track = parts[1];
+                    }
+                    
+                    await updateTrackDisplay(track, artist);
+                    return;
+                }
+            }
+        } catch (error) {
+            console.log('Failed to fetch from main API, trying alternative:', error);
+        }
+        
+        // Fallback: Try alternative metadata source
+        try {
+            const streamResponse = await fetch('https://radio.toolboxradio.com/radio/8000/status-json.xsl');
+            if (streamResponse.ok) {
+                const streamData = await streamResponse.json();
+                if (streamData.icestats && streamData.icestats.source) {
+                    const source = streamData.icestats.source;
+                    const title = source.title || source.stream_title || 'ToolBox Radio Live';
+                    
+                    let track = title;
+                    let artist = 'ToolBox Radio';
+                    
+                    if (title.includes(' - ')) {
+                        const parts = title.split(' - ');
+                        artist = parts[0];
+                        track = parts[1];
+                    }
+                    
+                    await updateTrackDisplay(track, artist);
+                    return;
+                }
+            }
+        } catch (error) {
+            console.log('Failed to fetch stream metadata:', error);
+        }
+        
+        // Final fallback
+        await updateTrackDisplay('ToolBox Radio', 'Live Construction Music Stream');
+    }
+    
+    // Initial load
+    await getRadioMetadata();
+    
+    // Check for updates every 30 seconds
+    if (metadataCheckInterval) {
+        clearInterval(metadataCheckInterval);
+    }
+    
+    metadataCheckInterval = setInterval(async () => {
+        await getRadioMetadata();
+    }, 30000);
 }
 
 // Function to fetch album art from external sources
 async function fetchAlbumArt(track, artist) {
+    // Skip API calls for generic/stream titles
+    const genericTitles = ['toolbox radio', 'live stream', 'construction music', 'loading', 'fetching'];
+    const searchTerm = (track + ' ' + artist).toLowerCase();
+    
+    if (genericTitles.some(term => searchTerm.includes(term))) {
+        return 'images/logo1.png';
+    }
+    
     try {
         // Try to fetch from iTunes API
-        const itunesResponse = await fetch(`https://itunes.apple.com/search?term=${encodeURIComponent(track + ' ' + artist)}&media=music&limit=1`);
+        const searchQuery = encodeURIComponent(`${artist} ${track}`);
+        const itunesResponse = await fetch(`https://itunes.apple.com/search?term=${searchQuery}&media=music&limit=5`);
         const itunesData = await itunesResponse.json();
         
         if (itunesData.results && itunesData.results.length > 0) {
-            const artwork = itunesData.results[0].artworkUrl100;
-            if (artwork) {
-                // Convert to higher resolution
-                return artwork.replace('100x100', '600x600');
+            // Look for exact or close matches
+            for (const result of itunesData.results) {
+                const artwork = result.artworkUrl100;
+                if (artwork) {
+                    console.log(`Found album art for "${track}" by "${artist}"`);
+                    // Convert to higher resolution
+                    return artwork.replace('100x100', '600x600');
+                }
             }
         }
+        
+        console.log(`No album art found for "${track}" by "${artist}"`);
     } catch (error) {
         console.log('Failed to fetch from iTunes API:', error);
     }
