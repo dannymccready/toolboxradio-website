@@ -1,13 +1,85 @@
+// Device Detection and Mobile Layout
+function isMobileDevice() {
+    return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ||
+           (window.innerWidth <= 768);
+}
+
+function initMobileLayout() {
+    const body = document.body;
+    
+    // Create mobile-specific HTML structure
+    body.innerHTML = `
+        <!-- Loading Screen for Mobile -->
+        <div class="mobile-loading-screen" id="mobileLoadingScreen">
+            <div class="mobile-loading-content">
+                <img src="images/logo1.png" alt="ToolBox Radio" class="mobile-logo-loading">
+                <div class="mobile-loading-bar">
+                    <div class="mobile-loading-progress"></div>
+                </div>
+                <p>Loading your construction soundtrack...</p>
+            </div>
+        </div>
+
+        <!-- Mobile Layout -->
+        <div class="mobile-container">
+            <div class="mobile-background"></div>
+            
+            <div class="mobile-content">
+                <div class="mobile-logo">
+                    <img src="images/logo1.png" alt="ToolBox Radio" class="mobile-logo-image">
+                </div>
+                
+                <div class="mobile-title">
+                    <h1>ToolBox Radio</h1>
+                    <p>Non-Stop Construction Music</p>
+                </div>
+                
+                <div class="mobile-live-indicator">
+                    <div class="live-dot"></div>
+                    <span>LIVE NOW</span>
+                </div>
+                
+                <div class="mobile-player">
+                    <div class="mobile-player-container">
+                        <iframe 
+                            src="https://radio.toolboxradio.com/public/toolbox_radio/embed?theme=light" 
+                            frameborder="0" 
+                            allowtransparency="true" 
+                            style="width: 100%; height: 120px; border: 0; border-radius: 15px;"
+                        ></iframe>
+                    </div>
+                </div>
+                
+                <div class="mobile-tagline">
+                    <p>Sod the Chat - Just the Tunes</p>
+                </div>
+            </div>
+        </div>
+    `;
+    
+    // Hide mobile loading screen after a delay
+    setTimeout(() => {
+        const mobileLoadingScreen = document.getElementById('mobileLoadingScreen');
+        if (mobileLoadingScreen) {
+            mobileLoadingScreen.classList.add('hidden');
+            setTimeout(() => {
+                mobileLoadingScreen.style.display = 'none';
+            }, 500);
+        }
+    }, 2000);
+}
+
 // Iframe Player Integration
 class ToolBoxRadioPlayer {
     constructor() {
-        this.iframe = document.querySelector('.iframe-container iframe');
+        this.iframe = document.querySelector('.iframe-container iframe, .mobile-player-container iframe');
+        this.isMobile = isMobileDevice();
         this.init();
     }
     
     init() {
         // Add any iframe-specific functionality here
-        console.log('ToolBox Radio iframe player initialized');
+        console.log('ToolBox Radio iframe player initialized for', this.isMobile ? 'mobile' : 'desktop');
         
         // Optional: Add event listeners for iframe communication
         window.addEventListener('message', (event) => {
@@ -16,6 +88,12 @@ class ToolBoxRadioPlayer {
                 console.log('Message from radio iframe:', event.data);
             }
         });
+        
+        // Mobile-specific iframe optimizations
+        if (this.isMobile && this.iframe) {
+            this.iframe.style.touchAction = 'manipulation';
+            this.iframe.setAttribute('allow', 'autoplay');
+        }
     }
 }
 
@@ -301,21 +379,30 @@ function initParallaxEffect() {
 
 // Initialize everything when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
-    // Initialize the radio player
-    const player = new ToolBoxRadioPlayer();
-    
-    // Initialize other features
-    initLoadingScreen();
-    initSmoothScrolling();
-    initContactForm();
-    initScrollAnimations();
-    addMobileNavStyles();
-    initMobileNav();
-    initNavbarScroll();
-    initParallaxEffect();
-    
-    // Add some interactive features
-    addInteractiveFeatures();
+    // Check if mobile device and initialize appropriate layout
+    if (isMobileDevice()) {
+        initMobileLayout();
+        // Only initialize basic player functionality for mobile
+        setTimeout(() => {
+            const player = new ToolBoxRadioPlayer();
+        }, 2500);
+    } else {
+        // Initialize the radio player
+        const player = new ToolBoxRadioPlayer();
+        
+        // Initialize other features
+        initLoadingScreen();
+        initSmoothScrolling();
+        initContactForm();
+        initScrollAnimations();
+        addMobileNavStyles();
+        initMobileNav();
+        initNavbarScroll();
+        initParallaxEffect();
+        
+        // Add some interactive features
+        addInteractiveFeatures();
+    }
 });
 
 // Additional interactive features
