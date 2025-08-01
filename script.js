@@ -116,7 +116,8 @@ function initAppPlayer() {
                     playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
                     playPauseBtn.classList.add('playing');
                     isPlaying = true;
-                    // Start progress animation
+                    // Reset and start progress for new session
+                    resetSongProgress();
                     startProgressAnimation();
                     // Refresh metadata when starting to play
                     fetchCurrentlyPlaying();
@@ -199,9 +200,26 @@ function stopProgressAnimation() {
     if (currentTimeElement) currentTimeElement.textContent = '0:00';
 }
 
+function resetSongProgress() {
+    // Reset all progress elements to start fresh for new song
+    const progressFill = document.getElementById('progressFill');
+    const progressDot = document.getElementById('progressDot');
+    const currentTimeElement = document.getElementById('currentTime');
+    
+    if (progressFill) progressFill.style.width = '0%';
+    if (progressDot) progressDot.style.left = '0%';
+    if (currentTimeElement) currentTimeElement.textContent = '0:00';
+    
+    // Reset song timing variables
+    songStartTime = Date.now();
+    songDuration = null;
+    
+    console.log('Progress reset for new song');
+}
+
 function updateSongProgress(duration) {
     songDuration = duration;
-    songStartTime = Date.now();
+    songStartTime = Date.now(); // Fresh start time for this song
     
     const totalTimeElement = document.getElementById('totalTime');
     
@@ -212,11 +230,12 @@ function updateSongProgress(duration) {
         const durationString = `${minutes}:${seconds.toString().padStart(2, '0')}`;
         if (totalTimeElement) totalTimeElement.textContent = durationString;
         
-        console.log(`Song duration set to: ${durationString}`);
+        console.log(`Song duration set to: ${durationString} (${duration} seconds)`);
     } else {
-        // Live stream - no specific duration
-        if (totalTimeElement) totalTimeElement.textContent = '∞';
-        console.log('Live stream mode - no specific duration');
+        // For unknown duration, estimate typical song length (3:30)
+        songDuration = 210; // 3.5 minutes as default
+        if (totalTimeElement) totalTimeElement.textContent = '3:30';
+        console.log('Using estimated duration: 3:30');
     }
     
     // Update progress immediately
@@ -228,10 +247,10 @@ function updateProgressDisplay() {
     const progressDot = document.getElementById('progressDot');
     const currentTimeElement = document.getElementById('currentTime');
     
-    if (!progressFill || !progressDot || !currentTimeElement) return;
+    if (!progressFill || !progressDot || !currentTimeElement || !songStartTime) return;
     
     const now = Date.now();
-    const elapsed = Math.floor((now - (songStartTime || progressStartTime)) / 1000);
+    const elapsed = Math.floor((now - songStartTime) / 1000);
     
     // Update current time display
     const minutes = Math.floor(elapsed / 60);
@@ -239,28 +258,32 @@ function updateProgressDisplay() {
     const timeString = `${minutes}:${seconds.toString().padStart(2, '0')}`;
     currentTimeElement.textContent = timeString;
     
-    // Update progress bar
+    // Update progress bar based on actual song duration
     let progressPercent = 0;
     
     if (songDuration && songDuration > 0) {
-        // Real song with known duration
+        // Calculate progress as percentage of actual song duration
         progressPercent = Math.min((elapsed / songDuration) * 100, 100);
         
-        // If song is finished, fetch new metadata
-        if (elapsed >= songDuration) {
-            console.log('Song finished, fetching new metadata...');
+        // If song is finished (with 2 second buffer), fetch new metadata
+        if (elapsed >= (songDuration - 2)) {
+            console.log(`Song nearly finished (${elapsed}s/${songDuration}s), fetching new metadata...`);
             setTimeout(() => {
                 fetchCurrentlyPlaying();
-            }, 1000);
+            }, 2000);
         }
     } else {
-        // Live stream or unknown duration - cycle every 4 minutes for visual effect
-        const cycleLength = 240; // 4 minutes
-        progressPercent = (elapsed % cycleLength) / cycleLength * 100;
+        // Should not happen with new logic, but fallback just in case
+        progressPercent = 0;
     }
     
     progressFill.style.width = `${progressPercent}%`;
     progressDot.style.left = `${progressPercent}%`;
+    
+    // Debug logging every 10 seconds
+    if (elapsed > 0 && elapsed % 10 === 0) {
+        console.log(`Song progress: ${elapsed}s / ${songDuration}s (${progressPercent.toFixed(1)}%)`);
+    }
 }
 
 // Header phrase rotation
@@ -368,11 +391,12 @@ async function fetchCurrentlyPlaying() {
         currentSong = newSong;
         console.log('Now playing:', track, 'by', artist, 'Duration:', duration, 'Album Art:', providedAlbumArt);
         
-        // Update song duration and restart progress if we have it
+        // Reset and restart progress for new song
+        resetSongProgress();
         if (duration && duration > 0) {
             updateSongProgress(duration);
         } else {
-            // For live streams or unknown duration, use continuous progress
+            // For live streams or unknown duration, use estimated duration
             updateSongProgress(null);
         }
         
