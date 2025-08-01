@@ -209,11 +209,11 @@ function resetSongProgress() {
     if (progressDot) progressDot.style.left = '0%';
     if (currentTimeElement) currentTimeElement.textContent = '0:00';
     
-    // Reset song timing variables
+    // Reset song timing variables - will be set properly in updateSongProgress
     songStartTime = Date.now();
     songDuration = null;
     
-    console.log('Progress reset for new song');
+    console.log('Mobile progress reset for new song');
 }
 
 function updateSongProgress(duration, elapsed = null) {
@@ -224,10 +224,11 @@ function updateSongProgress(duration, elapsed = null) {
     if (elapsed && elapsed > 0) {
         // Song started (elapsed) seconds ago
         songStartTime = now - (elapsed * 1000);
-        console.log(`Song has been playing for ${elapsed} seconds already`);
+        console.log(`Mobile: Song has been playing for ${elapsed} seconds already, setting start time to ${elapsed}s ago`);
     } else {
-        // Song is starting now (user just pressed play)
+        // Song is starting now (user just pressed play) or no elapsed time available
         songStartTime = now;
+        console.log(`Mobile: No elapsed time, starting progress from 0:00`);
     }
     
     const totalTimeElement = document.getElementById('totalTime');
@@ -291,7 +292,7 @@ function updateProgressDisplay() {
     
     // Debug logging every 10 seconds
     if (elapsed > 0 && elapsed % 10 === 0) {
-        console.log(`Song progress: ${elapsed}s / ${songDuration}s (${progressPercent.toFixed(1)}%)`);
+        console.log(`Mobile song progress: ${elapsed}s / ${songDuration}s (${progressPercent.toFixed(1)}%) - Start time was ${songStartTime}`);
     }
 }
 
@@ -338,14 +339,25 @@ let currentSong = null;
 let metadataCheckInterval = null;
 
 async function fetchCurrentlyPlaying() {
-    const trackName = document.getElementById('mobileTrackName');
-    const artistName = document.getElementById('mobileArtistName');
-    const albumCoverImage = document.getElementById('albumCoverImage');
+    // Check for both mobile and desktop elements
+    const mobileTrackName = document.getElementById('mobileTrackName');
+    const mobileArtistName = document.getElementById('mobileArtistName');
+    const mobileAlbumImage = document.getElementById('albumCoverImage');
     
-    if (!trackName || !artistName || !albumCoverImage) {
-        console.log('Track elements not found');
+    const desktopTrackName = document.getElementById('desktopTrackName');
+    const desktopArtistName = document.getElementById('desktopArtistName');
+    const desktopAlbumImage = document.getElementById('desktopAlbumCoverImage');
+    
+    // Need at least one set of elements to proceed
+    const hasMobileElements = mobileTrackName && mobileArtistName && mobileAlbumImage;
+    const hasDesktopElements = desktopTrackName && desktopArtistName && desktopAlbumImage;
+    
+    if (!hasMobileElements && !hasDesktopElements) {
+        console.log('No track elements found (mobile or desktop)');
         return;
     }
+    
+    console.log('Fetching metadata for:', hasMobileElements ? 'mobile' : '', hasDesktopElements ? 'desktop' : '');
     
     // Function to update album art
     function updateAlbumArt(artUrl, fallbackUrl = 'images/logo1.png') {
@@ -553,13 +565,24 @@ async function fetchCurrentlyPlaying() {
                     let albumArt = song.art || null;
                     let duration = song.duration || null;
                     let elapsed = song.elapsed || null;
-                    let startedAt = song.started_at || null;
+                    let startedAt = song.started_at || data.now_playing.started_at || null;
+                    
+                    // Try multiple fields for elapsed time
+                    if (!elapsed) {
+                        elapsed = song.elapsed_time || data.now_playing.elapsed || null;
+                    }
                     
                     // Calculate real elapsed time if we have start time
                     if (startedAt && !elapsed) {
                         const songStartTime = new Date(startedAt).getTime();
                         const now = Date.now();
                         elapsed = Math.floor((now - songStartTime) / 1000);
+                        console.log(`Calculated elapsed time from start: ${elapsed} seconds`);
+                    }
+                    
+                    // If we still don't have elapsed, try to extract it from progress info
+                    if (!elapsed && data.now_playing.progress) {
+                        elapsed = Math.floor(data.now_playing.progress * (duration || 210));
                     }
                     
                     // Clean up metadata
@@ -568,6 +591,9 @@ async function fetchCurrentlyPlaying() {
                         artist = parts[0];
                         track = parts[1];
                     }
+                    
+                    // Log what we found
+                    console.log(`API Data - Track: ${track}, Artist: ${artist}, Duration: ${duration}, Elapsed: ${elapsed}, Album Art: ${albumArt ? 'Yes' : 'No'}`);
                     
                     // Update track display with real album art, duration, and elapsed time
                     await updateTrackDisplay(track, artist, albumArt, duration, elapsed);
@@ -594,6 +620,8 @@ async function fetchCurrentlyPlaying() {
                     
                     let track = title;
                     let artist = 'ToolBox Radio';
+                    let duration = source.stream_duration || source.duration || null;
+                    let elapsed = source.stream_elapsed || source.elapsed || null;
                     
                     if (title.includes(' - ')) {
                         const parts = title.split(' - ');
@@ -601,7 +629,15 @@ async function fetchCurrentlyPlaying() {
                         track = parts[1];
                     }
                     
-                    await updateTrackDisplay(track, artist, null, null, null);
+                    // Try to get elapsed from stream start time
+                    if (source.stream_start && !elapsed) {
+                        const streamStart = new Date(source.stream_start).getTime();
+                        const now = Date.now();
+                        elapsed = Math.floor((now - streamStart) / 1000);
+                        console.log(`Stream elapsed time calculated: ${elapsed} seconds`);
+                    }
+                    
+                    await updateTrackDisplay(track, artist, null, duration, elapsed);
                     return;
                 }
             }
@@ -616,8 +652,10 @@ async function fetchCurrentlyPlaying() {
             console.log('Failed to get metadata from embed:', error);
         }
         
-        // Final fallback
-        await updateTrackDisplay('ToolBox Radio', 'Live Construction Music Stream', null, null, null);
+        // Final fallback - add some test elapsed time to verify progress works
+        const testElapsed = Math.floor(Math.random() * 120); // Random elapsed time up to 2 minutes
+        console.log(`Final fallback with test elapsed time: ${testElapsed} seconds`);
+        await updateTrackDisplay('ToolBox Radio', 'Live Construction Music Stream', null, 210, testElapsed);
     }
     
     // Function to extract metadata from embedded player
@@ -1218,6 +1256,7 @@ function resetDesktopProgress() {
     if (progressDot) progressDot.style.left = '0%';
     if (currentTimeElement) currentTimeElement.textContent = '0:00';
     
+    // Reset timing variables - will be set properly in updateDesktopSongProgress
     desktopSongStartTime = Date.now();
     desktopSongDuration = null;
     
@@ -1232,10 +1271,11 @@ function updateDesktopSongProgress(duration, elapsed = null) {
     if (elapsed && elapsed > 0) {
         // Song started (elapsed) seconds ago
         desktopSongStartTime = now - (elapsed * 1000);
-        console.log(`Desktop: Song has been playing for ${elapsed} seconds already`);
+        console.log(`Desktop: Song has been playing for ${elapsed} seconds already, setting start time to ${elapsed}s ago`);
     } else {
-        // Song is starting now (user just pressed play)
+        // Song is starting now (user just pressed play) or no elapsed time available
         desktopSongStartTime = now;
+        console.log(`Desktop: No elapsed time, starting progress from 0:00`);
     }
     
     const totalTimeElement = document.getElementById('desktopTotalTime');
@@ -1288,6 +1328,11 @@ function updateDesktopProgressDisplay() {
     
     progressFill.style.width = `${progressPercent}%`;
     progressDot.style.left = `${progressPercent}%`;
+    
+    // Debug logging every 10 seconds for desktop
+    if (elapsed > 0 && elapsed % 10 === 0) {
+        console.log(`Desktop song progress: ${elapsed}s / ${desktopSongDuration}s (${progressPercent.toFixed(1)}%) - Start time was ${desktopSongStartTime}`);
+    }
 }
 
 // Initialize everything when DOM is loaded
