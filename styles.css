@@ -299,7 +299,7 @@ body {
     margin: 0 auto;
     padding: 0 20px;
     display: grid;
-    grid-template-columns: 0.8fr 1.2fr;
+    grid-template-columns: 1fr 0.9fr;
     gap: 2rem;
     align-items: center;
     position: relative;
@@ -331,6 +331,7 @@ body {
     color: white;
     margin-bottom: 1.5rem;
     line-height: 1.1;
+    word-spacing: -0.1em;
 }
 
 .title-line {
@@ -1725,13 +1726,13 @@ body {
     align-items: center;
     justify-content: center;
     height: 100vh;
-    padding: 60px 20px 20px;
+    padding: 40px 20px 20px;
     text-align: center;
 }
 
 /* Mobile Album Display */
 .mobile-album-display {
-    margin-bottom: 25px;
+    margin-bottom: 30px;
 }
 
 
@@ -1910,7 +1911,7 @@ body {
     letter-spacing: 1px;
     box-shadow: 0 4px 15px rgba(255, 107, 53, 0.4);
     backdrop-filter: blur(10px);
-    margin-bottom: 15px;
+    margin-bottom: 25px;
 }
 
 .mobile-live-dot {
@@ -2249,7 +2250,14 @@ body {
     animation: orangePulse 2s infinite;
 }
 
-/* Responsive adjustments for desktop player */
+/* Responsive adjustments for desktop player and hero */
+@media (max-width: 1400px) {
+    .hero-title {
+        font-size: 4rem;
+        line-height: 1.05;
+    }
+}
+
 @media (max-width: 1200px) {
     .desktop-player-container {
         max-width: 350px;
@@ -2265,5 +2273,9 @@ body {
         width: 70px;
         height: 70px;
         font-size: 1.6rem;
+    }
+    
+    .hero-title {
+        font-size: 3.5rem;
     }
 } 

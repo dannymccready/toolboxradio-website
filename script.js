@@ -270,10 +270,15 @@ function updateSongProgress(duration, elapsed = null) {
         // Keep previous duration if we had one, otherwise use default
         if (!songDuration) {
             songDuration = 210; // 3.5 minutes as default only if no previous duration
-            if (totalTimeElement) totalTimeElement.textContent = '3:30';
-            console.log('No duration available, using estimated: 3:30');
-        } else {
-            console.log(`Keeping previous duration: ${songDuration} seconds`);
+        }
+        
+        // Always update the display with current songDuration
+        if (totalTimeElement && songDuration) {
+            const minutes = Math.floor(songDuration / 60);
+            const seconds = songDuration % 60;
+            const durationString = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+            totalTimeElement.textContent = durationString;
+            console.log(`Displaying duration: ${durationString} (${songDuration} seconds)`);
         }
     }
     
@@ -592,7 +597,10 @@ async function fetchCurrentlyPlaying() {
                     let track = song.title || song.text || 'ToolBox Radio';
                     let artist = song.artist || 'Live Stream';
                     let albumArt = song.art || null;
-                    let duration = song.duration || null;
+                    
+                    // Try multiple fields for duration
+                    let duration = song.duration || song.length || data.now_playing.duration || data.now_playing.length || null;
+                    
                     let elapsed = song.elapsed || null;
                     let startedAt = song.started_at || data.now_playing.started_at || null;
                     
@@ -623,6 +631,12 @@ async function fetchCurrentlyPlaying() {
                     
                     // Log what we found
                     console.log(`API Data - Track: ${track}, Artist: ${artist}, Duration: ${duration}, Elapsed: ${elapsed}, Album Art: ${albumArt ? 'Yes' : 'No'}`);
+                    console.log('Raw duration fields:', {
+                        'song.duration': song.duration,
+                        'song.length': song.length,
+                        'data.now_playing.duration': data.now_playing.duration,
+                        'data.now_playing.length': data.now_playing.length
+                    });
                     
                     // Update track display with real album art, duration, and elapsed time
                     await updateTrackDisplay(track, artist, albumArt, duration, elapsed);
@@ -1345,10 +1359,15 @@ function updateDesktopSongProgress(duration, elapsed = null) {
         // Keep previous duration if we had one, otherwise use default
         if (!desktopSongDuration) {
             desktopSongDuration = 210; // 3.5 minutes as default only if no previous duration
-            if (totalTimeElement) totalTimeElement.textContent = '3:30';
-            console.log('Desktop: No duration available, using estimated: 3:30');
-        } else {
-            console.log(`Desktop: Keeping previous duration: ${desktopSongDuration} seconds`);
+        }
+        
+        // Always update the display with current desktopSongDuration
+        if (totalTimeElement && desktopSongDuration) {
+            const minutes = Math.floor(desktopSongDuration / 60);
+            const seconds = desktopSongDuration % 60;
+            const durationString = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+            totalTimeElement.textContent = durationString;
+            console.log(`Desktop displaying duration: ${durationString} (${desktopSongDuration} seconds)`);
         }
     }
     
