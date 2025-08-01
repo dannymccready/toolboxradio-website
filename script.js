@@ -36,10 +36,30 @@ function initMobileLayout() {
             
             <!-- Main Content -->
             <div class="mobile-content-center">
+                <!-- Live Indicator -->
+                <div class="mobile-live-indicator">
+                    <div class="mobile-live-dot"></div>
+                    <span>LIVE NOW</span>
+                </div>
+                
                 <!-- Album Art Display -->
                 <div class="mobile-album-display">
                     <div class="mobile-album-cover">
                         <img src="images/logo1.png" alt="Album Art" class="album-cover-image" id="albumCoverImage">
+                    </div>
+                </div>
+                
+                <!-- Track Progress Bar -->
+                <div class="mobile-progress-section">
+                    <div class="progress-bar-container">
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="progressFill"></div>
+                            <div class="progress-dot" id="progressDot"></div>
+                        </div>
+                    </div>
+                    <div class="progress-times">
+                        <span class="time-current" id="currentTime">0:00</span>
+                        <span class="time-total" id="totalTime">∞</span>
                     </div>
                 </div>
                 
@@ -61,12 +81,6 @@ function initMobileLayout() {
                     <button class="mobile-control-btn mobile-play-pause-btn" id="mobilePlayPauseBtn">
                         <i class="fas fa-play"></i>
                     </button>
-                </div>
-                
-                <!-- Live Indicator -->
-                <div class="mobile-live-indicator">
-                    <div class="mobile-live-dot"></div>
-                    <span>LIVE NOW</span>
                 </div>
             </div>
         </div>
@@ -102,6 +116,8 @@ function initAppPlayer() {
                     playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
                     playPauseBtn.classList.add('playing');
                     isPlaying = true;
+                    // Start progress animation
+                    startProgressAnimation();
                     // Refresh metadata when starting to play
                     fetchCurrentlyPlaying();
                 }).catch(error => {
@@ -113,6 +129,7 @@ function initAppPlayer() {
                 audioPlayer.pause();
                 playPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
                 playPauseBtn.classList.remove('playing');
+                stopProgressAnimation();
                 isPlaying = false;
             }
         });
@@ -145,6 +162,54 @@ function initAppPlayer() {
     }
 }
 
+// Progress Bar Animation for Live Stream
+let progressInterval = null;
+let progressStartTime = null;
+
+function startProgressAnimation() {
+    stopProgressAnimation(); // Clear any existing animation
+    
+    const progressFill = document.getElementById('progressFill');
+    const progressDot = document.getElementById('progressDot');
+    const currentTimeElement = document.getElementById('currentTime');
+    
+    if (!progressFill || !progressDot || !currentTimeElement) return;
+    
+    progressStartTime = Date.now();
+    
+    progressInterval = setInterval(() => {
+        const elapsed = Date.now() - progressStartTime;
+        const seconds = Math.floor(elapsed / 1000);
+        const minutes = Math.floor(seconds / 60);
+        const remainingSeconds = seconds % 60;
+        
+        // Update time display
+        const timeString = `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
+        currentTimeElement.textContent = timeString;
+        
+        // Animate progress bar (resets every 60 seconds for visual effect)
+        const cycleProgress = (seconds % 60) / 60 * 100;
+        
+        progressFill.style.width = `${cycleProgress}%`;
+        progressDot.style.left = `${cycleProgress}%`;
+    }, 1000);
+}
+
+function stopProgressAnimation() {
+    if (progressInterval) {
+        clearInterval(progressInterval);
+        progressInterval = null;
+    }
+    
+    const progressFill = document.getElementById('progressFill');
+    const progressDot = document.getElementById('progressDot');
+    const currentTimeElement = document.getElementById('currentTime');
+    
+    if (progressFill) progressFill.style.width = '0%';
+    if (progressDot) progressDot.style.left = '0%';
+    if (currentTimeElement) currentTimeElement.textContent = '0:00';
+}
+
 // Header phrase rotation
 function startHeaderPhraseRotation() {
     const rotatingPhrase = document.getElementById('rotatingPhrase');
@@ -161,7 +226,7 @@ function startHeaderPhraseRotation() {
         "We don't drop bricks — just beats.",
         "Under construction: your taste in music.",
         "Powered by coffee, concrete, and killer playlists.",
-        "⚠️ Warning: Tunes may cause spontaneous head nodding on site.",
+        "⚠️ Warning:"<br>"Tunes may cause spontaneous head nodding on site.",
         "From rebar to reverb — we've got you."
     ];
     
@@ -370,51 +435,79 @@ async function fetchAlbumArt(track, artist) {
         return 'images/logo1.png';
     }
     
+    // First, try using a CORS proxy for iTunes API
     try {
-        // Try to fetch from iTunes API with cleaned names
         const searchQuery = encodeURIComponent(`${cleanArtist} ${cleanTrack}`);
-        console.log('Searching iTunes with query:', searchQuery);
+        console.log('Searching iTunes with CORS proxy:', searchQuery);
         
-        const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), 8000); // 8 second timeout
+        const proxyUrl = 'https://corsproxy.io/?';
+        const itunesUrl = `https://itunes.apple.com/search?term=${searchQuery}&media=music&limit=5&explicit=no`;
         
-        const itunesResponse = await fetch(`https://itunes.apple.com/search?term=${searchQuery}&media=music&limit=10&explicit=no`, {
-            signal: controller.signal
+        const response = await fetch(proxyUrl + encodeURIComponent(itunesUrl), {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+            }
         });
         
-        clearTimeout(timeoutId);
-        
-        if (!itunesResponse.ok) {
-            throw new Error(`iTunes API returned ${itunesResponse.status}`);
-        }
-        
-        const itunesData = await itunesResponse.json();
-        console.log('iTunes API response:', itunesData);
-        
-        if (itunesData.results && itunesData.results.length > 0) {
-            // Look for exact or close matches
-            for (const result of itunesData.results) {
-                const artwork = result.artworkUrl100;
-                if (artwork) {
-                    console.log(`Found album art for "${track}" by "${artist}":`, artwork);
-                    // Convert to higher resolution
-                    const highResArt = artwork.replace('100x100', '600x600');
-                    return highResArt;
+        if (response.ok) {
+            const data = await response.json();
+            console.log('iTunes API response via proxy:', data);
+            
+            if (data.results && data.results.length > 0) {
+                for (const result of data.results) {
+                    if (result.artworkUrl100) {
+                        const highResArt = result.artworkUrl100.replace('100x100', '600x600');
+                        console.log(`Found album art via proxy: ${highResArt}`);
+                        return highResArt;
+                    }
                 }
             }
         }
-        
-        console.log(`No album art found in iTunes for "${track}" by "${artist}"`);
     } catch (error) {
-        if (error.name === 'AbortError') {
-            console.log('iTunes API request timed out');
-        } else {
-            console.log('Failed to fetch from iTunes API:', error.message);
-        }
+        console.log('Proxy method failed:', error.message);
     }
     
-    console.log('Using fallback logo');
-    return 'images/logo1.png';
+    // Fallback: Try direct iTunes API (might work in some browsers)
+    try {
+        const searchQuery = encodeURIComponent(`${cleanArtist} ${cleanTrack}`);
+        const response = await fetch(`https://itunes.apple.com/search?term=${searchQuery}&media=music&limit=5&explicit=no`);
+        
+        if (response.ok) {
+            const data = await response.json();
+            if (data.results && data.results.length > 0) {
+                for (const result of data.results) {
+                    if (result.artworkUrl100) {
+                        const highResArt = result.artworkUrl100.replace('100x100', '600x600');
+                        console.log(`Found album art direct: ${highResArt}`);
+                        return highResArt;
+                    }
+                }
+            }
+        }
+    } catch (error) {
+        console.log('Direct iTunes API failed:', error.message);
+    }
+    
+    // Final fallback: Use some generic album arts based on artist/genre
+    const fallbackArts = [
+        'https://i.imgur.com/8B3jVjV.jpg', // Rock album art
+        'https://i.imgur.com/2xWBhjl.jpg', // Pop album art
+        'https://i.imgur.com/kV8jQxr.jpg', // Classic rock
+        'https://i.imgur.com/7VjK9mL.jpg', // Alternative
+        'https://i.imgur.com/3kJnVxM.jpg'  // General music
+    ];
+    
+    // Use a deterministic selection based on artist name
+    const artistHash = cleanArtist.split('').reduce((a, b) => {
+        a = ((a << 5) - a) + b.charCodeAt(0);
+        return a & a;
+    }, 0);
+    
+    const fallbackIndex = Math.abs(artistHash) % fallbackArts.length;
+    console.log(`Using fallback album art #${fallbackIndex}`);
+    
+    return fallbackArts[fallbackIndex];
 }
 
 // Show helper message for app users
