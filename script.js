@@ -7,219 +7,227 @@ function isMobileDevice() {
 function initMobileLayout() {
     const body = document.body;
     
-    // Create mobile-specific HTML structure
+    // Create iPhone app-style mobile layout
     body.innerHTML = `
         <!-- Loading Screen for Mobile -->
-        <div class="mobile-loading-screen" id="mobileLoadingScreen">
-            <div class="mobile-loading-content">
-                <img src="images/logo1.png" alt="ToolBox Radio" class="mobile-logo-loading">
-                <div class="mobile-loading-bar">
-                    <div class="mobile-loading-progress"></div>
+        <div class="app-loading-screen" id="appLoadingScreen">
+            <div class="app-loading-content">
+                <div class="app-logo-container">
+                    <img src="images/logo1.png" alt="ToolBox Radio" class="app-logo-loading">
+                    <div class="loading-pulse"></div>
                 </div>
-                <p>Loading your construction soundtrack...</p>
+                <h2>ToolBox Radio</h2>
+                <p>Loading...</p>
             </div>
         </div>
 
-        <!-- Mobile Layout -->
-        <div class="mobile-container">
-            <div class="mobile-background"></div>
+        <!-- iPhone App Style Layout -->
+        <div class="app-container">
+            <!-- Status Bar -->
+            <div class="status-bar">
+                <div class="status-left">
+                    <span class="time" id="currentTime"></span>
+                </div>
+                <div class="status-right">
+                    <i class="fas fa-signal"></i>
+                    <i class="fas fa-wifi"></i>
+                    <div class="battery">
+                        <div class="battery-level"></div>
+                    </div>
+                </div>
+            </div>
             
-            <div class="mobile-content">
-                <div class="mobile-logo">
-                    <img src="images/logo1.png" alt="ToolBox Radio" class="mobile-logo-image">
-                </div>
-                
-                <div class="mobile-title">
-                    <h1>ToolBox Radio</h1>
-                    <p>Non-Stop Construction Music</p>
-                </div>
-                
-                <div class="mobile-live-indicator">
+            <!-- App Header -->
+            <div class="app-header">
+                <img src="images/logo1.png" alt="ToolBox Radio" class="header-logo">
+                <h1>ToolBox Radio</h1>
+                <div class="live-badge">
                     <div class="live-dot"></div>
-                    <span>LIVE NOW</span>
+                    <span>LIVE</span>
                 </div>
-                
-                <div class="mobile-player">
-                    <div class="mobile-player-container">
-                        <!-- Hidden iframe for actual streaming -->
-                        <iframe 
-                            id="radioStream"
-                            src="https://radio.toolboxradio.com/public/toolbox_radio/embed?theme=light" 
-                            frameborder="0" 
-                            allowtransparency="true" 
-                            style="width: 1px; height: 1px; opacity: 0; position: absolute; pointer-events: none;"
-                        ></iframe>
-                        
-                        <!-- Custom Mobile Player Interface -->
-                        <div class="custom-mobile-player">
-                            <div class="player-top-section">
-                                <div class="album-art">
-                                    <img src="images/logo1.png" alt="ToolBox Radio" class="album-image">
-                                    <div class="album-art-overlay">
-                                        <i class="fas fa-music"></i>
-                                    </div>
-                                </div>
-                                
-                                <div class="track-info">
-                                    <div class="track-title">ToolBox Radio</div>
-                                    <div class="track-artist">Construction's #1 Music Station</div>
-                                    <div class="track-status">
-                                        <div class="status-dot"></div>
-                                        <span>Live Stream</span>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <div class="player-controls">
-                                <button class="play-btn" id="mobilePlayBtn">
-                                    <i class="fas fa-play"></i>
-                                </button>
-                            </div>
-                            
-                            <div class="player-info">
-                                <div class="stream-quality">
-                                    <i class="fas fa-signal"></i>
-                                    <span>High Quality Stream</span>
-                                </div>
-                            </div>
-                        </div>
+            </div>
+            
+            <!-- Main Player Section -->
+            <div class="player-section">
+                <!-- Album Art Display -->
+                <div class="album-display">
+                    <div class="album-cover">
+                        <img src="images/logo1.png" alt="Now Playing" class="cover-image" id="albumArt">
+                        <div class="cover-reflection"></div>
                     </div>
                 </div>
                 
-                <div class="mobile-tagline">
-                    <p>Sod the Chat - Just the Tunes</p>
+                <!-- Track Information -->
+                <div class="track-display">
+                    <h2 class="track-name" id="trackName">ToolBox Radio</h2>
+                    <p class="artist-name" id="artistName">Construction's #1 Music Station</p>
+                    <p class="album-name" id="albumName">Live Stream</p>
                 </div>
+                
+                <!-- Audio Player -->
+                <audio id="radioPlayer" preload="none">
+                    <source src="https://radio.toolboxradio.com/radio/8000/radio.mp3" type="audio/mpeg">
+                    Your browser does not support the audio element.
+                </audio>
+                
+                <!-- Player Controls -->
+                <div class="player-controls">
+                    <button class="control-btn play-pause-btn" id="playPauseBtn">
+                        <i class="fas fa-play"></i>
+                    </button>
+                </div>
+                
+                <!-- Stream Info -->
+                <div class="stream-info">
+                    <div class="info-item">
+                        <i class="fas fa-radio"></i>
+                        <span>High Quality Stream</span>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-music"></i>
+                        <span>24/7 Non-Stop Music</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Bottom Text -->
+            <div class="app-footer">
+                <p>Sod the Chat - Just the Tunes</p>
             </div>
         </div>
     `;
     
-    // Hide mobile loading screen after a delay
+    // Hide loading screen and initialize
     setTimeout(() => {
-        const mobileLoadingScreen = document.getElementById('mobileLoadingScreen');
-        if (mobileLoadingScreen) {
-            mobileLoadingScreen.classList.add('hidden');
+        const loadingScreen = document.getElementById('appLoadingScreen');
+        if (loadingScreen) {
+            loadingScreen.classList.add('hidden');
             setTimeout(() => {
-                mobileLoadingScreen.style.display = 'none';
-                // Initialize mobile player controls after loading screen is hidden
-                initMobilePlayerControls();
+                loadingScreen.style.display = 'none';
+                initAppPlayer();
+                updateStatusBar();
             }, 500);
         }
-    }, 2000);
+    }, 2500);
 }
 
-// Mobile Player Controls
-function initMobilePlayerControls() {
-    const playBtn = document.getElementById('mobilePlayBtn');
-    const iframe = document.getElementById('radioStream');
+// App Player Controls
+function initAppPlayer() {
+    const audioPlayer = document.getElementById('radioPlayer');
+    const playPauseBtn = document.getElementById('playPauseBtn');
+    const albumArt = document.getElementById('albumArt');
     let isPlaying = false;
     
-    if (playBtn && iframe) {
-        playBtn.addEventListener('click', () => {
+    if (audioPlayer && playPauseBtn) {
+        // Play/Pause functionality
+        playPauseBtn.addEventListener('click', () => {
             if (!isPlaying) {
                 // Start playing
-                iframe.style.width = '300px';
-                iframe.style.height = '150px';
-                iframe.style.opacity = '1';
-                iframe.style.pointerEvents = 'auto';
-                iframe.style.position = 'fixed';
-                iframe.style.top = '50%';
-                iframe.style.left = '50%';
-                iframe.style.transform = 'translate(-50%, -50%)';
-                iframe.style.zIndex = '10000';
-                iframe.style.borderRadius = '15px';
-                iframe.style.boxShadow = '0 10px 30px rgba(0, 0, 0, 0.5)';
-                
-                // Update button state
-                playBtn.innerHTML = '<i class="fas fa-pause"></i>';
-                playBtn.classList.add('playing');
-                
-                // Show helper text
-                showStreamMessage('Tap play in the stream player above');
-                
-                // Hide iframe again after a brief moment (user can click play in iframe)
-                setTimeout(() => {
-                    iframe.style.width = '1px';
-                    iframe.style.height = '1px';
-                    iframe.style.opacity = '0';
-                    iframe.style.pointerEvents = 'none';
-                    iframe.style.position = 'absolute';
-                    iframe.style.top = '0';
-                    iframe.style.left = '0';
-                    iframe.style.transform = 'none';
-                    iframe.style.zIndex = '1';
-                }, 4000);
-                
-                isPlaying = true;
-                
-                // Update track info with animation
-                updateTrackInfo();
-                
+                audioPlayer.play().then(() => {
+                    playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
+                    playPauseBtn.classList.add('playing');
+                    albumArt.classList.add('spinning');
+                    isPlaying = true;
+                    startTrackRotation();
+                }).catch(error => {
+                    console.log('Playback failed:', error);
+                    showAppMessage('Tap to allow audio playback');
+                });
             } else {
-                // Pause (show iframe for user to pause)
-                iframe.style.width = '300px';
-                iframe.style.height = '150px';
-                iframe.style.opacity = '1';
-                iframe.style.pointerEvents = 'auto';
-                
-                playBtn.innerHTML = '<i class="fas fa-play"></i>';
-                playBtn.classList.remove('playing');
-                
-                setTimeout(() => {
-                    iframe.style.width = '1px';
-                    iframe.style.height = '1px';
-                    iframe.style.opacity = '0';
-                    iframe.style.pointerEvents = 'none';
-                }, 3000);
-                
+                // Pause
+                audioPlayer.pause();
+                playPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
+                playPauseBtn.classList.remove('playing');
+                albumArt.classList.remove('spinning');
                 isPlaying = false;
             }
         });
         
-        // Add some interactive feedback
-        playBtn.addEventListener('touchstart', () => {
-            playBtn.style.transform = 'scale(0.95)';
+        // Audio event listeners
+        audioPlayer.addEventListener('loadstart', () => {
+            console.log('Started loading radio stream...');
         });
         
-        playBtn.addEventListener('touchend', () => {
-            playBtn.style.transform = 'scale(1)';
+        audioPlayer.addEventListener('canplay', () => {
+            console.log('Radio stream ready to play');
+        });
+        
+        audioPlayer.addEventListener('error', (e) => {
+            console.log('Audio error:', e);
+            showAppMessage('Connection error - please try again');
+            playPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
+            playPauseBtn.classList.remove('playing');
+            albumArt.classList.remove('spinning');
+            isPlaying = false;
+        });
+        
+        // Touch feedback
+        playPauseBtn.addEventListener('touchstart', () => {
+            playPauseBtn.style.transform = 'scale(0.95)';
+        });
+        
+        playPauseBtn.addEventListener('touchend', () => {
+            playPauseBtn.style.transform = 'scale(1)';
         });
     }
 }
 
-// Update track info with dynamic content
-function updateTrackInfo() {
-    const trackTitle = document.querySelector('.track-title');
-    const trackArtist = document.querySelector('.track-artist');
+// Update status bar time
+function updateStatusBar() {
+    const timeElement = document.getElementById('currentTime');
     
-    if (trackTitle && trackArtist) {
-        // Add some dynamic feel to the player
-        const messages = [
-            { title: "ToolBox Radio", artist: "Construction's #1 Music Station" },
-            { title: "Now Playing", artist: "Non-Stop Construction Music" },
-            { title: "Live Stream", artist: "Sod the Chat - Just the Tunes" }
-        ];
-        
-        let messageIndex = 0;
-        
-        setInterval(() => {
-            const message = messages[messageIndex];
-            trackTitle.style.opacity = '0.5';
-            trackArtist.style.opacity = '0.5';
-            
-            setTimeout(() => {
-                trackTitle.textContent = message.title;
-                trackArtist.textContent = message.artist;
-                trackTitle.style.opacity = '1';
-                trackArtist.style.opacity = '1';
-            }, 300);
-            
-            messageIndex = (messageIndex + 1) % messages.length;
-        }, 5000);
+    function updateTime() {
+        const now = new Date();
+        const hours = now.getHours().toString().padStart(2, '0');
+        const minutes = now.getMinutes().toString().padStart(2, '0');
+        timeElement.textContent = `${hours}:${minutes}`;
     }
+    
+    updateTime();
+    setInterval(updateTime, 1000);
 }
 
-// Show helper message for mobile users
-function showStreamMessage(message) {
+// Track information rotation
+function startTrackRotation() {
+    const trackName = document.getElementById('trackName');
+    const artistName = document.getElementById('artistName');
+    const albumName = document.getElementById('albumName');
+    
+    const trackInfo = [
+        { track: "ToolBox Radio", artist: "Construction's #1 Music Station", album: "Live Stream" },
+        { track: "Non-Stop Music", artist: "No Chat, Just Tunes", album: "24/7 Live" },
+        { track: "Construction Hits", artist: "Worksite Radio", album: "Powered by CMS Desk" },
+        { track: "Live Stream", artist: "ToolBox Radio", album: "High Quality Audio" }
+    ];
+    
+    let index = 0;
+    
+    setInterval(() => {
+        const info = trackInfo[index];
+        
+        // Fade out
+        trackName.style.opacity = '0.5';
+        artistName.style.opacity = '0.5';
+        albumName.style.opacity = '0.5';
+        
+        setTimeout(() => {
+            // Update content
+            trackName.textContent = info.track;
+            artistName.textContent = info.artist;
+            albumName.textContent = info.album;
+            
+            // Fade in
+            trackName.style.opacity = '1';
+            artistName.style.opacity = '1';
+            albumName.style.opacity = '1';
+        }, 300);
+        
+        index = (index + 1) % trackInfo.length;
+    }, 8000);
+}
+
+// Show helper message for app users
+function showAppMessage(message) {
     const existingMessage = document.querySelector('.stream-helper-message');
     if (existingMessage) {
         existingMessage.remove();
