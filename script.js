@@ -21,78 +21,47 @@ function initMobileLayout() {
             </div>
         </div>
 
-        <!-- iPhone App Style Layout -->
-        <div class="app-container">
-            <!-- Status Bar -->
-            <div class="status-bar">
-                <div class="status-left">
-                    <span class="time" id="currentTime"></span>
-                </div>
-                <div class="status-right">
-                    <i class="fas fa-signal"></i>
-                    <i class="fas fa-wifi"></i>
-                    <div class="battery">
-                        <div class="battery-level"></div>
-                    </div>
-                </div>
+        <!-- Simple Mobile Layout -->
+        <div class="mobile-app-container">
+            <!-- Logo in corner -->
+            <div class="corner-logo">
+                <img src="images/logo1.png" alt="ToolBox Radio" class="corner-logo-image">
             </div>
             
-            <!-- App Header -->
-            <div class="app-header">
-                <img src="images/logo1.png" alt="ToolBox Radio" class="header-logo">
-                <h1>ToolBox Radio</h1>
-                <div class="live-badge">
-                    <div class="live-dot"></div>
-                    <span>LIVE</span>
-                </div>
-            </div>
-            
-            <!-- Main Player Section -->
-            <div class="player-section">
+            <!-- Main Content -->
+            <div class="mobile-content-center">
                 <!-- Album Art Display -->
-                <div class="album-display">
-                    <div class="album-cover">
-                        <img src="images/logo1.png" alt="Now Playing" class="cover-image" id="albumArt">
-                        <div class="cover-reflection"></div>
+                <div class="mobile-album-display">
+                    <div class="mobile-album-cover">
+                        <img src="images/logo1.png" alt="ToolBox Radio" class="mobile-cover-image" id="mobileAlbumArt">
                     </div>
                 </div>
                 
                 <!-- Track Information -->
-                <div class="track-display">
-                    <h2 class="track-name" id="trackName">ToolBox Radio</h2>
-                    <p class="artist-name" id="artistName">Construction's #1 Music Station</p>
-                    <p class="album-name" id="albumName">Live Stream</p>
+                <div class="mobile-track-display">
+                    <h2 class="mobile-track-name" id="mobileTrackName">ToolBox Radio</h2>
+                    <p class="mobile-artist-name" id="mobileArtistName">Construction's #1 Music Station</p>
+                    <p class="mobile-album-name" id="mobileAlbumName">Live Stream - Sod the Chat, Just the Tunes</p>
                 </div>
                 
                 <!-- Audio Player -->
-                <audio id="radioPlayer" preload="none">
+                <audio id="mobileRadioPlayer" preload="none">
                     <source src="https://radio.toolboxradio.com/radio/8000/radio.mp3" type="audio/mpeg">
                     Your browser does not support the audio element.
                 </audio>
                 
                 <!-- Player Controls -->
-                <div class="player-controls">
-                    <button class="control-btn play-pause-btn" id="playPauseBtn">
+                <div class="mobile-player-controls">
+                    <button class="mobile-control-btn mobile-play-pause-btn" id="mobilePlayPauseBtn">
                         <i class="fas fa-play"></i>
                     </button>
                 </div>
                 
-                <!-- Stream Info -->
-                <div class="stream-info">
-                    <div class="info-item">
-                        <i class="fas fa-radio"></i>
-                        <span>High Quality Stream</span>
-                    </div>
-                    <div class="info-item">
-                        <i class="fas fa-music"></i>
-                        <span>24/7 Non-Stop Music</span>
-                    </div>
+                <!-- Live Indicator -->
+                <div class="mobile-live-indicator">
+                    <div class="mobile-live-dot"></div>
+                    <span>LIVE NOW</span>
                 </div>
-            </div>
-            
-            <!-- Bottom Text -->
-            <div class="app-footer">
-                <p>Sod the Chat - Just the Tunes</p>
             </div>
         </div>
     `;
@@ -105,17 +74,15 @@ function initMobileLayout() {
             setTimeout(() => {
                 loadingScreen.style.display = 'none';
                 initAppPlayer();
-                updateStatusBar();
             }, 500);
         }
     }, 2500);
 }
 
-// App Player Controls
+// Mobile App Player Controls
 function initAppPlayer() {
-    const audioPlayer = document.getElementById('radioPlayer');
-    const playPauseBtn = document.getElementById('playPauseBtn');
-    const albumArt = document.getElementById('albumArt');
+    const audioPlayer = document.getElementById('mobileRadioPlayer');
+    const playPauseBtn = document.getElementById('mobilePlayPauseBtn');
     let isPlaying = false;
     
     if (audioPlayer && playPauseBtn) {
@@ -126,9 +93,8 @@ function initAppPlayer() {
                 audioPlayer.play().then(() => {
                     playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
                     playPauseBtn.classList.add('playing');
-                    albumArt.classList.add('spinning');
                     isPlaying = true;
-                    startTrackRotation();
+                    startMobileTrackRotation();
                 }).catch(error => {
                     console.log('Playback failed:', error);
                     showAppMessage('Tap to allow audio playback');
@@ -138,7 +104,6 @@ function initAppPlayer() {
                 audioPlayer.pause();
                 playPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
                 playPauseBtn.classList.remove('playing');
-                albumArt.classList.remove('spinning');
                 isPlaying = false;
             }
         });
@@ -157,7 +122,6 @@ function initAppPlayer() {
             showAppMessage('Connection error - please try again');
             playPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
             playPauseBtn.classList.remove('playing');
-            albumArt.classList.remove('spinning');
             isPlaying = false;
         });
         
@@ -172,32 +136,23 @@ function initAppPlayer() {
     }
 }
 
-// Update status bar time
-function updateStatusBar() {
-    const timeElement = document.getElementById('currentTime');
+// Mobile track information rotation
+function startMobileTrackRotation() {
+    const trackName = document.getElementById('mobileTrackName');
+    const artistName = document.getElementById('mobileArtistName');
+    const albumName = document.getElementById('mobileAlbumName');
     
-    function updateTime() {
-        const now = new Date();
-        const hours = now.getHours().toString().padStart(2, '0');
-        const minutes = now.getMinutes().toString().padStart(2, '0');
-        timeElement.textContent = `${hours}:${minutes}`;
+    if (!trackName || !artistName || !albumName) {
+        console.log('Track elements not found');
+        return;
     }
     
-    updateTime();
-    setInterval(updateTime, 1000);
-}
-
-// Track information rotation
-function startTrackRotation() {
-    const trackName = document.getElementById('trackName');
-    const artistName = document.getElementById('artistName');
-    const albumName = document.getElementById('albumName');
-    
     const trackInfo = [
-        { track: "ToolBox Radio", artist: "Construction's #1 Music Station", album: "Live Stream" },
-        { track: "Non-Stop Music", artist: "No Chat, Just Tunes", album: "24/7 Live" },
+        { track: "ToolBox Radio", artist: "Construction's #1 Music Station", album: "Live Stream - Sod the Chat, Just the Tunes" },
+        { track: "Non-Stop Music", artist: "No Chat, Just Tunes", album: "24/7 Live Construction Radio" },
         { track: "Construction Hits", artist: "Worksite Radio", album: "Powered by CMS Desk" },
-        { track: "Live Stream", artist: "ToolBox Radio", album: "High Quality Audio" }
+        { track: "Live Stream", artist: "ToolBox Radio", album: "High Quality Audio Stream" },
+        { track: "Now Playing", artist: "Construction Music", album: "For the Building Industry" }
     ];
     
     let index = 0;
@@ -223,7 +178,7 @@ function startTrackRotation() {
         }, 300);
         
         index = (index + 1) % trackInfo.length;
-    }, 8000);
+    }, 6000);
 }
 
 // Show helper message for app users
