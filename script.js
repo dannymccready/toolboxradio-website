@@ -100,6 +100,75 @@ function initMobileLayout() {
     }, 2500);
 }
 
+// Geo-restriction: allow playback only for UK visitors
+async function isUKVisitor() {
+	try {
+		const res = await fetch('https://ipapi.co/json/', { cache: 'no-store' });
+		if (res.ok) {
+			const data = await res.json();
+			if (data && data.country_code === 'GB') return true;
+		}
+	} catch (e) {
+		console.log('ipapi.co geo lookup failed:', e?.message || e);
+	}
+	try {
+		const res2 = await fetch('https://ipwho.is/', { cache: 'no-store' });
+		if (res2.ok) {
+			const data2 = await res2.json();
+			if (data2 && data2.success && data2.country_code === 'GB') return true;
+		}
+	} catch (e) {
+		console.log('ipwho.is geo lookup failed:', e?.message || e);
+	}
+	return false;
+}
+
+function showRegionRestriction() {
+	// Hide any floating live badge
+	const liveBadge = document.querySelector('.floating-live');
+	if (liveBadge) liveBadge.style.display = 'none';
+
+	// Disable desktop audio element if present
+	const desktopAudio = document.getElementById('desktopRadioPlayer');
+	if (desktopAudio) {
+		try { desktopAudio.pause(); } catch (_) {}
+		desktopAudio.removeAttribute('src');
+		while (desktopAudio.firstChild) desktopAudio.removeChild(desktopAudio.firstChild);
+	}
+
+	// Replace hero player with region-locked message
+	const heroPlayer = document.querySelector('.hero-player');
+	if (heroPlayer) {
+		heroPlayer.innerHTML = `
+			<div class="region-locked" role="status" aria-live="polite">
+				<i class="fas fa-lock" aria-hidden="true"></i>
+				<span>Sorry, the radio player is only available in the UK.</span>
+			</div>
+		`;
+	}
+
+	// Inject minimal styles for the region lock message
+	if (!document.getElementById('region-lock-styles')) {
+		const style = document.createElement('style');
+		style.id = 'region-lock-styles';
+		style.textContent = `
+			.region-locked {
+				display: flex;
+				align-items: center;
+				gap: 10px;
+				background: rgba(255,255,255,0.95);
+				border: 1px solid rgba(0,0,0,0.08);
+				border-radius: 16px;
+				padding: 16px 20px;
+				color: #1f2937;
+				box-shadow: 0 10px 25px rgba(0,0,0,0.10);
+			}
+			.region-locked i { color: #ef4444; }
+		`;
+		document.head.appendChild(style);
+	}
+}
+
 // Mobile App Player Controls
 function initAppPlayer() {
     const audioPlayer = document.getElementById('mobileRadioPlayer');
@@ -339,16 +408,16 @@ function startHeaderPhraseRotation() {
         return;
     }
     
-    const phrases = [
-        "Now streaming: certified bangers and power hammers.",
-        "Our mixtape passed the building inspection.",
-        "Noise complaint? Nope — just your new favorite station.",
-        "We don't drop bricks — just beats.",
-        "Under construction: your taste in music.",
-        "Powered by coffee, concrete, and killer playlists.",
-        "⚠️ Warning:"<br>"Tunes may cause spontaneous head nodding on site.",
-        "From rebar to reverb — we've got you."
-    ];
+	const phrases = [
+		"Now streaming: certified bangers and power hammers.",
+		"Our mixtape passed the building inspection.",
+		"Noise complaint? Nope — just your new favorite station.",
+		"We don't drop bricks — just beats.",
+		"Under construction: your taste in music.",
+		"Powered by coffee, concrete, and killer playlists.",
+		"⚠️ Warning: Tunes may cause spontaneous head nodding on site.",
+		"From rebar to reverb — we've got you."
+	];
     
     let phraseIndex = 0;
     
@@ -1414,19 +1483,11 @@ function updateDesktopProgressDisplay() {
 }
 
 // Initialize everything when DOM is loaded
-document.addEventListener('DOMContentLoaded', () => {
-    // Check if mobile device and initialize appropriate layout
-    if (isMobileDevice()) {
-        initMobileLayout();
-        initAppPlayer();
-        startHeaderPhraseRotation();
-        fetchCurrentlyPlaying();
-    } else {
-        // Desktop device - use standard layout with new player
-        // Initialize the radio player
-        const player = new ToolBoxRadioPlayer();
-        
-        // Initialize other features
+document.addEventListener('DOMContentLoaded', async () => {
+    const inUK = await isUKVisitor();
+    if (!inUK) {
+        showRegionRestriction();
+        // Initialize non-player features only
         initLoadingScreen();
         initSmoothScrolling();
         initContactForm();
@@ -1435,16 +1496,31 @@ document.addEventListener('DOMContentLoaded', () => {
         initMobileNav();
         initNavbarScroll();
         initParallaxEffect();
-        
-        // Initialize desktop player
+        addInteractiveFeatures();
+        return;
+    }
+
+    // Check if mobile device and initialize appropriate layout
+    if (isMobileDevice()) {
+        initMobileLayout();
+        initAppPlayer();
+        startHeaderPhraseRotation();
+        fetchCurrentlyPlaying();
+    } else {
+        // Desktop device - use standard layout with new player
+        const player = new ToolBoxRadioPlayer();
+        initLoadingScreen();
+        initSmoothScrolling();
+        initContactForm();
+        initScrollAnimations();
+        addMobileNavStyles();
+        initMobileNav();
+        initNavbarScroll();
+        initParallaxEffect();
         initDesktopPlayer();
-        
-        // Start fetching metadata for desktop player
         setTimeout(() => {
             fetchCurrentlyPlaying();
         }, 2000);
-        
-        // Add some interactive features
         addInteractiveFeatures();
     }
 });
